@@ -1,183 +1,71 @@
 package com.aro.defenseofatroth;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.ApplicationListener;
+import com.aro.defenseofatroth.Screens.SplashScreen;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.sun.prism.image.ViewPort;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Timer;
 
-public class MainClass  extends InputAdapter implements ApplicationListener {
-	private OrthographicCamera camera; //camara principal.
-	private SpriteBatch batch; //representa el MUNDO.
-	private TextureAtlas atlas; //imagen con las texturas Tambien se puede hacer mediante codigo Pag:166
-	private Sprite background; //se usa para manejar tamaño y posicion de texturas (Se puede cargar desde un Atlas)
-	private FitViewport viewport; //representa la imagen en PANTALLA
-	private Texture levelTexture;
-    private Sprite caverman;
-	private GestureDetector gestureDetector;
-    private Vector2 camposicion;
-	//Constantes de Camara
-	private static final float CAMERA_SPEED = 2.0f;
-	private static final float CAMERA_ZOOM_SPEED = 2.0f;
-	private static final float CAMERA_ZOOM_MAX = 1.0f;
-	private static final float CAMERA_ZOOM_MIN = 0.01f;
-	private static final float CAMERA_MOVE_EDGE = 0.2f;
+public class MainClass extends Game {
 
-	//Constantes de ViewPort.
-	private static final float SCENE_WIDTH = 1280f; //ancho pantalla en PIXELES!!
-	private static final float SCENE_HEIGHT = 720f; //alto del pantalla en PIXELES!!
-	//Para diferentes dispositivos. Usar como en QT
-	/*Tipos de viewPorts:
-		Strech: Ocupa toda la pantalla sin proporcion, puede ser distorsionado
-		Fit: Ajusta a la pantalla con proporcion. Rellena con bordes negros si se sale del rango
-		Screen: Ajusta a la pantalla con proporcion. Si se sale, cortara la imagen.
-		Extend: Se mantiene ajustada entre X valores. Si se sale del maximo rellena con bordes negros
-	*/
-	//En pixeles! Para mantener la proporcion
-	private static final float MIN_SCENE_WIDTH = 800.0f;
-	private static final float MIN_SCENE_HEIGHT = 600.0f;
-	private static final float MAX_SCENE_WIDTH = 1280.0f;
-	private static final float MAX_SCENE_HEIGHT = 720.0f;
-//gestion de entrada
-	private static final int MESSAGE_MAX = 20;
-	private static final float HALF_TAP_SQUARE_SIZE = 20.0f;
-	private static final float TAP_COUNT_INTERVAL = 0.4f;
-	private static final float LONG_PRESS_DURATION = 1.1f;
-	private static final float MAX_FLING_DELAY = 0.15f;
+	private static long SPLASH_MINIMUM_MILLIS = 1000L;
 
+	protected Game game;
+	private Stage stage;
+
+	public MainClass() {
+		super();
+	}
 
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		camera = new OrthographicCamera(); //camara orthografica, es en 2D!
-		viewport = new FitViewport(SCENE_WIDTH, SCENE_HEIGHT, camera); //al viewport se le pasa la camara ¡Si no no muestra nada!
-		atlas= new TextureAtlas(Gdx.files.internal("prehistoric.atlas"));
-		background= new Sprite(atlas.findRegion("background"));
-		background.setPosition(-background.getWidth() * 0.5f, -background.getHeight() * 0.5f);
-		background.scale(2f);
-        caverman=new Sprite(atlas.findRegion("caveman"));
-        caverman.setPosition(0f, 0f);
-        camposicion= new Vector2(0f,0f);
-		gestureDetector = new GestureDetector(HALF_TAP_SQUARE_SIZE,
-				TAP_COUNT_INTERVAL,
-				LONG_PRESS_DURATION,
-				MAX_FLING_DELAY,
-				new GestureHandler(camposicion));
+		game =  this;
+		//setScreen(new Menu(this));
+		// SplashScreen
 
-		Gdx.input.setInputProcessor(gestureDetector);
+		setScreen(new SplashScreen(this));
+
+		final long splash_start_time = System.currentTimeMillis();
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+
+				Gdx.app.postRunnable(new Runnable() {
+					@Override
+					public void run() {
+						// ... carga de datos
+						// ... carga de fuentes tipograficas
+						// ... carga de sonidos
+						// ... carga de imagenes
+						// ... carga de recursos de internacionalizacion
+						// ... otros
+
+						// Se muestra el menu principal tras la SpashScreen
+						long splash_elapsed_time = System.currentTimeMillis() - splash_start_time;
+						if (splash_elapsed_time < MainClass.SPLASH_MINIMUM_MILLIS) {
+							Timer.schedule(
+									new Timer.Task() {
+										@Override
+										public void run() {
+											MainClass.this.setScreen(new Menu((MainClass) game));
+										}
+									}, (float)(MainClass.SPLASH_MINIMUM_MILLIS - splash_elapsed_time) / 1000f);
+						} else {
+							MainClass.this.setScreen(new Menu(new MainClass()));
+						}
+					}
+				});
+			}
+		}).start();
+
+		// SplashScreen
 	}
 
 	@Override
-	public void render () {
-		//Limpiamos el frame
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		float deltaTime = Gdx.graphics.getDeltaTime();
-
-        camera.translate(camposicion);
-		camera.update();
-        camposicion.scl(0.95f);
-		batch.setProjectionMatrix(camera.combined);
-		//Preparamos para dibujar
-		batch.begin();
-		//Dibujamos, to.do lo que haya que renderizar ira aqui
-		background.draw(batch);
-		//No nos olvidemos de terminar el dibujo. Si algo se renderiza despues de esto, la aplicacion PETARA!
-		batch.end();
-	}
-
-	@Override
-	public void pause() {
-
-	}
-
-	@Override
-	public void resume() {
-
-	}
-
-	@Override
-	public void resize(int width, int height) {
-		viewport.update(width, height);
-	}
-
-	@Override
-	public void dispose(){
-		//Se libera memoria, necesario para evitar memory leaks
-		//Liberar batch y atlas sobretodo!!!
-		batch.dispose();
-		atlas.dispose();
-		//Camaras y sprites no se necesitan limpiar
-	}
-
-	public class GestureHandler implements GestureDetector.GestureListener
-	{
-        private Vector2 vec;
-        GestureHandler(Vector2 vec){
-            this.vec=vec;
-        }
-		@Override
-		public boolean touchDown(float x, float y, int pointer, int button) {
-			//addMessage("touchDown: x(" + x + ") y(" + y + ") pointer(" + pointer + ") button(" + button +")");
-			return false;
-		}
-
-		@Override
-		public boolean tap(float x, float y, int count, int button) {
-			vec.scl(0f);
-			return false;
-		}
-
-		@Override
-		public boolean longPress(float x, float y) {
-			//addMessage("longPress: x(" + x + ") y(" + y + ")");
-			return false;
-		}
-
-		@Override
-		public boolean fling(float velocityX, float velocityY, int button) {
-			//addMessage("fling: velX(" + velocityX + ") velY(" + velocityY + ") button(" + button +")");
-			return false;
-		}
-
-		@Override
-		public boolean pan(float x, float y, float deltaX, float deltaY) {
-            //translate mueve la camara segun esas coordenadas (igual que camera.x+=x)
-
-            vec.x=-deltaX;
-            vec.y=deltaY;
-			return false;
-		}
-
-		@Override
-		public boolean panStop(float x, float y, int pointer, int button) {
-			//addMessage("panStop: x(" + x + ") y(" + y + ") pointer(" + pointer + ") button(" + button +")");
-			return false;
-		}
-
-		@Override
-		public boolean zoom(float initialDistance, float distance) {
-			//addMessage("zoom: initialDistance(" + initialDistance + ") distance(" + distance + ")");
-			return false;
-		}
-
-		@Override
-		public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
-			//addMessage("pinch: initialP1(" + initialPointer1 + ") initialP2(" + initialPointer2 + ") p1(" + pointer1 + ") p2(" + pointer2 +")");
-			return false;
-		}
-
+	public void dispose() {
+		stage.dispose();
+		getScreen().dispose();
+		game.dispose();
+		Gdx.app.exit();
 	}
 }
