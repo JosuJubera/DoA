@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.sun.prism.image.ViewPort;
@@ -21,9 +23,8 @@ public class MainClass  extends InputAdapter implements ApplicationListener {
 	private TextureAtlas atlas; //imagen con las texturas Tambien se puede hacer mediante codigo Pag:166
 	private Sprite background; //se usa para manejar tamaño y posicion de texturas (Se puede cargar desde un Atlas)
 	private FitViewport viewport; //representa la imagen en PANTALLA
-	private Vector3 touch;
 	private Texture levelTexture;
-
+	private GestureDetector gestureDetector;
 	//Constantes de Camara
 	private static final float CAMERA_SPEED = 2.0f;
 	private static final float CAMERA_ZOOM_SPEED = 2.0f;
@@ -46,7 +47,12 @@ public class MainClass  extends InputAdapter implements ApplicationListener {
 	private static final float MIN_SCENE_HEIGHT = 600.0f;
 	private static final float MAX_SCENE_WIDTH = 1280.0f;
 	private static final float MAX_SCENE_HEIGHT = 720.0f;
-
+//gestion de entrada
+	private static final int MESSAGE_MAX = 20;
+	private static final float HALF_TAP_SQUARE_SIZE = 20.0f;
+	private static final float TAP_COUNT_INTERVAL = 0.4f;
+	private static final float LONG_PRESS_DURATION = 1.1f;
+	private static final float MAX_FLING_DELAY = 0.15f;
 
 
 	@Override
@@ -57,9 +63,14 @@ public class MainClass  extends InputAdapter implements ApplicationListener {
 		atlas= new TextureAtlas(Gdx.files.internal("prehistoric.atlas"));
 		background= new Sprite(atlas.findRegion("background"));
 		background.setPosition(-background.getWidth() * 0.5f, -background.getHeight() * 0.5f);
-		background.scale(4f);
-		touch = new Vector3();
-		Gdx.input.setInputProcessor(this);
+		background.scale(2f);;
+		gestureDetector = new GestureDetector(HALF_TAP_SQUARE_SIZE,
+				TAP_COUNT_INTERVAL,
+				LONG_PRESS_DURATION,
+				MAX_FLING_DELAY,
+				new GestureHandler(camera));
+
+		Gdx.input.setInputProcessor(gestureDetector);
 	}
 
 	@Override
@@ -69,12 +80,8 @@ public class MainClass  extends InputAdapter implements ApplicationListener {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		float deltaTime = Gdx.graphics.getDeltaTime();
-		if (Gdx.input.isTouched()) {
-			touch.set(Gdx.input.getX(), Gdx.input.getY(), 0.0f);
-			camera.unproject(touch);
-			camera.position.x += -(camera.position.x-touch.x)*0.1f;
-			camera.position.y += -(camera.position.y-touch.y)*0.1f;
-		}
+
+
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		//Preparamos para dibujar
@@ -116,5 +123,65 @@ public class MainClass  extends InputAdapter implements ApplicationListener {
 		batch.dispose();
 		atlas.dispose();
 		//Camaras y sprites no se necesitan limpiar
+	}
+
+	public class GestureHandler implements GestureDetector.GestureListener
+	{
+        private OrthographicCamera camera;
+        Vector3 touch;
+        GestureHandler(OrthographicCamera camera){
+            this.camera=camera;
+            touch=new Vector3(0f,0f,0f);
+        }
+		@Override
+		public boolean touchDown(float x, float y, int pointer, int button) {
+			//addMessage("touchDown: x(" + x + ") y(" + y + ") pointer(" + pointer + ") button(" + button +")");
+			return false;
+		}
+
+		@Override
+		public boolean tap(float x, float y, int count, int button) {
+			//addMessage("tap: x(" + x + ") y(" + y + ") count(" + count + ") button(" + button +")");
+			return false;
+		}
+
+		@Override
+		public boolean longPress(float x, float y) {
+			//addMessage("longPress: x(" + x + ") y(" + y + ")");
+			return false;
+		}
+
+		@Override
+		public boolean fling(float velocityX, float velocityY, int button) {
+			//addMessage("fling: velX(" + velocityX + ") velY(" + velocityY + ") button(" + button +")");
+			return false;
+		}
+
+		@Override
+		public boolean pan(float x, float y, float deltaX, float deltaY) {
+            //translate mueve la camara segun esas coordenadas (igual que camera.x+=x)
+            camera.translate(-deltaX,deltaY);
+
+			return false;
+		}
+
+		@Override
+		public boolean panStop(float x, float y, int pointer, int button) {
+			//addMessage("panStop: x(" + x + ") y(" + y + ") pointer(" + pointer + ") button(" + button +")");
+			return false;
+		}
+
+		@Override
+		public boolean zoom(float initialDistance, float distance) {
+			//addMessage("zoom: initialDistance(" + initialDistance + ") distance(" + distance + ")");
+			return false;
+		}
+
+		@Override
+		public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+			//addMessage("pinch: initialP1(" + initialPointer1 + ") initialP2(" + initialPointer2 + ") p1(" + pointer1 + ") p2(" + pointer2 +")");
+			return false;
+		}
+
 	}
 }
