@@ -24,7 +24,9 @@ public class MainClass  extends InputAdapter implements ApplicationListener {
 	private Sprite background; //se usa para manejar tamaño y posicion de texturas (Se puede cargar desde un Atlas)
 	private FitViewport viewport; //representa la imagen en PANTALLA
 	private Texture levelTexture;
+    private Sprite caverman;
 	private GestureDetector gestureDetector;
+    private Vector2 camposicion;
 	//Constantes de Camara
 	private static final float CAMERA_SPEED = 2.0f;
 	private static final float CAMERA_ZOOM_SPEED = 2.0f;
@@ -63,12 +65,15 @@ public class MainClass  extends InputAdapter implements ApplicationListener {
 		atlas= new TextureAtlas(Gdx.files.internal("prehistoric.atlas"));
 		background= new Sprite(atlas.findRegion("background"));
 		background.setPosition(-background.getWidth() * 0.5f, -background.getHeight() * 0.5f);
-		background.scale(2f);;
+		background.scale(2f);
+        caverman=new Sprite(atlas.findRegion("caveman"));
+        caverman.setPosition(0f, 0f);
+        camposicion= new Vector2(0f,0f);
 		gestureDetector = new GestureDetector(HALF_TAP_SQUARE_SIZE,
 				TAP_COUNT_INTERVAL,
 				LONG_PRESS_DURATION,
 				MAX_FLING_DELAY,
-				new GestureHandler(camera));
+				new GestureHandler(camposicion));
 
 		Gdx.input.setInputProcessor(gestureDetector);
 	}
@@ -81,22 +86,14 @@ public class MainClass  extends InputAdapter implements ApplicationListener {
 
 		float deltaTime = Gdx.graphics.getDeltaTime();
 
-
+        camera.translate(camposicion);
 		camera.update();
+        camposicion.scl(0.95f);
 		batch.setProjectionMatrix(camera.combined);
 		//Preparamos para dibujar
 		batch.begin();
 		//Dibujamos, to.do lo que haya que renderizar ira aqui
 		background.draw(batch);
-		/*batch.draw(levelTexture,
-				0.0f, 0.0f,
-				0.0f, 0.0f,
-				levelTexture.getWidth(), levelTexture.getHeight(),
-				0.01f, 0.01f,
-				0.0f,
-				0, 0,
-				levelTexture.getWidth(), levelTexture.getHeight(),
-				false, false);*/
 		//No nos olvidemos de terminar el dibujo. Si algo se renderiza despues de esto, la aplicacion PETARA!
 		batch.end();
 	}
@@ -127,11 +124,9 @@ public class MainClass  extends InputAdapter implements ApplicationListener {
 
 	public class GestureHandler implements GestureDetector.GestureListener
 	{
-        private OrthographicCamera camera;
-        Vector3 touch;
-        GestureHandler(OrthographicCamera camera){
-            this.camera=camera;
-            touch=new Vector3(0f,0f,0f);
+        private Vector2 vec;
+        GestureHandler(Vector2 vec){
+            this.vec=vec;
         }
 		@Override
 		public boolean touchDown(float x, float y, int pointer, int button) {
@@ -141,7 +136,7 @@ public class MainClass  extends InputAdapter implements ApplicationListener {
 
 		@Override
 		public boolean tap(float x, float y, int count, int button) {
-			//addMessage("tap: x(" + x + ") y(" + y + ") count(" + count + ") button(" + button +")");
+			vec.scl(0f);
 			return false;
 		}
 
@@ -160,8 +155,9 @@ public class MainClass  extends InputAdapter implements ApplicationListener {
 		@Override
 		public boolean pan(float x, float y, float deltaX, float deltaY) {
             //translate mueve la camara segun esas coordenadas (igual que camera.x+=x)
-            camera.translate(-deltaX,deltaY);
 
+            vec.x=-deltaX;
+            vec.y=deltaY;
 			return false;
 		}
 
