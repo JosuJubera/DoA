@@ -6,14 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 /**
  * Created by Sergio on 16/03/2016.
  */
-public class Unidad {
-    //almacena la textura
-    public Sprite texture;
+public class Unidad extends Entidad {
+    private int vidaMaxima;
+    private int vidaActual;
 
-    Unidad(){
-        texture=new Sprite();
-    }
-    public void setTexture(TextureRegion text){
-        texture.setRegion(text);
-    }
 }
