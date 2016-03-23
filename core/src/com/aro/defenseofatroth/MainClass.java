@@ -11,7 +11,6 @@ public class MainClass extends Game {
 	private static long SPLASH_MINIMUM_MILLIS = 1000L;
 
 	protected Game game;
-	private Stage stage;
 
 	public MainClass() {
 		super();
@@ -20,7 +19,7 @@ public class MainClass extends Game {
 	@Override
 	public void create () {
 		game =  this;
-		//setScreen(new Menu(this));
+		//setScreen(new Menu(this)); si queremos quitar el splashscreen
 		// SplashScreen
 
 		setScreen(new SplashScreen(this));
@@ -63,9 +62,9 @@ public class MainClass extends Game {
 
 	@Override
 	public void dispose() {
-		stage.dispose();
-		getScreen().dispose();
-		game.dispose();
+		//stage.dispose();
+		//getScreen().dispose();
+		//game.dispose();
 		Gdx.app.exit();
 	}
 }

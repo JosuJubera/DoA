@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">DefenseOfAtroth</string>
+    <string name="app_name">Defense Of Atroth</string>
+    <string name="btn_yes">Si</string>
+    <string name="btn_no">No</string>
+    <string name="exit_msg">¿Seguro que quieres salir?</string>
 
 </resources>
