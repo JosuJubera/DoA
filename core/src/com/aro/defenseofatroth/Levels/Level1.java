@@ -101,6 +101,8 @@ public class Level1  extends BaseScreen{
 		prueba.animacion=new Animation(0.05f, anima, Animation.PlayMode.LOOP);
 		entidades=new Array();
 		entidades.add(prueba);
+		prueba.setVelocidad(new Vector2(1f, 1f));
+		prueba.setDestino(new Vector2(5f,5f));
 	}
 
 	public void render (float delta) {

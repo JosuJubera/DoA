@@ -19,6 +19,7 @@ public abstract class Entidad implements Disposable{
     protected Vector2 posicion; //posicion del objeto
     protected Vector2 velocidad; //velocidad del objeto
     protected Vector2 aceleracion; //aceleracion del objeto
+    protected Vector2 destino;
 
     Entidad(){
         texture=null;
@@ -59,5 +60,13 @@ public abstract class Entidad implements Disposable{
 
     public Vector2 getPosicion(){
         return this.posicion;
+    }
+
+    public Vector2 getDestino(){
+        return this.destino;
+    }
+
+    public void setDestino(Vector2 destino){
+        this.destino=destino;
     }
 }
