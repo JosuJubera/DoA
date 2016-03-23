@@ -120,7 +120,8 @@ public class Level1  extends BaseScreen{
 		background.draw(batch);
 		//Dibujar toda la escena
 		for (int i = 0; i < entidades.size; i++) {
-			entidades.get(i).draw(batch,delta);
+			entidades.get(i).draw(batch, delta);
+			((Unidad) entidades.get(i)).danar(1);
 		}
 
 		//No nos olvidemos de terminar el dibujo. Si algo se renderiza despues de esto, la aplicacion PETARA!
