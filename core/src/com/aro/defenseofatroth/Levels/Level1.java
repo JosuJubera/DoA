@@ -1,7 +1,9 @@
 package com.aro.defenseofatroth.Levels;
 
+import com.aro.defenseofatroth.Entidad;
 import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Screens.BaseScreen;
+import com.aro.defenseofatroth.Unidad;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -9,6 +11,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -16,6 +19,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.sun.prism.image.ViewPort;
 
@@ -29,6 +33,11 @@ public class Level1  extends BaseScreen{
     private Sprite caverman;
 	private GestureDetector gestureDetector;
     private Vector2 camposicion;
+	private Array<Entidad> entidades; //aqui iran todas la sentidades dibujables
+
+	//prueba
+	TextureAtlas atextura;
+
 	//Constantes de Camara
 	private static final float CAMERA_SPEED = 2.0f;
 	private static final float CAMERA_ZOOM_SPEED = 2.0f;
@@ -76,8 +85,6 @@ public class Level1  extends BaseScreen{
 		background= new Sprite(atlas.findRegion("background"));
 		background.setPosition(-background.getWidth() * 0.5f, -background.getHeight() * 0.5f);
 		background.scale(2f);
-        caverman=new Sprite(atlas.findRegion("caveman"));
-        caverman.setPosition(0f, 0f);
         camposicion= new Vector2(0f,0f);
 		gestureDetector = new GestureDetector(HALF_TAP_SQUARE_SIZE,
 				TAP_COUNT_INTERVAL,
@@ -86,6 +93,14 @@ public class Level1  extends BaseScreen{
 				new GestureHandler(camposicion,camera));
 
 		Gdx.input.setInputProcessor(gestureDetector);
+
+		//Dbujamos a una unidad
+		Unidad prueba=new Unidad();
+		atextura= new TextureAtlas(Gdx.files.internal("caveman.atlas"));
+		Array<TextureAtlas.AtlasRegion> anima = new Array<TextureAtlas.AtlasRegion>(atextura.getRegions());
+		prueba.animacion=new Animation(0.05f, anima, Animation.PlayMode.LOOP);
+		entidades=new Array();
+		entidades.add(prueba);
 	}
 
 	public void render (float delta) {
@@ -103,6 +118,11 @@ public class Level1  extends BaseScreen{
 		batch.begin();
 		//Dibujamos, to.do lo que haya que renderizar ira aqui
 		background.draw(batch);
+		//Dibujar toda la escena
+		for (int i = 0; i < entidades.size; i++) {
+			entidades.get(i).draw(batch,delta);
+		}
+
 		//No nos olvidemos de terminar el dibujo. Si algo se renderiza despues de esto, la aplicacion PETARA!
 		batch.end();
 	}
@@ -119,6 +139,7 @@ public class Level1  extends BaseScreen{
 		//Liberar batch y atlas sobretodo!!!
 		batch.dispose();
 		atlas.dispose();
+        atextura.dispose();
 		//Camaras y sprites no se necesitan limpiar
 	}
 
