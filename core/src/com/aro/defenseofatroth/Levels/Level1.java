@@ -4,10 +4,7 @@ import com.aro.defenseofatroth.Entidad;
 import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Screens.BaseScreen;
 import com.aro.defenseofatroth.Unidad;
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,13 +12,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.sun.prism.image.ViewPort;
 
 public class Level1  extends BaseScreen{
 	private OrthographicCamera camera; //camara principal.
@@ -150,6 +144,9 @@ public class Level1  extends BaseScreen{
 	{
         private Vector2 vec;
 		private OrthographicCamera camera;
+		float velX, velY;
+		boolean flinging = false;
+		float initialScale = 1;
         GestureHandler(Vector2 vec,OrthographicCamera camera){
             this.vec=vec;
 			this.camera=camera;
@@ -157,12 +154,14 @@ public class Level1  extends BaseScreen{
 		@Override
 		public boolean touchDown(float x, float y, int pointer, int button) {
 			//addMessage("touchDown: x(" + x + ") y(" + y + ") pointer(" + pointer + ") button(" + button +")");
+			flinging = false;
+			initialScale = camera.zoom;
 			return false;
 		}
 
 		@Override
 		public boolean tap(float x, float y, int count, int button) {
-			vec.scl(0f);
+			//vec.scl(0f);
 			return false;
 		}
 
@@ -175,6 +174,9 @@ public class Level1  extends BaseScreen{
 		@Override
 		public boolean fling(float velocityX, float velocityY, int button) {
 			//addMessage("fling: velX(" + velocityX + ") velY(" + velocityY + ") button(" + button +")");
+			flinging = true;
+			velX = camera.zoom * velocityX * 0.5f;
+			velY = camera.zoom * velocityY * 0.5f;
 			return false;
 		}
 
@@ -182,8 +184,9 @@ public class Level1  extends BaseScreen{
 		public boolean pan(float x, float y, float deltaX, float deltaY) {
             //translate mueve la camara segun esas coordenadas (igual que camera.x+=x)
 
-            vec.x=-deltaX;
-            vec.y=deltaY;
+//            vec.x=-deltaX;
+//            vec.y=deltaY;
+			camera.position.add(-deltaX * camera.zoom, deltaY * camera.zoom, 0);
 			return true;
 		}
 
@@ -196,6 +199,9 @@ public class Level1  extends BaseScreen{
 		@Override
 		public boolean zoom(float initialDistance, float distance) {
 			//camera.zoom=camera.zoom/distance;
+			float ratio = initialDistance / distance;
+			camera.zoom = initialScale * ratio;
+			System.out.println(camera.zoom);
 			return true;
 		}
 
