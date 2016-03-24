@@ -182,11 +182,16 @@ public class Level1  extends BaseScreen{
 
 		@Override
 		public boolean pan(float x, float y, float deltaX, float deltaY) {
-            //translate mueve la camara segun esas coordenadas (igual que camera.x+=x)
+			//translate mueve la camara segun esas coordenadas (igual que camera.x+=x)
 
-//            vec.x=-deltaX;
-//            vec.y=deltaY;
-			camera.position.add(-deltaX * camera.zoom, deltaY * camera.zoom, 0);
+			if ((camera.position.x -deltaX * camera.zoom < (200 / 189 * camera.zoom * camera.zoom - 121760 / 189 * camera.zoom + 121160 / 63))
+					&& (camera.position.y + deltaY * camera.zoom) < (-200 / 189 * camera.zoom * camera.zoom - 67240 / 189 * camera.zoom + 67840 / 63)
+					&& (camera.position.x + -deltaX * camera.zoom) > (-200 / 189 * camera.zoom * camera.zoom + 121760 / 189 * camera.zoom - 121160 / 63)
+					&& (camera.position.y + deltaY * camera.zoom) > (200 / 189 * camera.zoom * camera.zoom + 67240 / 189 * camera.zoom - 67840 / 63)){
+
+				camera.position.add(-deltaX * camera.zoom, deltaY * camera.zoom, 0);
+			}
+			System.out.println(camera.position + " zoom " + camera.zoom);
 			return true;
 		}
 
@@ -198,13 +203,12 @@ public class Level1  extends BaseScreen{
 
 		@Override
 		public boolean zoom(float initialDistance, float distance) {
-			//camera.zoom=camera.zoom/distance;
 
 			float ratio = initialDistance / distance;
-			if ((initialScale * ratio < CAMERA_ZOOM_MAX) && (initialScale * ratio > CAMERA_ZOOM_MIN)) {
+			if ((initialScale * ratio <= CAMERA_ZOOM_MAX) && (initialScale * ratio >= CAMERA_ZOOM_MIN)) {
 				camera.zoom = initialScale * ratio;
 			}
-			System.out.println(camera.zoom);
+			System.out.println(camera.position + " zoom " + camera.zoom);
 			return true;
 		}
 
