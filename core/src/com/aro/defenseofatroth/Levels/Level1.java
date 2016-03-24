@@ -35,8 +35,8 @@ public class Level1  extends BaseScreen{
 	//Constantes de Camara
 	private static final float CAMERA_SPEED = 2.0f;
 	private static final float CAMERA_ZOOM_SPEED = 2.0f;
-	private static final float CAMERA_ZOOM_MAX = 1.0f;
-	private static final float CAMERA_ZOOM_MIN = 0.01f;
+	private static final float CAMERA_ZOOM_MAX = 3.0f; // Lo lejos que esta el zoom
+	private static final float CAMERA_ZOOM_MIN = 0.3f; // Lo creca que esta el zoom
 	private static final float CAMERA_MOVE_EDGE = 0.2f;
 
 	//Constantes de ViewPort.
@@ -199,8 +199,11 @@ public class Level1  extends BaseScreen{
 		@Override
 		public boolean zoom(float initialDistance, float distance) {
 			//camera.zoom=camera.zoom/distance;
+
 			float ratio = initialDistance / distance;
-			camera.zoom = initialScale * ratio;
+			if ((initialScale * ratio < CAMERA_ZOOM_MAX) && (initialScale * ratio > CAMERA_ZOOM_MIN)) {
+				camera.zoom = initialScale * ratio;
+			}
 			System.out.println(camera.zoom);
 			return true;
 		}
