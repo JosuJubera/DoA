@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class Level1  extends BaseScreen{
+
 	private OrthographicCamera camera; //camara principal.
 	private SpriteBatch batch; //representa el MUNDO.
 	private TextureAtlas atlas; //imagen con las texturas Tambien se puede hacer mediante codigo Pag:166
@@ -54,7 +55,8 @@ public class Level1  extends BaseScreen{
 	private static final float MIN_SCENE_HEIGHT = 600.0f;
 	private static final float MAX_SCENE_WIDTH = 1280.0f;
 	private static final float MAX_SCENE_HEIGHT = 720.0f;
-//gestion de entrada
+
+	//gestion de entrada
 	private static final int MESSAGE_MAX = 20;
 	private static final float HALF_TAP_SQUARE_SIZE = 20.0f;
 	private static final float TAP_COUNT_INTERVAL = 0.4f;
@@ -184,14 +186,14 @@ public class Level1  extends BaseScreen{
 		public boolean pan(float x, float y, float deltaX, float deltaY) {
 			//translate mueve la camara segun esas coordenadas (igual que camera.x+=x)
 
-			if ((camera.position.x -deltaX * camera.zoom < (200 / 189 * camera.zoom * camera.zoom - 121760 / 189 * camera.zoom + 121160 / 63))
-					&& (camera.position.y + deltaY * camera.zoom) < (-200 / 189 * camera.zoom * camera.zoom - 67240 / 189 * camera.zoom + 67840 / 63)
-					&& (camera.position.x + -deltaX * camera.zoom) > (-200 / 189 * camera.zoom * camera.zoom + 121760 / 189 * camera.zoom - 121160 / 63)
-					&& (camera.position.y + deltaY * camera.zoom) > (200 / 189 * camera.zoom * camera.zoom + 67240 / 189 * camera.zoom - 67840 / 63)){
+			if (camera.position.x - deltaX * camera.zoom <= (200 / 189 * camera.zoom * camera.zoom - 121760 / 189 * camera.zoom + 121160 / 63)              // 1730
+					&& (camera.position.y + deltaY * camera.zoom) <= (-200 / 189 * camera.zoom * camera.zoom - 67240 / 189 * camera.zoom + 67840 / 63)      // 970
+					&& (camera.position.x - deltaX * camera.zoom) >= (-200 / 189 * camera.zoom * camera.zoom + 121760 / 189 * camera.zoom - 121160 / 63)    // -1730
+					&& (camera.position.y + deltaY * camera.zoom) >= (200 / 189 * camera.zoom * camera.zoom + 67240 / 189 * camera.zoom - 67840 / 63)){     // -970
 
 				camera.position.add(-deltaX * camera.zoom, deltaY * camera.zoom, 0);
 			}
-			System.out.println(camera.position + " zoom " + camera.zoom);
+//			System.out.println("pan" + camera.position + " zoom " + camera.zoom);
 			return true;
 		}
 
@@ -204,11 +206,70 @@ public class Level1  extends BaseScreen{
 		@Override
 		public boolean zoom(float initialDistance, float distance) {
 
+			float zoomPrevio = camera.zoom;
+
 			float ratio = initialDistance / distance;
-			if ((initialScale * ratio <= CAMERA_ZOOM_MAX) && (initialScale * ratio >= CAMERA_ZOOM_MIN)) {
-				camera.zoom = initialScale * ratio;
+			float nextZoom = initialScale * ratio;
+			if ((nextZoom <= CAMERA_ZOOM_MAX) && (nextZoom >= CAMERA_ZOOM_MIN)) {
+				if (nextZoom > zoomPrevio){
+
+					if ((camera.position.x < 0) && (camera.position.y < 0)) {
+						if (camera.position.x - camera.viewportWidth * nextZoom/2 < -1920) {
+
+							camera.position.set((-200 / 189 * nextZoom * nextZoom + 121760 / 189 * nextZoom - 121160 / 63),
+									camera.position.y, 0);
+						}
+						if (camera.position.y - camera.viewportHeight * nextZoom/2 < -1080) {
+
+							camera.position.set(camera.position.x,
+									(200 / 189 * nextZoom * nextZoom + 67240 / 189 * nextZoom - 67840 / 63), 0);
+						}
+
+					}
+
+					if ((camera.position.x < 0) && (camera.position.y > 0)) {
+						if (camera.position.x - camera.viewportWidth * nextZoom/2 < -1920) {
+
+							camera.position.set((-200 / 189 * nextZoom * nextZoom + 121760 / 189 * nextZoom - 121160 / 63),
+									camera.position.y, 0);
+						}
+						if (camera.position.y + camera.viewportHeight * nextZoom/2 > 1080) {
+
+							camera.position.set(camera.position.x,
+									(-200 / 189 * nextZoom * nextZoom - 67240 / 189 * nextZoom + 67840 / 63), 0);
+						}
+					}
+
+					if ((camera.position.x > 0) && (camera.position.y < 0)) {
+						if (camera.position.x + camera.viewportWidth * nextZoom/2 > 1920) {
+
+							camera.position.set((200 / 189 * nextZoom * nextZoom - 121760 / 189 * nextZoom + 121160 / 63),
+									camera.position.y, 0);
+						}
+						if (camera.position.y - camera.viewportHeight * nextZoom/2 < -1080) {
+
+							camera.position.set(camera.position.x,
+									(200 / 189 * nextZoom * nextZoom + 67240 / 189 * nextZoom - 67840 / 63), 0);
+						}
+					}
+
+					if ((camera.position.x > 0) && (camera.position.y > 0)) {
+						if (camera.position.x + camera.viewportWidth * nextZoom/2 > 1920) {
+
+							camera.position.set((200 / 189 * nextZoom * nextZoom - 121760 / 189 * nextZoom + 121160 / 63),
+									camera.position.y, 0);
+						}
+						if (camera.position.y + camera.viewportHeight * nextZoom/2 > 1080){
+
+							camera.position.set(camera.position.x,
+									(-200 / 189 * nextZoom * nextZoom - 67240 / 189 * nextZoom + 67840 / 63), 0);
+						}
+					}
+				}
+				camera.zoom = nextZoom;
 			}
-			System.out.println(camera.position + " zoom " + camera.zoom);
+
+//			System.out.println((camera.position) + " zoom " + camera.zoom);
 			return true;
 		}
 
