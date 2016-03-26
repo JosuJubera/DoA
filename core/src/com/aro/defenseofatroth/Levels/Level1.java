@@ -4,6 +4,7 @@ import com.aro.defenseofatroth.Entidad;
 import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Screens.BaseScreen;
 import com.aro.defenseofatroth.Unidad;
+import com.aro.defenseofatroth.GestureHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,7 +18,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-public class Level1  extends BaseScreen{
+public class Level1  extends BaseScreen {
 
 	private OrthographicCamera camera; //camara principal.
 	private SpriteBatch batch; //representa el MUNDO.
@@ -25,9 +26,9 @@ public class Level1  extends BaseScreen{
 	private Sprite background; //se usa para manejar tamaño y posicion de texturas (Se puede cargar desde un Atlas)
 	private FitViewport viewport; //representa la imagen en PANTALLA
 	private Texture levelTexture;
-    private Sprite caverman;
+	private Sprite caverman;
 	private GestureDetector gestureDetector;
-    private Vector2 camposicion;
+//	private Vector2 camposicion;
 	private Array<Entidad> entidades; //aqui iran todas la sentidades dibujables
 
 	//prueba
@@ -73,44 +74,43 @@ public class Level1  extends BaseScreen{
 	}
 
 
-	public void create () {
+	public void create() {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(); //camara orthografica, es en 2D!
 		viewport = new FitViewport(SCENE_WIDTH, SCENE_HEIGHT, camera); //al viewport se le pasa la camara ¡Si no no muestra nada!
-		atlas= new TextureAtlas(Gdx.files.internal("prehistoric.atlas"));
-		background= new Sprite(atlas.findRegion("background"));
+		atlas = new TextureAtlas(Gdx.files.internal("prehistoric.atlas"));
+		background = new Sprite(atlas.findRegion("background"));
 		background.setPosition(-background.getWidth() * 0.5f, -background.getHeight() * 0.5f);
 		background.scale(2f);
-        camposicion= new Vector2(0f,0f);
+//		camposicion = new Vector2(0f, 0f);
 		gestureDetector = new GestureDetector(HALF_TAP_SQUARE_SIZE,
 				TAP_COUNT_INTERVAL,
 				LONG_PRESS_DURATION,
 				MAX_FLING_DELAY,
-				new GestureHandler(camposicion,camera));
+				new GestureHandler(/*camposicion,*/ camera));
 
 		Gdx.input.setInputProcessor(gestureDetector);
 
 		//Dbujamos a una unidad
-		Unidad prueba=new Unidad();
-		atextura= new TextureAtlas(Gdx.files.internal("caveman.atlas"));
+		Unidad prueba = new Unidad();
+		atextura = new TextureAtlas(Gdx.files.internal("caveman.atlas"));
 		Array<TextureAtlas.AtlasRegion> anima = new Array<TextureAtlas.AtlasRegion>(atextura.getRegions());
-		prueba.animacion=new Animation(0.05f, anima, Animation.PlayMode.LOOP);
-		entidades=new Array();
+		prueba.animacion = new Animation(0.05f, anima, Animation.PlayMode.LOOP);
+		entidades = new Array();
 		entidades.add(prueba);
 		prueba.setVelocidad(new Vector2(1f, 1f));
-		prueba.setDestino(new Vector2(5f,5f));
+		prueba.setDestino(new Vector2(5f, 5f));
 	}
 
-	public void render (float delta) {
+	public void render(float delta) {
 		//Limpiamos el frame
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-
-        camera.translate(camposicion);
+//		camera.translate(camposicion);
 		camera.update();
-        camposicion.scl(0.95f);
+//		camposicion.scl(0.95f);
 		batch.setProjectionMatrix(camera.combined);
 		//Preparamos para dibujar
 		batch.begin();
@@ -133,151 +133,12 @@ public class Level1  extends BaseScreen{
 	}
 
 	@Override
-	public void dispose(){
+	public void dispose() {
 		//Se libera memoria, necesario para evitar memory leaks
 		//Liberar batch y atlas sobretodo!!!
 		batch.dispose();
 		atlas.dispose();
-        atextura.dispose();
+		atextura.dispose();
 		//Camaras y sprites no se necesitan limpiar
-	}
-
-	public class GestureHandler implements GestureDetector.GestureListener
-	{
-        private Vector2 vec;
-		private OrthographicCamera camera;
-		float velX, velY;
-		boolean flinging = false;
-		float initialScale = 1;
-        GestureHandler(Vector2 vec,OrthographicCamera camera){
-            this.vec=vec;
-			this.camera=camera;
-        }
-		@Override
-		public boolean touchDown(float x, float y, int pointer, int button) {
-			//addMessage("touchDown: x(" + x + ") y(" + y + ") pointer(" + pointer + ") button(" + button +")");
-			flinging = false;
-			initialScale = camera.zoom;
-			return false;
-		}
-
-		@Override
-		public boolean tap(float x, float y, int count, int button) {
-			//vec.scl(0f);
-			return false;
-		}
-
-		@Override
-		public boolean longPress(float x, float y) {
-			//addMessage("longPress: x(" + x + ") y(" + y + ")");
-			return false;
-		}
-
-		@Override
-		public boolean fling(float velocityX, float velocityY, int button) {
-			//addMessage("fling: velX(" + velocityX + ") velY(" + velocityY + ") button(" + button +")");
-			flinging = true;
-			velX = camera.zoom * velocityX * 0.5f;
-			velY = camera.zoom * velocityY * 0.5f;
-			return false;
-		}
-
-		@Override
-		public boolean pan(float x, float y, float deltaX, float deltaY) {
-			//translate mueve la camara segun esas coordenadas (igual que camera.x+=x)
-
-			if (camera.position.x - deltaX * camera.zoom <= (200 / 189 * camera.zoom * camera.zoom - 121760 / 189 * camera.zoom + 121160 / 63)              // 1730
-					&& (camera.position.y + deltaY * camera.zoom) <= (-200 / 189 * camera.zoom * camera.zoom - 67240 / 189 * camera.zoom + 67840 / 63)      // 970
-					&& (camera.position.x - deltaX * camera.zoom) >= (-200 / 189 * camera.zoom * camera.zoom + 121760 / 189 * camera.zoom - 121160 / 63)    // -1730
-					&& (camera.position.y + deltaY * camera.zoom) >= (200 / 189 * camera.zoom * camera.zoom + 67240 / 189 * camera.zoom - 67840 / 63)){     // -970
-
-				camera.position.add(-deltaX * camera.zoom, deltaY * camera.zoom, 0);
-			}
-//			System.out.println("pan" + camera.position + " zoom " + camera.zoom);
-			return true;
-		}
-
-		@Override
-		public boolean panStop(float x, float y, int pointer, int button) {
-			//addMessage("panStop: x(" + x + ") y(" + y + ") pointer(" + pointer + ") button(" + button +")");
-			return false;
-		}
-
-		@Override
-		public boolean zoom(float initialDistance, float distance) {
-
-			float zoomPrevio = camera.zoom;
-
-			float ratio = initialDistance / distance;
-			float nextZoom = initialScale * ratio;
-			if ((nextZoom <= CAMERA_ZOOM_MAX) && (nextZoom >= CAMERA_ZOOM_MIN)) {
-				if (nextZoom > zoomPrevio){
-
-					if ((camera.position.x < 0) && (camera.position.y < 0)) {
-						if (camera.position.x - camera.viewportWidth * nextZoom/2 < -1920) {
-
-							camera.position.set((-200 / 189 * nextZoom * nextZoom + 121760 / 189 * nextZoom - 121160 / 63),
-									camera.position.y, 0);
-						}
-						if (camera.position.y - camera.viewportHeight * nextZoom/2 < -1080) {
-
-							camera.position.set(camera.position.x,
-									(200 / 189 * nextZoom * nextZoom + 67240 / 189 * nextZoom - 67840 / 63), 0);
-						}
-
-					}
-
-					if ((camera.position.x < 0) && (camera.position.y > 0)) {
-						if (camera.position.x - camera.viewportWidth * nextZoom/2 < -1920) {
-
-							camera.position.set((-200 / 189 * nextZoom * nextZoom + 121760 / 189 * nextZoom - 121160 / 63),
-									camera.position.y, 0);
-						}
-						if (camera.position.y + camera.viewportHeight * nextZoom/2 > 1080) {
-
-							camera.position.set(camera.position.x,
-									(-200 / 189 * nextZoom * nextZoom - 67240 / 189 * nextZoom + 67840 / 63), 0);
-						}
-					}
-
-					if ((camera.position.x > 0) && (camera.position.y < 0)) {
-						if (camera.position.x + camera.viewportWidth * nextZoom/2 > 1920) {
-
-							camera.position.set((200 / 189 * nextZoom * nextZoom - 121760 / 189 * nextZoom + 121160 / 63),
-									camera.position.y, 0);
-						}
-						if (camera.position.y - camera.viewportHeight * nextZoom/2 < -1080) {
-
-							camera.position.set(camera.position.x,
-									(200 / 189 * nextZoom * nextZoom + 67240 / 189 * nextZoom - 67840 / 63), 0);
-						}
-					}
-
-					if ((camera.position.x > 0) && (camera.position.y > 0)) {
-						if (camera.position.x + camera.viewportWidth * nextZoom/2 > 1920) {
-
-							camera.position.set((200 / 189 * nextZoom * nextZoom - 121760 / 189 * nextZoom + 121160 / 63),
-									camera.position.y, 0);
-						}
-						if (camera.position.y + camera.viewportHeight * nextZoom/2 > 1080){
-
-							camera.position.set(camera.position.x,
-									(-200 / 189 * nextZoom * nextZoom - 67240 / 189 * nextZoom + 67840 / 63), 0);
-						}
-					}
-				}
-				camera.zoom = nextZoom;
-			}
-
-//			System.out.println((camera.position) + " zoom " + camera.zoom);
-			return true;
-		}
-
-		@Override
-		public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
-			//addMessage("pinch: initialP1(" + initialPointer1 + ") initialP2(" + initialPointer2 + ") p1(" + pointer1 + ") p2(" + pointer2 +")");
-			return false;
-		}
-
 	}
 }
