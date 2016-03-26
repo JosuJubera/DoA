@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -80,17 +81,24 @@ public class LoginScreen extends BaseScreen {
             };
         });
 
+        Label nameLabel = new Label("Name",new Label.LabelStyle(font, Color.WHITE));
+        nameLabel.setPosition(VIRTUAL_WIDTH / 2 - VIRTUAL_WIDTH / 8, VIRTUAL_HEIGHT * 7 / 8);
+        stage.addActor(nameLabel);
+
         // Login
-        TextField name = new TextField("NAME", skin);
-        name.setPosition(VIRTUAL_WIDTH / 2 - VIRTUAL_WIDTH / 8, VIRTUAL_HEIGHT * 5 / 8);
-        name.setSize(VIRTUAL_WIDTH / 10, VIRTUAL_HEIGHT / 10);
-        stage.addActor(name);
+        TextField nameField = new TextField("", skin);
+        nameField.setPosition(VIRTUAL_WIDTH / 2 - VIRTUAL_WIDTH / 8, VIRTUAL_HEIGHT * 6 / 8);
+        nameField.setSize(VIRTUAL_WIDTH / 10, VIRTUAL_HEIGHT / 10);
+        stage.addActor(nameField);
 
+        Label passLabel = new Label("Pass",new Label.LabelStyle(font, Color.WHITE));
+        passLabel.setPosition(VIRTUAL_WIDTH / 2 - VIRTUAL_WIDTH / 8, VIRTUAL_HEIGHT * 5 / 8);
+        stage.addActor(passLabel);
 
-        TextField pass = new TextField("PASS", skin);
-        pass.setPosition(VIRTUAL_WIDTH / 2 - VIRTUAL_WIDTH / 8, VIRTUAL_HEIGHT * 4 / 8);
-        pass.setSize(VIRTUAL_WIDTH / 10, VIRTUAL_HEIGHT / 10);
-        stage.addActor(pass);
+        TextField passField = new TextField("", skin);
+        passField.setPosition(VIRTUAL_WIDTH / 2 - VIRTUAL_WIDTH / 8, VIRTUAL_HEIGHT * 4 / 8);
+        passField.setSize(VIRTUAL_WIDTH / 10, VIRTUAL_HEIGHT / 10);
+        stage.addActor(passField);
 
 
         TextButton submit = new TextButton("SUBMIT", skin);
