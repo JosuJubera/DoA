@@ -13,16 +13,15 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import java.awt.TextField;
-
 /**
- * Created by Juber on 11/03/2016.
+ * Created by elementary on 26/03/16.
  */
-public class SinglePlayScreen extends BaseScreen {
+public class LoginScreen extends BaseScreen {
 
     private static int VIRTUAL_WIDTH = 800;
     private static int VIRTUAL_HEIGHT = 600;
@@ -34,7 +33,7 @@ public class SinglePlayScreen extends BaseScreen {
     private BitmapFont font;
     private Skin skin;
 
-    public SinglePlayScreen(MainClass game){
+    public LoginScreen(MainClass game) {
         super(game);
         this.game = game;
         create();
@@ -69,7 +68,7 @@ public class SinglePlayScreen extends BaseScreen {
         textButtonStyle.font = skin.getFont("default");
         skin.add("default", textButtonStyle);
 
-        TextButton back = new TextButton("Volver", skin); // Use the initialized skin
+        TextButton back = new TextButton("Saltar", skin); // Use the initialized skin
         back.setPosition(VIRTUAL_WIDTH - VIRTUAL_WIDTH * 1 /10 , VIRTUAL_HEIGHT * 6 / 7); // desde bottomleft
         stage.addActor(back);
 
@@ -81,37 +80,27 @@ public class SinglePlayScreen extends BaseScreen {
             };
         });
 
-        // Levels
-        TextButton n1 = new TextButton("N1", skin);
-        n1.setPosition(VIRTUAL_WIDTH - VIRTUAL_WIDTH * 7 / 10, VIRTUAL_HEIGHT * 5 / 7);
-        stage.addActor(n1);
+        // Login
+        TextField name = new TextField("NAME", skin);
+        name.setPosition(VIRTUAL_WIDTH / 2 - VIRTUAL_WIDTH / 8, VIRTUAL_HEIGHT * 5 / 8);
+        name.setSize(VIRTUAL_WIDTH / 10, VIRTUAL_HEIGHT / 10);
+        stage.addActor(name);
 
-        n1.addListener(new ClickListener() {
+
+        TextField pass = new TextField("PASS", skin);
+        pass.setPosition(VIRTUAL_WIDTH / 2 - VIRTUAL_WIDTH / 8, VIRTUAL_HEIGHT * 4 / 8);
+        pass.setSize(VIRTUAL_WIDTH / 10, VIRTUAL_HEIGHT / 10);
+        stage.addActor(pass);
+
+
+        TextButton submit = new TextButton("SUBMIT", skin);
+        submit.setPosition(VIRTUAL_WIDTH / 2 - VIRTUAL_WIDTH / 8, VIRTUAL_HEIGHT / 8);
+        stage.addActor(submit);
+
+        submit.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Level1(game));
-            }
-        });
-
-        TextButton n2 = new TextButton("N2", skin);
-        n2.setPosition(VIRTUAL_WIDTH - VIRTUAL_WIDTH * 5 / 10, VIRTUAL_HEIGHT * 2 / 7);
-        stage.addActor(n2);
-
-        n2.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Level1(game));
-            }
-        });
-
-        TextButton n3 = new TextButton("N3", skin);
-        n3.setPosition(VIRTUAL_WIDTH - VIRTUAL_WIDTH * 3 / 10, VIRTUAL_HEIGHT * 4 / 7);
-        stage.addActor(n3);
-
-        n3.addListener( new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Level1(game));
+                game.setScreen(new Menu(game));
             };
         });
     }
@@ -123,7 +112,7 @@ public class SinglePlayScreen extends BaseScreen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.act(Math.min(delta, 1 / 60f));

@@ -1,5 +1,6 @@
 package com.aro.defenseofatroth;
 
+import com.aro.defenseofatroth.Screens.LoginScreen;
 import com.aro.defenseofatroth.Screens.SplashScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -46,11 +47,11 @@ public class MainClass extends Game {
 									new Timer.Task() {
 										@Override
 										public void run() {
-											MainClass.this.setScreen(new Menu((MainClass) game));
+											MainClass.this.setScreen(new LoginScreen((MainClass) game));
 										}
 									}, (float)(MainClass.SPLASH_MINIMUM_MILLIS - splash_elapsed_time) / 1000f);
 						} else {
-							MainClass.this.setScreen(new Menu(new MainClass()));
+							MainClass.this.setScreen(new LoginScreen(new MainClass()));
 						}
 					}
 				});
