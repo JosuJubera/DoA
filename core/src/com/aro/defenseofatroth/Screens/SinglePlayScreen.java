@@ -17,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.awt.TextField;
+
 /**
  * Created by Juber on 11/03/2016.
  */
@@ -81,29 +83,33 @@ public class SinglePlayScreen extends BaseScreen {
 
         // Levels
         TextButton n1 = new TextButton("N1", skin);
-        n1.setPosition(VIRTUAL_WIDTH - VIRTUAL_WIDTH * 7 /10 , VIRTUAL_HEIGHT * 5 / 7);
+        n1.setPosition(VIRTUAL_WIDTH - VIRTUAL_WIDTH * 7 / 10, VIRTUAL_HEIGHT * 5 / 7);
         stage.addActor(n1);
 
-        n1.addListener( new ClickListener() {
+        n1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new Level1(game));
-            };
+            }
+
+            ;
         });
 
         TextButton n2 = new TextButton("N2", skin);
-        n2.setPosition(VIRTUAL_WIDTH - VIRTUAL_WIDTH * 5 /10 , VIRTUAL_HEIGHT * 2 / 7);
+        n2.setPosition(VIRTUAL_WIDTH - VIRTUAL_WIDTH * 5 / 10, VIRTUAL_HEIGHT * 2 / 7);
         stage.addActor(n2);
 
-        n2.addListener( new ClickListener() {
+        n2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new Level1(game));
-            };
+            }
+
+            ;
         });
 
         TextButton n3 = new TextButton("N3", skin);
-        n3.setPosition(VIRTUAL_WIDTH - VIRTUAL_WIDTH * 3 /10 , VIRTUAL_HEIGHT * 4 / 7);
+        n3.setPosition(VIRTUAL_WIDTH - VIRTUAL_WIDTH * 3 / 10, VIRTUAL_HEIGHT * 4 / 7);
         stage.addActor(n3);
 
         n3.addListener( new ClickListener() {
@@ -112,6 +118,16 @@ public class SinglePlayScreen extends BaseScreen {
                 game.setScreen(new Level1(game));
             };
         });
+
+
+        //pruebas
+
+
+
+
+        Skin skin2 = new Skin(Gdx.files.internal("data/uiskin.json"));
+        com.badlogic.gdx.scenes.scene2d.ui.TextField NameField = new com.badlogic.gdx.scenes.scene2d.ui.TextField("Nombre",skin2);
+        stage.addActor(NameField);
     }
 
     @Override
