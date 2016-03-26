@@ -2,10 +2,13 @@ package com.aro.defenseofatroth.Levels;
 
 import com.aro.defenseofatroth.Entidad;
 import com.aro.defenseofatroth.MainClass;
+import com.aro.defenseofatroth.Menu;
 import com.aro.defenseofatroth.Screens.BaseScreen;
+import com.aro.defenseofatroth.Screens.SplashScreen;
 import com.aro.defenseofatroth.Unidad;
 import com.aro.defenseofatroth.GestureHandler;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -66,11 +69,20 @@ public class Level1  extends BaseScreen {
 	protected MainClass game;
 
 
-	public Level1(MainClass game) {
+	private Music music;
+	//private Media
+
+
+	public Level1(MainClass game, boolean musica) {
 		super(game);
 		this.game = game;
 		create();
 		render(Gdx.graphics.getDeltaTime());
+		music = MainClass.manager.get("music.ogg", Music.class);
+		if (musica == true){
+			music.setLooping(true);
+			music.play();
+		}
 	}
 
 

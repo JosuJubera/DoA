@@ -1,6 +1,5 @@
 package com.aro.defenseofatroth.Screens;
 
-import com.aro.defenseofatroth.Levels.Level1;
 import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Menu;
 import com.badlogic.gdx.Gdx;

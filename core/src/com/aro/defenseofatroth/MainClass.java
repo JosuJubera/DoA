@@ -4,7 +4,8 @@ import com.aro.defenseofatroth.Screens.LoginScreen;
 import com.aro.defenseofatroth.Screens.SplashScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.utils.Timer;
 
 public class MainClass extends Game {
@@ -12,6 +13,8 @@ public class MainClass extends Game {
 	private static long SPLASH_MINIMUM_MILLIS = 1000L;
 
 	protected Game game;
+
+	public static AssetManager manager;
 
 	public MainClass() {
 		super();
@@ -40,6 +43,10 @@ public class MainClass extends Game {
 						// ... carga de recursos de internacionalizacion
 						// ... otros
 
+						manager = new AssetManager();
+						manager.load("music.ogg", Music.class);
+						manager.finishLoading();
+
 						// Se muestra el menu principal tras la SpashScreen
 						long splash_elapsed_time = System.currentTimeMillis() - splash_start_time;
 						if (splash_elapsed_time < MainClass.SPLASH_MINIMUM_MILLIS) {
@@ -66,6 +73,7 @@ public class MainClass extends Game {
 		//stage.dispose();
 		//getScreen().dispose();
 		//game.dispose();
+		manager.dispose();
 		Gdx.app.exit();
 	}
 }

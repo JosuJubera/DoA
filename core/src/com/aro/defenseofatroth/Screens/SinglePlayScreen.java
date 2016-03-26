@@ -33,10 +33,12 @@ public class SinglePlayScreen extends BaseScreen {
 
     private BitmapFont font;
     private Skin skin;
+    private boolean musica;
 
-    public SinglePlayScreen(MainClass game){
+    public SinglePlayScreen(MainClass game, boolean musica){
         super(game);
         this.game = game;
+        this.musica = musica;
         create();
         render(Gdx.graphics.getDeltaTime());
     }
@@ -89,7 +91,7 @@ public class SinglePlayScreen extends BaseScreen {
         n1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Level1(game));
+                game.setScreen(new Level1(game, musica));
             }
         });
 
@@ -100,7 +102,7 @@ public class SinglePlayScreen extends BaseScreen {
         n2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Level1(game));
+                game.setScreen(new Level1(game, musica));
             }
         });
 
@@ -111,7 +113,7 @@ public class SinglePlayScreen extends BaseScreen {
         n3.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Level1(game));
+                game.setScreen(new Level1(game, musica));
             };
         });
     }
