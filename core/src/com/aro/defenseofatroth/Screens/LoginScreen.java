@@ -86,7 +86,7 @@ public class LoginScreen extends BaseScreen {
         stage.addActor(nameLabel);
 
         // Login
-        TextField nameField = new TextField("", skin);
+        final TextField nameField = new TextField("", skin);
         nameField.setPosition(VIRTUAL_WIDTH / 2 - VIRTUAL_WIDTH / 8, VIRTUAL_HEIGHT * 6 / 8);
         nameField.setSize(VIRTUAL_WIDTH / 10, VIRTUAL_HEIGHT / 10);
         stage.addActor(nameField);
@@ -95,9 +95,11 @@ public class LoginScreen extends BaseScreen {
         passLabel.setPosition(VIRTUAL_WIDTH / 2 - VIRTUAL_WIDTH / 8, VIRTUAL_HEIGHT * 5 / 8);
         stage.addActor(passLabel);
 
-        TextField passField = new TextField("", skin);
+        final TextField passField = new TextField("", skin);
         passField.setPosition(VIRTUAL_WIDTH / 2 - VIRTUAL_WIDTH / 8, VIRTUAL_HEIGHT * 4 / 8);
         passField.setSize(VIRTUAL_WIDTH / 10, VIRTUAL_HEIGHT / 10);
+        passField.setPasswordCharacter('*');
+        passField.setPasswordMode(true);
         stage.addActor(passField);
 
 
@@ -108,6 +110,11 @@ public class LoginScreen extends BaseScreen {
         submit.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                String name = nameField.getText();
+                String pass = passField.getText();
+
+                System.out.println(name +" "+ pass);
+
                 game.setScreen(new Menu(game));
             };
         });
