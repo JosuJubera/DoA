@@ -149,10 +149,12 @@ public class Level1  extends BaseScreen{
 	public class GestureHandler implements GestureDetector.GestureListener
 	{
         private Vector2 vec;
+        float distance;
 		private OrthographicCamera camera;
         GestureHandler(Vector2 vec,OrthographicCamera camera){
             this.vec=vec;
 			this.camera=camera;
+            distance=0;
         }
 		@Override
 		public boolean touchDown(float x, float y, int pointer, int button) {
@@ -195,7 +197,14 @@ public class Level1  extends BaseScreen{
 
 		@Override
 		public boolean zoom(float initialDistance, float distance) {
-			//camera.zoom=camera.zoom/distance;
+            //cambiar, comparar initialDistance/distance
+            if (distance<this.distance){ //la distancia se reduce, nos laejamos
+                camera.zoom += (initialDistance/distance)*0.06f; //es decir, aumentamos zoom
+            }else{ //la distancia entre dedos aumeta, nos acercamos
+                camera.zoom -=(initialDistance/distance)*0.06f; //es decir, reducimos zoom
+            }
+            this.distance=distance;
+
 			return true;
 		}
 

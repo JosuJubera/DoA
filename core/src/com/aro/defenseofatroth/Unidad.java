@@ -52,7 +52,7 @@ public class Unidad extends Entidad {
         }
     }
     protected void actuar(float delta){
-        posicion.x+=0.1f;
+        posicion.x+=1f;
 
     }
 }
