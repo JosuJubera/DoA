@@ -39,6 +39,8 @@ public class Menu extends BaseScreen {
 	private BitmapFont font;
 	private Skin skin;
 
+	public boolean musica = false;
+
 	public Menu(MainClass game) {
 		super(game);
 		this.game = game;
@@ -93,7 +95,7 @@ public class Menu extends BaseScreen {
 		unjugador.addListener( new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new SinglePlayScreen(game));
+				game.setScreen(new SinglePlayScreen(game, musica));
 			};
 		});
 
@@ -110,6 +112,22 @@ public class Menu extends BaseScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Gdx.app.exit();
+			};
+		});
+
+
+		TextButton musicButton = new TextButton("MUSICA", skin); // Use the initialized skin
+		musicButton.setPosition(VIRTUAL_WIDTH - VIRTUAL_WIDTH * 2 /10 , VIRTUAL_HEIGHT * 6 / 7); // desde bottomleft
+		stage.addActor(musicButton);
+
+		// musicButton button listener
+		musicButton.addListener( new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if (musica == false) {
+					musica = true;
+				} else
+					musica = false;
 			};
 		});
 	}

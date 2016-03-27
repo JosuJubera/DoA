@@ -1,9 +1,11 @@
 package com.aro.defenseofatroth;
 
+import com.aro.defenseofatroth.Screens.LoginScreen;
 import com.aro.defenseofatroth.Screens.SplashScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.utils.Timer;
 
 public class MainClass extends Game {
@@ -12,6 +14,8 @@ public class MainClass extends Game {
 
 	protected Game game;
 
+	public static AssetManager manager;
+
 	public MainClass() {
 		super();
 	}
@@ -19,9 +23,9 @@ public class MainClass extends Game {
 	@Override
 	public void create () {
 		game =  this;
-		//setScreen(new Menu(this)); si queremos quitar el splashscreen
+		setScreen(new Menu(this)); //si queremos quitar el splashscreen
 		// SplashScreen
-
+/*
 		setScreen(new SplashScreen(this));
 
 		final long splash_start_time = System.currentTimeMillis();
@@ -39,6 +43,10 @@ public class MainClass extends Game {
 						// ... carga de recursos de internacionalizacion
 						// ... otros
 
+						manager = new AssetManager();
+						manager.load("music.ogg", Music.class);
+						manager.finishLoading();
+
 						// Se muestra el menu principal tras la SpashScreen
 						long splash_elapsed_time = System.currentTimeMillis() - splash_start_time;
 						if (splash_elapsed_time < MainClass.SPLASH_MINIMUM_MILLIS) {
@@ -46,17 +54,17 @@ public class MainClass extends Game {
 									new Timer.Task() {
 										@Override
 										public void run() {
-											MainClass.this.setScreen(new Menu((MainClass) game));
+											MainClass.this.setScreen(new LoginScreen((MainClass) game));
 										}
 									}, (float)(MainClass.SPLASH_MINIMUM_MILLIS - splash_elapsed_time) / 1000f);
 						} else {
-							MainClass.this.setScreen(new Menu(new MainClass()));
+							MainClass.this.setScreen(new LoginScreen(new MainClass()));
 						}
 					}
 				});
 			}
 		}).start();
-
+*/
 		// SplashScreen
 	}
 
@@ -65,6 +73,7 @@ public class MainClass extends Game {
 		//stage.dispose();
 		//getScreen().dispose();
 		//game.dispose();
+		manager.dispose();
 		Gdx.app.exit();
 	}
 }

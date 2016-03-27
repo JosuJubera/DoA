@@ -2,7 +2,9 @@ package com.aro.defenseofatroth.Levels;
 
 import com.aro.defenseofatroth.Entidad;
 import com.aro.defenseofatroth.MainClass;
+import com.aro.defenseofatroth.Menu;
 import com.aro.defenseofatroth.Screens.BaseScreen;
+import com.aro.defenseofatroth.Screens.SplashScreen;
 import com.aro.defenseofatroth.Unidad;
 import com.aro.defenseofatroth.GestureHandler;
 import com.badlogic.gdx.Gdx;
@@ -76,11 +78,7 @@ public class Level1  extends BaseScreen {
 		this.game = game;
 		create();
 		render(Gdx.graphics.getDeltaTime());
-		try {
-			music = MainClass.manager.get("music.ogg", Music.class);
-		}catch (Exception e){
-			Gdx.app.error("FILE NOT FOUND", "No se ha encontrado",e);
-		}
+		music = MainClass.manager.get("music.ogg", Music.class);
 		if (musica == true){
 			music.setLooping(true);
 			music.play();
@@ -155,5 +153,78 @@ public class Level1  extends BaseScreen {
 		atextura.dispose();
 		//Camaras y sprites no se necesitan limpiar
 	}
+<<<<<<< HEAD
 
+	public class GestureHandler implements GestureDetector.GestureListener
+	{
+        private Vector2 vec;
+        float distance;
+		private OrthographicCamera camera;
+        GestureHandler(Vector2 vec,OrthographicCamera camera){
+            this.vec=vec;
+			this.camera=camera;
+            distance=0;
+        }
+		@Override
+		public boolean touchDown(float x, float y, int pointer, int button) {
+			//addMessage("touchDown: x(" + x + ") y(" + y + ") pointer(" + pointer + ") button(" + button +")");
+			return false;
+		}
+
+		@Override
+		public boolean tap(float x, float y, int count, int button) {
+			vec.scl(0f);
+			return false;
+		}
+
+		@Override
+		public boolean longPress(float x, float y) {
+			//addMessage("longPress: x(" + x + ") y(" + y + ")");
+			return false;
+		}
+
+		@Override
+		public boolean fling(float velocityX, float velocityY, int button) {
+			//addMessage("fling: velX(" + velocityX + ") velY(" + velocityY + ") button(" + button +")");
+			return false;
+		}
+
+		@Override
+		public boolean pan(float x, float y, float deltaX, float deltaY) {
+            //translate mueve la camara segun esas coordenadas (igual que camera.x+=x)
+
+            vec.x=-deltaX;
+            vec.y=deltaY;
+			return true;
+		}
+
+		@Override
+		public boolean panStop(float x, float y, int pointer, int button) {
+			//addMessage("panStop: x(" + x + ") y(" + y + ") pointer(" + pointer + ") button(" + button +")");
+			return false;
+		}
+
+		@Override
+		public boolean zoom(float initialDistance, float distance) {
+            //cambiar, comparar initialDistance/distance
+            if (distance<this.distance){ //la distancia se reduce, nos laejamos
+                camera.zoom += (initialDistance/distance)*0.06f; //es decir, aumentamos zoom
+            }else{ //la distancia entre dedos aumeta, nos acercamos
+                camera.zoom -=(initialDistance/distance)*0.06f; //es decir, reducimos zoom
+            }
+            this.distance=distance;
+
+			return true;
+		}
+
+		@Override
+		public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+			//addMessage("pinch: initialP1(" + initialPointer1 + ") initialP2(" + initialPointer2 + ") p1(" + pointer1 + ") p2(" + pointer2 +")");
+			return false;
+		}
+
+	}
 }
+=======
+}
+>>>>>>> 1fe64d4c82ff71ae0abb9f777ae355fc77b3cd0e
