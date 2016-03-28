@@ -77,7 +77,7 @@ public class Level1  extends BaseScreen {
 		create();
 		render(Gdx.graphics.getDeltaTime());
 		try {
-			music = MainClass.manager.get("music.ogg", Music.class);
+			music = MainClass.getManager().get("music.ogg", Music.class);
 		}catch (Exception e){
 			Gdx.app.error("FILE NOT FOUND", "No se ha encontrado",e);
 		}

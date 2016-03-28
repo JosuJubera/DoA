@@ -6,6 +6,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
 
 public class MainClass extends Game {
@@ -14,7 +15,11 @@ public class MainClass extends Game {
 
 	protected Game game;
 
-	public static AssetManager manager;
+	private static AssetManager manager;
+
+	public static AssetManager getManager() {
+		return manager;
+	}
 
 	public MainClass() {
 		super();
@@ -45,6 +50,8 @@ public class MainClass extends Game {
 
 						manager = new AssetManager();
 						manager.load("music.ogg", Music.class);
+						manager.load("torre.png", Texture.class);
+						manager.load("barraRoja.png", Texture.class);
 						manager.finishLoading();
 
 						// Se muestra el menu principal tras la SpashScreen
@@ -58,7 +65,7 @@ public class MainClass extends Game {
 										}
 									}, (float)(MainClass.SPLASH_MINIMUM_MILLIS - splash_elapsed_time) / 1000f);
 						} else {
-							MainClass.this.setScreen(new LoginScreen(new MainClass()));
+							MainClass.this.setScreen(new LoginScreen((MainClass) game));
 						}
 					}
 				});
