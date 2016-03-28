@@ -23,9 +23,9 @@ public class MainClass extends Game {
 	@Override
 	public void create () {
 		game =  this;
-		setScreen(new Menu(this)); //si queremos quitar el splashscreen
+		//setScreen(new Menu(this)); //si queremos quitar el splashscreen
 		// SplashScreen
-/*
+
 		setScreen(new SplashScreen(this));
 
 		final long splash_start_time = System.currentTimeMillis();
@@ -64,7 +64,7 @@ public class MainClass extends Game {
 				});
 			}
 		}).start();
-*/
+
 		// SplashScreen
 	}
 
