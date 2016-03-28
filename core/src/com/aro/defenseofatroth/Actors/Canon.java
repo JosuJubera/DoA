@@ -1,7 +1,7 @@
 package com.aro.defenseofatroth.Actors;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /**
@@ -9,19 +9,23 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  */
 public class Canon extends Actor {
 
-    private TextureRegion canon;
+    private Texture canon;
 
-    public Canon(TextureRegion canon) {
+    public Canon(Texture canon) {
         this.canon = canon;
+        setPosition(500, -250);
+        setSize(canon.getWidth(), canon.getHeight());
     }
 
     @Override
     public void act(float delta) {
-        rotateBy(getRotation() + 0.1f * delta);
+        //rotateBy(getRotation() + 0.1f * delta);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(canon, getX(), getY());
     }
+
+
 }

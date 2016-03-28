@@ -1,6 +1,8 @@
 package com.aro.defenseofatroth.Screens;
 
 import com.aro.defenseofatroth.Levels.Level1;
+import com.aro.defenseofatroth.Levels.Level2;
+import com.aro.defenseofatroth.Levels.Level3;
 import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Menu;
 import com.badlogic.gdx.Gdx;
@@ -102,7 +104,7 @@ public class SinglePlayScreen extends BaseScreen {
         n2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Level1(game, musica));
+                game.setScreen(new Level2(game, musica));
             }
         });
 
@@ -113,7 +115,7 @@ public class SinglePlayScreen extends BaseScreen {
         n3.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Level1(game, musica));
+                game.setScreen(new Level3(game));
             };
         });
     }
