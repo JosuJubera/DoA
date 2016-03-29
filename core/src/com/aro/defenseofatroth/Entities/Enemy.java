@@ -1,5 +1,6 @@
 package com.aro.defenseofatroth.Entities;
 
+import com.aro.defenseofatroth.Levels.Level3;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -38,13 +40,24 @@ public class Enemy extends Actor {
         def.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(def);
 
-        CircleShape enemyShape =  new CircleShape();
-        enemyShape.setRadius(2);
-        fixture = body.createFixture(enemyShape, 3);
+        FixtureDef fixtureDef = new FixtureDef();
+        CircleShape shape =  new CircleShape();
+        shape.setRadius(0.5f);
+
+        fixtureDef.shape = shape;
+        body.createFixture(fixtureDef);
+
+        fixture = body.createFixture(shape, 3);
         fixture.setUserData("enemy");
-        enemyShape.dispose();
+
+        shape.dispose();
 
         setSize(PIXELS_IN_METER, PIXELS_IN_METER);
+
+        fixtureDef.isSensor = true;
+        fixtureDef.filter.categoryBits = Level3.ENEMY_BIT;
+        fixtureDef.filter.maskBits = Level3.DEFAULT_BIT | Level3.TORRE_BIT;
+//        body.createFixture(fixtureDef).setUserData("enemy");
 
 jump = false;
 
