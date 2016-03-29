@@ -14,20 +14,12 @@ import com.badlogic.gdx.math.Vector2;
 public class Unidad extends Entidad {
     private int vidaMaxima=100;
     private int vidaActual=100;
-    private NinePatch barraVidaFondo;
-    private NinePatch barraVidaDelante;
-
-    TextureRegion broja;
-    TextureRegion bverde;
+    private BarraVida barraVida;
     private float animationTime=0;
     public Unidad(){
         super();
-        //new NinePatch(new TextureRegion(texture, x, y, width, height), left, right, top, bottom);
-        // De la roja: ancho: 36 47 alto 39 47
-        broja=new TextureRegion(new Texture(Gdx.files.internal("barraRoja.png")));
-        bverde=new TextureRegion(new Texture(Gdx.files.internal("barraVerde.png")));
-        barraVidaFondo=new NinePatch(broja, 0, 0, 0, 0); //es una prueba
-        barraVidaDelante=new NinePatch(bverde,0,0,0,0);
+        barraVida=new BarraVida();
+        barraVida.setPosition(posicion);
     }
 
     @Override
@@ -36,8 +28,7 @@ public class Unidad extends Entidad {
         animationTime+=delta;
         TextureRegion animaconFrame = animacion.getKeyFrame(animationTime);
         batch.draw(animaconFrame,posicion.x,posicion.y);
-        barraVidaFondo.draw(batch,posicion.x,posicion.y,vidaMaxima,10);
-        barraVidaDelante.draw(batch,posicion.x,posicion.y,vidaActual,10);
+        barraVida.draw(batch,delta); //tambien podria dibujarlo en el bucle principal... ya veremos k hacemos
 
     }
 
@@ -50,6 +41,7 @@ public class Unidad extends Entidad {
         if (vidaActual<0){
             vidaActual=vidaMaxima;
         }
+        barraVida.setValor((float)vidaActual);
     }
     protected void actuar(float delta){
         posicion.x+=1f;

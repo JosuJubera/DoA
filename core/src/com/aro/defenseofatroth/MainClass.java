@@ -28,7 +28,7 @@ public class MainClass extends Game {
 	@Override
 	public void create () {
 		game =  this;
-		//setScreen(new Menu(this)); //si queremos quitar el splashscreen
+		setScreen(new Menu(this)); //si queremos quitar el splashscreen
 		// SplashScreen
 
 		setScreen(new SplashScreen(this));
@@ -49,7 +49,7 @@ public class MainClass extends Game {
 						// ... otros
 
 						manager = new AssetManager();
-						manager.load("music.ogg", Music.class);
+					//	manager.load("music.ogg", Music.class); //Josu, no has subido el archivo de musica!! P.D: Gestiones excepciones como estas cuando lancemos la aplicacion!!
 						manager.load("torre.png", Texture.class);
 						manager.load("barraRoja.png", Texture.class);
 						manager.finishLoading();
