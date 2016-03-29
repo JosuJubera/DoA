@@ -52,6 +52,7 @@ public class MainClass extends Game {
 						manager.load("music.ogg", Music.class);
 						manager.load("torre.png", Texture.class);
 						manager.load("barraRoja.png", Texture.class);
+						manager.load("barraVerde.png", Texture.class);
 						manager.finishLoading();
 
 						// Se muestra el menu principal tras la SpashScreen
