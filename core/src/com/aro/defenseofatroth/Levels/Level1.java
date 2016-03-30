@@ -29,7 +29,8 @@ public class Level1  extends BaseScreen {
 	private Texture levelTexture;
 	private Sprite caverman;
 	private GestureDetector gestureDetector;
-//	private Vector2 camposicion;
+//	atencion, ñapa gorda, cuidado!
+	public static Entidad niapa;
 	private Array<Entidad> entidades; //aqui iran todas la sentidades dibujables
 
 	//prueba
@@ -112,8 +113,10 @@ public class Level1  extends BaseScreen {
 		prueba.animacion = new Animation(0.05f, anima, Animation.PlayMode.LOOP);
 		entidades = new Array();
 		entidades.add(prueba);
-		prueba.setVelocidad(new Vector2(1f, 1f));
-		prueba.setDestino(new Vector2(5f, 5f));
+		prueba.setVelocidad(100f);
+		prueba.setDestino(new Vector2(10f,10f));
+		niapa=prueba;
+
 	}
 
 	public void render(float delta) {

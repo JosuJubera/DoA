@@ -1,8 +1,10 @@
 package com.aro.defenseofatroth;
 
+import com.aro.defenseofatroth.Levels.Level1;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 /**
  * Created by elementary on 25/03/16.
@@ -32,14 +34,17 @@ public class GestureHandler implements GestureDetector.GestureListener {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        //vec.scl(0f);
         return false;
     }
 
     @Override
     public boolean longPress(float x, float y) {
-        //addMessage("longPress: x(" + x + ") y(" + y + ")");
-        return false;
+        //atencion, ñapa gorda, tapense los ojos. Esta ñapa puede herir su sensibilidad
+        Vector3 pantallacorr=new Vector3(x,y,0);
+        pantallacorr=camera.unproject(pantallacorr);
+
+        Level1.niapa.setDestino(new Vector2(pantallacorr.x,pantallacorr.y));
+        return true;
     }
 
     @Override

@@ -24,6 +24,7 @@ public abstract class Entidad implements Disposable{
     Entidad(){
         texture=null;
         animacion=null;
+        destino=new Vector2(0f,0f);
         posicion=new Vector2(0f,0f);
         velocidad=new Vector2(0f,0f);
         aceleracion=new Vector2(0f,0f);
