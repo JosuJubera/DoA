@@ -12,10 +12,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -60,7 +62,7 @@ public class Level3 extends BaseScreen{
     public static final short DEAD_BIT = 8;
 
     Timer.Task t;
-    private Array<Contact> colided;
+//    private Array<Contact> colided;
 
     Box2DDebugRenderer renderer;
     OrthographicCamera cam;
@@ -88,6 +90,7 @@ cam.update();
         world.setContactListener(new ContactListener() {
 
             // Colision 2 fixtures, no 2 bodies
+            // hay que poner colision filters pa no chocar enemy con enemy
             private boolean areCollided(Contact contact, Object userA, Object userB) {
                 Object userDataA = contact.getFixtureA().getUserData();
                 Object userDataB = contact.getFixtureB().getUserData();
@@ -100,35 +103,71 @@ cam.update();
                         (userDataA.equals(userB) && userDataB.equals(userA));
             }
 
-        @Override
-        public void beginContact(Contact contact) {
+            @Override
+            public void beginContact(Contact contact) {
 
-            if (areCollided(contact, "torre", "enemy")) {
-                if (enemy.isAlive()) {
-                    daino = true;
-                    System.out.println("*************");
+                if (areCollided(contact, "alcance", "enemy")) {
+
+                    Fixture bodyA = contact.getFixtureA();
+                    Fixture bodyB = contact.getFixtureB();
+
+                    if (bodyA.getUserData().equals("enemy")) {
+                        System.out.println("alla");
+                        Iterator<Enemy> iterator = bots.iterator();
+                        while (iterator.hasNext()){
+                            Enemy en = iterator.next();
+                            if (en.getBody().equals(bodyA.getBody()) && en.isAlive()){
+                                en.setHerir(true);
+                            }
+                        }
+                    }
+                    if (bodyB.getUserData().equals("enemy")) {
+                        Iterator<Enemy> iterator = bots.iterator();
+                        while (iterator.hasNext()){
+                            Enemy en = iterator.next();
+                            if (en.getBody().equals(bodyB.getBody()) && en.isAlive()){
+                                en.setHerir(true);
+                            }
+                        }
+                    }
                 }
             }
-            if (areCollided(contact, "alcance", "enemy")) {
-                if (enemy.isAlive()) {
-                    daino = true;
-                    System.out.println("/////////////");
+
+            @Override
+            public void endContact(Contact contact) {
+
+                if (areCollided(contact, "alcance", "enemy")) {
+
+                    Fixture bodyA = contact.getFixtureA();
+                    Fixture bodyB = contact.getFixtureB();
+
+                    if (bodyA.getUserData().equals("enemy")) {
+                        System.out.println("alla");
+                        Iterator<Enemy> iterator = bots.iterator();
+                        while (iterator.hasNext()){
+                            Enemy en = iterator.next();
+                            if (en.getBody().equals(bodyA.getBody()) && en.isAlive()){
+                                en.setHerir(false);
+                            }
+                        }
+                    }
+                    if (bodyB.getUserData().equals("enemy")) {
+                        Iterator<Enemy> iterator = bots.iterator();
+                        while (iterator.hasNext()){
+                            Enemy en = iterator.next();
+                            if (en.getBody().equals(bodyB.getBody()) && en.isAlive()){
+                                en.setHerir(false);
+                            }
+                        }
+                    }
                 }
             }
-        }
 
-        @Override
-        public void endContact(Contact contact) {
-            if (enemy.isAlive()) {
-                daino = false;
-            }
-        }
+            @Override
+            public void preSolve(Contact contact, Manifold oldManifold) {}
 
-        @Override
-        public void preSolve(Contact contact, Manifold oldManifold) {}
-
-        @Override
-        public void postSolve(Contact contact, ContactImpulse impulse) {}
+            @Override
+            public void postSolve(Contact contact, ContactImpulse impulse) {}
         });
 
 
@@ -149,10 +188,10 @@ cam.update();
         Texture torreTex = game.getManager().get("torre.png", Texture.class);
         Texture enemyTex = game.getManager().get("barraRoja.png", Texture.class);
         torre = new Torre(world, torreTex, new Vector2(1, 2));
-        enemy = new Enemy(world, enemyTex, new Vector2(10, 2));
-        enemy.setAlive(true);
+//        enemy = new Enemy(world, enemyTex, new Vector2(10, 2));
+//        enemy.setAlive(true);
         stage.addActor(torre);
-        stage.addActor(enemy);
+//        stage.addActor(enemy);
     }
 
     @Override
@@ -179,19 +218,17 @@ cam.update();
         world.step(delta, 6, 2);
 
 
-        if (daino){
-            enemy.dainar(10 * delta);
-            if (enemy.getVidaActual() <= 0) {
-                enemy.setAlive(false);
+        for (int i = 0; i < bots.size; i++) {
+            Enemy e = bots.get(i);
+            if (e.getHerir()) {
+                e.dainar(10 * delta);
             }
-            if (enemy.getVidaActual() < 50) {
-                enemy.jump = true;
+            if (!e.isAlive()){
+                bots.removeIndex(i);
+                e.remove();
+                world.destroyBody(e.getBody());
             }
         }
-        if (!enemy.isAlive()) {
-            enemy.remove();
-        }
-
 
         if (bots.size >= 10){
             t.cancel();
@@ -210,6 +247,7 @@ cam.update();
 
         Texture enemyTex2 = game.getManager().get("barraRoja.png", Texture.class);
         enemy = new Enemy(world, enemyTex2, new Vector2(10, (new Random().nextInt(6))));
+        enemy.setAlive(true);
         bots.add(enemy);
     }
 }

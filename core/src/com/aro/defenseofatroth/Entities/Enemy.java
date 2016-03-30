@@ -25,9 +25,15 @@ public class Enemy extends Actor {
 
     private Texture texture;
     private World world;
+
+    public Body getBody() {
+        return body;
+    }
+
     private Body body;
     private Fixture fixture;
     private boolean alive;
+    private boolean herir;
     public boolean jump;
 
     public Enemy(World world, Texture texture, Vector2 position) {
@@ -89,7 +95,7 @@ jump = false;
         body.setLinearVelocity(-1, 0);
         if (jump) {
             Vector2 position = body.getPosition();
-            body.applyLinearImpulse(10, 0, position.x, position.y, true);
+            body.applyLinearImpulse(20, 0, position.x, position.y, true);
         }
     }
 
@@ -125,8 +131,15 @@ jump = false;
 
         this.vidaActual -= daino;
         if (vidaActual <= 0) {
-            vidaActual = vidaMaxima;
+            this.setAlive(false);
         }
     }
 
+    public boolean getHerir() {
+        return herir;
+    }
+
+    public void setHerir(boolean herir) {
+        this.herir = herir;
+    }
 }
