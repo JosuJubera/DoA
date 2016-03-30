@@ -26,15 +26,21 @@ public class Enemy extends Actor {
     private Texture texture;
     private World world;
 
-    public Body getBody() {
-        return body;
-    }
-
     private Body body;
     private Fixture fixture;
     private boolean alive;
     private boolean herir;
     public boolean jump;
+
+    private int vidaMaxima=100;
+
+    private int vidaActual=100;
+
+    private NinePatch barraVidaFondo;
+    private NinePatch barraVidaDelante;
+    TextureRegion broja;
+
+    TextureRegion bverde;
 
     public Enemy(World world, Texture texture, Vector2 position) {
 
@@ -107,26 +113,6 @@ jump = false;
         this.alive = alive;
     }
 
-
-
-
-
-    private int vidaMaxima=100;
-
-    public int getVidaActual() {
-        return vidaActual;
-    }
-
-    private int vidaActual=100;
-    private NinePatch barraVidaFondo;
-    private NinePatch barraVidaDelante;
-
-    TextureRegion broja;
-    TextureRegion bverde;
-    private float animationTime=0;
-    public Animation animacion;
-    protected Vector2 posicion;
-
     public void dainar(float daino) {
 
         this.vidaActual -= daino;
@@ -135,11 +121,19 @@ jump = false;
         }
     }
 
+    public int getVidaActual() {
+        return vidaActual;
+    }
+
     public boolean getHerir() {
         return herir;
     }
 
     public void setHerir(boolean herir) {
         this.herir = herir;
+    }
+
+    public Body getBody() {
+        return body;
     }
 }
