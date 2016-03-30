@@ -39,7 +39,6 @@ public class Enemy extends Actor {
     private NinePatch barraVidaFondo;
     private NinePatch barraVidaDelante;
     TextureRegion broja;
-
     TextureRegion bverde;
 
     public Enemy(World world, Texture texture, Vector2 position) {
@@ -69,6 +68,7 @@ public class Enemy extends Actor {
         fixtureDef.isSensor = true;
         fixtureDef.filter.categoryBits = Level3.ENEMY_BIT;
         fixtureDef.filter.maskBits = Level3.DEFAULT_BIT | Level3.TORRE_BIT;
+        this.alive = true;
 //        body.createFixture(fixtureDef).setUserData("enemy");
 
 jump = false;
