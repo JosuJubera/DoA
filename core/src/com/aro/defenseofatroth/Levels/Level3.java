@@ -54,10 +54,10 @@ public class Level3 extends BaseScreen{
 
     private boolean daino;
     // Pa las colisiones tutorial mario
-//    public static final short DEFAULT_BIT = 1;
-//    public static final short TORRE_BIT = 2;
-//    public static final short ENEMY_BIT = 4;
-//    public static final short DEAD_BIT = 8;
+    public static final short DEFAULT_BIT = 1;
+    public static final short TORRE_BIT = 2;
+    public static final short ENEMY_BIT = 4;
+    public static final short DEAD_BIT = 8;
 
     Timer.Task t;
     private Array<Contact> colided;
