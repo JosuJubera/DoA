@@ -179,7 +179,7 @@ cam.update();
 
         if (daino){
             enemy.dainar(10 * delta);
-            if (enemy.getVidaActual() == 0) {
+            if (enemy.getVidaActual() <= 0) {
                 enemy.setAlive(false);
             }
             if (enemy.getVidaActual() < 50) {

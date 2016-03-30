@@ -52,7 +52,8 @@ public class MainClass extends Game {
 					//	manager.load("music.ogg", Music.class); //Josu, no has subido el archivo de musica!! P.D: Gestiones excepciones como estas cuando lancemos la aplicacion!!
 						manager.load("torre.png", Texture.class);
 						manager.load("barraRoja.png", Texture.class);
-						manager.load("barraVerde.png", Texture.class);
+						manager.load("barraRojaBuena.png", Texture.class);
+						manager.load("barraVerdeBuena.png", Texture.class);
 						manager.finishLoading();
 
 						// Se muestra el menu principal tras la SpashScreen

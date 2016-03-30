@@ -62,8 +62,8 @@ public class Enemy extends Actor {
 jump = false;
 
 
-        broja = new TextureRegion(new Texture(Gdx.files.internal("barraRoja.png")));
-        bverde = new TextureRegion(new Texture(Gdx.files.internal("barraVerde.png")));
+        broja = new TextureRegion(new Texture(Gdx.files.internal("barraRojaBuena.png")));
+        bverde = new TextureRegion(new Texture(Gdx.files.internal("barraVerdeBuena.png")));
         barraVidaFondo = new NinePatch(broja, 0, 0, 0, 0); //es una prueba
         barraVidaDelante = new NinePatch(bverde,0,0,0,0);
     }
@@ -89,7 +89,7 @@ jump = false;
         body.setLinearVelocity(-1, 0);
         if (jump) {
             Vector2 position = body.getPosition();
-            body.applyLinearImpulse(200, 20, position.x, position.y, true);
+            body.applyLinearImpulse(10, 0, position.x, position.y, true);
         }
     }
 
@@ -124,7 +124,7 @@ jump = false;
     public void dainar(float daino) {
 
         this.vidaActual -= daino;
-        if (vidaActual < 0) {
+        if (vidaActual <= 0) {
             vidaActual = vidaMaxima;
         }
     }
