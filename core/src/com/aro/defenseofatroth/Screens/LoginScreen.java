@@ -3,11 +3,14 @@ package com.aro.defenseofatroth.Screens;
 import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Menu;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Net;
+import com.badlogic.gdx.Net.HttpRequest;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -15,8 +18,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import java.io.IOException;
+
+import sun.net.www.http.HttpClient;
 
 /**
  * Created by elementary on 26/03/16.
@@ -77,7 +85,7 @@ public class LoginScreen extends BaseScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new Menu(game));
-            };
+            }
         });
 
         Label nameLabel = new Label("Name",new Label.LabelStyle(font, Color.WHITE));
@@ -112,10 +120,13 @@ public class LoginScreen extends BaseScreen {
                 String name = nameField.getText();
                 String pass = passField.getText();
 
-                System.out.println(name +" "+ pass);
+                if (login(name, pass)) {
 
-                game.setScreen(new Menu(game));
-            };
+                    System.out.println(name + " " + pass);
+
+                    game.setScreen(new Menu(game));
+                }
+            }
         });
     }
 
@@ -139,5 +150,42 @@ public class LoginScreen extends BaseScreen {
         stage.dispose();
         font.dispose();
         skin.dispose();
+    }
+
+    private boolean login(String name, String pass) {
+
+        HttpRequest httpRequest = new HttpRequest(Net.HttpMethods.POST);
+        httpRequest.setUrl("http://ec2-52-24-183-222.us-west-2.compute.amazonaws.com/WS.php");
+//            httpRequest.setHeader("","");
+        httpRequest.setContent(name + pass);
+        Gdx.net.sendHttpRequest(httpRequest, new Net.HttpResponseListener() {
+
+            String status = null;
+
+            @Override
+            public void handleHttpResponse(Net.HttpResponse httpResponse) {
+
+                final int statusCode = httpResponse.getStatus().getStatusCode();
+
+                System.out.println("HTTP Request status: " + statusCode);
+                System.out.println("Content:");
+                status = httpResponse.getResultAsString();
+                System.out.println(status);
+            }
+
+            @Override
+            public void failed(Throwable t) {
+                status = "failed";
+                System.out.println("HTTP request "+ status);
+            }
+
+            @Override
+            public void cancelled() {
+                status = "cancelled";
+                System.out.println("HTTP request "+ status);
+            }
+        });
+
+        return false;
     }
 }
