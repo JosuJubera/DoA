@@ -3,7 +3,6 @@ package com.aro.defenseofatroth.Screens;
 import com.aro.defenseofatroth.Levels.Level1;
 import com.aro.defenseofatroth.Levels.Level3;
 import com.aro.defenseofatroth.MainClass;
-import com.aro.defenseofatroth.Menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -78,7 +77,7 @@ public class SinglePlayScreen extends BaseScreen {
         back.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Menu(game));
+                game.setScreen(new MenuScreen(game));
             };
         });
 

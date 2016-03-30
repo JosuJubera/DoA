@@ -16,7 +16,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import static com.aro.defenseofatroth.Constants.PIXELS_IN_METER;
+import static com.aro.defenseofatroth.Tools.Constants.PIXELS_IN_METER;
 
 /**
  * Created by elementary on 28/03/16.

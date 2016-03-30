@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import static com.aro.defenseofatroth.Constants.VIRTUAL_WIDTH;
-import static com.aro.defenseofatroth.Constants.VIRTUAL_HEIGHT;
+import static com.aro.defenseofatroth.Tools.Constants.VIRTUAL_WIDTH;
+import static com.aro.defenseofatroth.Tools.Constants.VIRTUAL_HEIGHT;
 
 /**
  * Created by Juber on 11/03/2016.

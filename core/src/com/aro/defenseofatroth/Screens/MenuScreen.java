@@ -1,5 +1,6 @@
-package com.aro.defenseofatroth;
+package com.aro.defenseofatroth.Screens;
 
+import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Screens.BaseScreen;
 import com.aro.defenseofatroth.Screens.SinglePlayScreen;
 import com.badlogic.gdx.Game;
@@ -22,7 +23,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import com.aro.defenseofatroth.Screens.GameScreen;
 
-public class Menu extends BaseScreen {
+public class MenuScreen extends BaseScreen {
 
 	protected MainClass game;
 
@@ -41,7 +42,7 @@ public class Menu extends BaseScreen {
 
 	public boolean musica = false;
 
-	public Menu(MainClass game) {
+	public MenuScreen(MainClass game) {
 		super(game);
 		this.game = game;
 		create();

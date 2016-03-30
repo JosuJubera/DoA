@@ -1,4 +1,4 @@
-package com.aro.defenseofatroth;
+package com.aro.defenseofatroth.Tools;
 
 import com.aro.defenseofatroth.Levels.Level1;
 import com.badlogic.gdx.graphics.OrthographicCamera;

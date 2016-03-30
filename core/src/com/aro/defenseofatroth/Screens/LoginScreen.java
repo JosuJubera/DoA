@@ -1,7 +1,6 @@
 package com.aro.defenseofatroth.Screens;
 
 import com.aro.defenseofatroth.MainClass;
-import com.aro.defenseofatroth.Menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Net.HttpRequest;
@@ -10,7 +9,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -18,13 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-import java.io.IOException;
-
-import sun.net.www.http.HttpClient;
 
 /**
  * Created by elementary on 26/03/16.
@@ -84,7 +77,7 @@ public class LoginScreen extends BaseScreen {
         back.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Menu(game));
+                game.setScreen(new MenuScreen(game));
             }
         });
 
@@ -124,7 +117,7 @@ public class LoginScreen extends BaseScreen {
 
                     System.out.println(name + " " + pass);
 
-                    game.setScreen(new Menu(game));
+                    game.setScreen(new MenuScreen(game));
                 }
             }
         });
