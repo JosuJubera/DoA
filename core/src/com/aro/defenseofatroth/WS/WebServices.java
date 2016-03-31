@@ -25,8 +25,8 @@ public class WebServices {
         public static final String DESCARTAR_FOTO = "descartaFoto";*/
     }
 
-    public com.aro.defenseofatroth.WS.User login( String user_str, String pass_str) {
-        com.aro.defenseofatroth.WS.User user = null;
+    public User login( String user_str, String pass_str) {
+        User user = null;
         SoapObject request = new SoapObject (NAMESPACE, METHOD_NAMES.LOGIN);
         request.addProperty("nombre", user_str);
         request.addProperty("pass", pass_str);
@@ -39,14 +39,14 @@ public class WebServices {
         try {
             transporte.call(SOAP_ACTION_PREFIX + METHOD_NAMES.LOGIN, envelope);
             String json = envelope.getResponse().toString();
-            com.aro.defenseofatroth.WS.ResponseWS response = new Gson().fromJson(json, com.aro.defenseofatroth.WS.ResponseWS.class);
-            user = new Gson().fromJson(response.getData().toString(), com.aro.defenseofatroth.WS.User.class);
+            ResponseWS response = new Gson().fromJson(json, ResponseWS.class);
+            user = new Gson().fromJson(response.getData().toString(), User.class);
         } catch (Exception e) {System.out.println(e.getMessage());}
         return user;
     }
 
-    public com.aro.defenseofatroth.WS.ResponseWS createUser(String user_str, String pass_str, String mail_str) {
-        com.aro.defenseofatroth.WS.ResponseWS response=null;
+    public ResponseWS createUser(String user_str, String pass_str, String mail_str) {
+        ResponseWS response=null;
         SoapObject request = new SoapObject (NAMESPACE, METHOD_NAMES.CREAR_USUARIO);
         request.addProperty("nombre", user_str);
         request.addProperty("pass", pass_str);
@@ -60,7 +60,7 @@ public class WebServices {
         try {
             transporte.call(SOAP_ACTION_PREFIX + METHOD_NAMES.CREAR_USUARIO, envelope);
             String json = envelope.getResponse().toString();
-            response = new Gson().fromJson(json, com.aro.defenseofatroth.WS.ResponseWS.class);
+            response = new Gson().fromJson(json, ResponseWS.class);
             //TODO CAMBIAR EL PARSEO DE DATA
             //user = new Gson().fromJson(response.getData().toString(), User.class);
         } catch (Exception e) {}
