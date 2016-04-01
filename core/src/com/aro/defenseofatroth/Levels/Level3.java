@@ -210,7 +210,7 @@ cam.update();                                                                   
         for (int i = 0; i < bots.size; i++) {                                            // Coge los bots
             Enemy e = bots.get(i);
             if (e.getHerir()) {
-                e.dainar(22 * delta);                                                    // Daña lo que seria 10 por segundo
+                e.dainar(24 * delta);                                                    // Daña lo que seria 10 por segundo
             }
             if (!e.isAlive()){
                 bots.removeIndex(i);                                                     // Quitar del array
