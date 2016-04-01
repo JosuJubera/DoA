@@ -210,7 +210,7 @@ cam.update();                                                                   
         for (int i = 0; i < bots.size; i++) {                                            // Coge los bots
             Enemy e = bots.get(i);
             if (e.getHerir()) {
-                e.dainar(10 * delta);                                                    // Daña lo que seria 10 por segundo
+                e.dainar(22 * delta);                                                    // Daña lo que seria 10 por segundo
             }
             if (!e.isAlive()){
                 bots.removeIndex(i);                                                     // Quitar del array
@@ -234,7 +234,7 @@ cam.update();                                                                   
     public void spawnBots() {
 
         Texture enemyTex2 = game.getManager().get("barraRoja.png", Texture.class);       // Cargar textura del assetManager
-        Enemy enemy = new Enemy(world, enemyTex2, new Vector2(10, (new Random().nextInt(6)))); // Crear un enemigo mundo por ahora no se usa
+        Enemy enemy = new Enemy(world, enemyTex2, new Vector2(10, (new Random().nextFloat() * 5)), 100); // Crear un enemigo mundo por ahora no se usa
         bots.add(enemy);                                                                 // Añadir al array de enemigos
         contadorBotsCreados++;                                                           // Contador de enemigos
     }

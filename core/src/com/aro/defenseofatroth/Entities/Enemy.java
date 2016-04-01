@@ -32,19 +32,21 @@ public class Enemy extends Actor {
     private boolean herir;
     public boolean jump;
 
-    private int vidaMaxima=100;
+    private float vidaMaxima=100;
 
-    private int vidaActual=100;
+    private float vidaActual=100;
 
     private NinePatch barraVidaFondo;
     private NinePatch barraVidaDelante;
     TextureRegion broja;
     TextureRegion bverde;
 
-    public Enemy(World world, Texture texture, Vector2 position) {
+    public Enemy(World world, Texture texture, Vector2 position, float vidaMaxima) {
 
         this.world = world;
         this.texture = texture;
+        this.vidaMaxima = vidaMaxima;
+        this.vidaActual = vidaMaxima;
 
         BodyDef def = new BodyDef();
         def.position.set(position);
@@ -89,10 +91,10 @@ jump = false;
 
         barraVidaFondo.draw(batch, body.getPosition().x * PIXELS_IN_METER,
                 body.getPosition().y * PIXELS_IN_METER + getHeight() + 0.1f * PIXELS_IN_METER,
-                vidaMaxima * getWidth() / PIXELS_IN_METER / 1.5f, 1 * PIXELS_IN_METER / 7.2f);
+                100 * getWidth() / PIXELS_IN_METER / 1.5f, 1 * PIXELS_IN_METER / 7.2f);
         barraVidaDelante.draw(batch, body.getPosition().x * PIXELS_IN_METER,
                 body.getPosition().y * PIXELS_IN_METER + getHeight() + 0.1f * PIXELS_IN_METER,
-                vidaActual * getWidth() / PIXELS_IN_METER / 1.5f, 1 * PIXELS_IN_METER / 7.2f);
+                vidaActual / vidaMaxima * 100 * getWidth() / PIXELS_IN_METER / 1.5f, 1 * PIXELS_IN_METER / 7.2f);
 
     }
 
@@ -121,7 +123,7 @@ jump = false;
         }
     }
 
-    public int getVidaActual() {
+    public float getVidaActual() {
         return vidaActual;
     }
 
