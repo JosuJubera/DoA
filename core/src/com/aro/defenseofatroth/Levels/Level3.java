@@ -6,9 +6,12 @@ import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Screens.BaseScreen;
 import com.aro.defenseofatroth.Tools.GestureHandler;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -18,7 +21,14 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -28,6 +38,7 @@ import java.util.Random;
 
 import static com.aro.defenseofatroth.Tools.Constants.VIRTUAL_HEIGHT;
 import static com.aro.defenseofatroth.Tools.Constants.VIRTUAL_WIDTH;
+import static com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.*;
 
 /**
  * Created by elementary on 28/03/16.
@@ -63,7 +74,7 @@ public class Level3 extends BaseScreen{
     Box2DDebugRenderer renderer; // Pa debugear
     OrthographicCamera cam;      // camara pa renderer, debug
 
-    public Level3(MainClass game) {
+    public Level3(final MainClass game) {
 
         super(game);
         camera = new OrthographicCamera(); //camara orthografica, es en 2D!
@@ -74,8 +85,9 @@ public class Level3 extends BaseScreen{
                 MAX_FLING_DELAY,
                 new GestureHandler(camera));
 
-        Gdx.input.setInputProcessor(gestureDetector);
         stage = new Stage(viewport);
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage,gestureDetector);
+        Gdx.input.setInputProcessor(inputMultiplexer);
         world = new World(new Vector2(0, 0), true);
 
 renderer = new Box2DDebugRenderer(true,true,true,true,true,true);                                 // Renderer pa debug de bodies y cosas
@@ -175,13 +187,93 @@ cam.update();
         };
 
         Timer.schedule(t, 0.5f, 1);                                                         // Fijar timer (cuando empezar desde aki, cada cuanto)
+
+
+        Texture torreTex = game.getManager().get("torre.png", Texture.class);
+        torre = new Torre(world, torreTex, new Vector2(1, 2));;
+        stage.addActor(torre);
+
+        final Skin skin = new Skin();
+        skin.add("default", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        skin.add("badlogic", new Texture("badlogic.jpg"));
+
+        Image validTargetImage = new Image(skin, "badlogic");
+        validTargetImage.setBounds(1000, 50, 100, 100);
+        stage.addActor(validTargetImage);
+
+        Image invalidTargetImage = new Image(skin, "badlogic");
+        invalidTargetImage.setBounds(500, 400, 100, 100);
+        stage.addActor(invalidTargetImage);
+
+        DragAndDrop dragAndDrop = new DragAndDrop();
+        dragAndDrop.addSource(new Source(torre) {
+            @Override
+            public Payload dragStart (InputEvent event, float x, float y, int pointer) {
+                Payload payload = new Payload();
+                payload.setObject("Some payload!");
+
+                payload.setDragActor(new Label("Some payload!", skin));
+
+                Label validLabel = new Label("Some payload!", skin);
+                validLabel.setColor(0, 1, 0, 1);
+                payload.setValidDragActor(validLabel);
+
+                Label invalidLabel = new Label("Some payload!", skin);
+                invalidLabel.setColor(1, 0, 0, 1);
+                payload.setInvalidDragActor(invalidLabel);
+
+                return payload;
+            }
+
+            @Override
+            public void dragStop(InputEvent event, float x, float y, int pointer, Payload payload, Target target) {
+
+                if (target != null) {
+                    Texture torreTex = game.getManager().get("torre.png", Texture.class);
+                    Torre torreNew = new Torre(world, torreTex, new Vector2(payload.getDragActor().getX(), payload.getDragActor().getY()));
+                    stage.addActor(torreNew);
+                    torre.remove();
+                    world.destroyBody(torre.getBody());
+                }
+            }
+        });
+
+        dragAndDrop.addTarget(new Target(validTargetImage) {
+            public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
+                getActor().setColor(Color.GREEN);
+                return true;
+            }
+
+            public void reset (Source source, Payload payload) {
+                getActor().setColor(Color.WHITE);
+            }
+
+            public void drop (Source source, Payload payload, float x, float y, int pointer) {
+            }
+        });
+
+
+        dragAndDrop.addTarget(new Target(invalidTargetImage) {
+            public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
+                getActor().setColor(Color.RED);
+                return false;
+            }
+
+            public void reset (Source source, Payload payload) {
+                getActor().setColor(Color.WHITE);
+            }
+
+            public void drop (Source source, Payload payload, float x, float y, int pointer) {
+            }
+        });
+
     }
 
     @Override
     public void show() {
-        Texture torreTex = game.getManager().get("torre.png", Texture.class);
-        torre = new Torre(world, torreTex, new Vector2(1, 2));;
-        stage.addActor(torre);
+//        Texture torreTex = game.getManager().get("torre.png", Texture.class);
+//        torre = new Torre(world, torreTex, new Vector2(1, 2));;
+//        stage.addActor(torre);
     }
 
     @Override

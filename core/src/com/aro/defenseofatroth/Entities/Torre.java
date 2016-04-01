@@ -69,4 +69,8 @@ public class Torre extends Actor {
     public void act(float delta) {
 
     }
+
+    public Body getBody() {
+        return body;
+    }
 }
