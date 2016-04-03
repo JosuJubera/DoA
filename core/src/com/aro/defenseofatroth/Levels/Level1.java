@@ -77,15 +77,15 @@ public class Level1  extends BaseScreen {
 		this.game = game;
 		create();
 		render(Gdx.graphics.getDeltaTime());
-		try {
-			music = MainClass.getManager().get("music.ogg", Music.class);
-		}catch (Exception e){
-			Gdx.app.error("FILE NOT FOUND", "No se ha encontrado",e);
-		}
-		if (musica == true){
-			music.setLooping(true);
-			music.play();
-		}
+//		try {
+//			music = MainClass.getManager().get("music.ogg", Music.class);
+//		}catch (Exception e){
+//			Gdx.app.error("FILE NOT FOUND", "No se ha encontrado",e);
+//		}
+//		if (musica == true){
+//			music.setLooping(true);
+//			music.play();
+//		}
 	}
 
 
