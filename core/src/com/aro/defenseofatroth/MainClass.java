@@ -117,7 +117,7 @@ public class MainClass extends Game {
 	}
 
 	public void finishLoading() {
-		setScreen(new MenuScreen(this));
+		setScreen(new LoginScreen(this));
 	}
 
 	public AssetManager getManager() {
