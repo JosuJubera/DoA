@@ -40,7 +40,9 @@ public class WebServices {
             transporte.call(SOAP_ACTION_PREFIX + METHOD_NAMES.LOGIN, envelope);
             String json = envelope.getResponse().toString();
             ResponseWS response = new Gson().fromJson(json, ResponseWS.class);
-            user = new Gson().fromJson(response.getData().toString(), User.class);
+            if(response.getExito()==true) {
+                user = new Gson().fromJson(response.getData().toString(), User.class);
+            }
         } catch (Exception e) {System.out.println(e.getMessage());}
         return user;
     }

@@ -5,10 +5,10 @@ package com.aro.defenseofatroth.WS;
  */
 public class User {
     private String nombre;
-    private String email;
+    private int puntuacion;
 
     public String getNombre(){
         return nombre;
     }
-    public String getEmail(){return email;}
+    public int getPuntuacion(){return puntuacion;}
 }
