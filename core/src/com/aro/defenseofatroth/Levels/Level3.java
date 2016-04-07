@@ -78,6 +78,7 @@ public class Level3 extends BaseScreen{
 
         super(game);
         camera = new OrthographicCamera(); //camara orthografica, es en 2D!
+        camera.zoom = 0.5f;
         viewport = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
         gestureDetector = new GestureDetector(HALF_TAP_SQUARE_SIZE,
                 TAP_COUNT_INTERVAL,
@@ -86,7 +87,7 @@ public class Level3 extends BaseScreen{
                 new GestureHandler(camera));
 
         stage = new Stage(viewport);
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage,gestureDetector);
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage, gestureDetector);
         Gdx.input.setInputProcessor(inputMultiplexer);
         world = new World(new Vector2(0, 0), true);
 
@@ -198,11 +199,14 @@ cam.update();
         skin.add("badlogic", new Texture("badlogic.jpg"));
 
         Image validTargetImage = new Image(skin, "badlogic");
-        validTargetImage.setBounds(1000, 50, 100, 100);
+        validTargetImage.setBounds(2460, 0, 100, 100);
         stage.addActor(validTargetImage);
+        Image validTargetImage2 = new Image(skin, "badlogic");
+        validTargetImage2.setBounds(0, 1340, 100, 100);
+        stage.addActor(validTargetImage2);
 
         Image invalidTargetImage = new Image(skin, "badlogic");
-        invalidTargetImage.setBounds(500, 400, 100, 100);
+        invalidTargetImage.setBounds(2460, 1340, 100, 100);
         stage.addActor(invalidTargetImage);
 
         DragAndDrop dragAndDrop = new DragAndDrop();

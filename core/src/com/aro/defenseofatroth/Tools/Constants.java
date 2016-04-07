@@ -6,6 +6,6 @@ package com.aro.defenseofatroth.Tools;
 public class Constants {
 
     public static final float PIXELS_IN_METER = 72f;
-    public static final int VIRTUAL_WIDTH = 1280;
-    public static final int VIRTUAL_HEIGHT = 720;
+    public static final int VIRTUAL_WIDTH = 2560;
+    public static final int VIRTUAL_HEIGHT = 1440;
 }
