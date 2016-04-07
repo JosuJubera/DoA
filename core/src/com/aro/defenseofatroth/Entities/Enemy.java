@@ -33,13 +33,14 @@ public class Enemy extends Actor {
     public boolean jump;
 
     private float vidaMaxima=100;
-
     private float vidaActual=100;
+    private int score = 100;
+    private int gold = 20;
 
     private NinePatch barraVidaFondo;
     private NinePatch barraVidaDelante;
-    TextureRegion broja;
-    TextureRegion bverde;
+    private TextureRegion broja;
+    private TextureRegion bverde;
 
     public Enemy(World world, Texture texture, Vector2 position, float vidaMaxima) {
 
@@ -137,5 +138,13 @@ jump = false;
 
     public Body getBody() {
         return body;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

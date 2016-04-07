@@ -320,6 +320,11 @@ cam.update();                                                                   
                 bots.removeIndex(i);                                                     // Quitar del array
                 e.remove();                                                              // Elimina nose que pero hay que usar
                 world.destroyBody(e.getBody());                                          // Eliminar actor del mundo
+                hud.addScore(e.getScore());
+                hud.addGold(e.getGold());
+            }
+            if (bots.size == 0) {
+                hud.addWave();
             }
         }
 

@@ -23,22 +23,22 @@ public class Hud {
     public Stage stage;
     private Viewport viewport;
 
-    private int score;
+    private static int score;
     private int wave;
-    private int money;
+    private static int money;
 
-    Label userName;
-    Label moneyTextLabel;
-    Label waveTextLabel;
+    private Label userName;
+    private Label moneyTextLabel;
+    private Label waveTextLabel;
 
-    Label scoreLabel;
-    Label moneyLabel;
-    Label waveLabel;
+    private static Label scoreLabel;
+    private static Label moneyLabel;
+    private Label waveLabel;
 
     public Hud(SpriteBatch spriteBatch) {
 
         score = 0;
-        wave = 0;
+        wave = 1;
         money = 0;
 
         viewport = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, new OrthographicCamera());
@@ -76,5 +76,21 @@ public class Hud {
 
         stage.addActor(table);
 
+    }
+
+    public static void addScore(int value) {
+        score += value;
+        scoreLabel.setText(String.format("%08d", score));
+    }
+
+    public void addWave() {
+        wave++;
+        waveLabel.setText(String.format("%02d", wave));
+    }
+
+    public static void addGold(int gold) {
+
+        money += gold;
+        moneyLabel.setText(String.format("%08d", money));
     }
 }
