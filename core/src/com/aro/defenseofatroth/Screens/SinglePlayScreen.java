@@ -3,6 +3,7 @@ package com.aro.defenseofatroth.Screens;
 import com.aro.defenseofatroth.Levels.Level1;
 import com.aro.defenseofatroth.Levels.Level3;
 import com.aro.defenseofatroth.MainClass;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -108,10 +110,21 @@ public class SinglePlayScreen extends BaseScreen {
         n3.setPosition(VIRTUAL_WIDTH - VIRTUAL_WIDTH * 3 / 10, VIRTUAL_HEIGHT * 4 / 7);
         stage.addActor(n3);
 
+//        n3.addListener( new ClickListener() {
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                game.setScreen(new Level3(game));
+//            };
+//        });
         n3.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Level3(game));
+                stage.addAction(Actions.sequence(Actions.fadeOut(1), Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        ((Game) Gdx.app.getApplicationListener()).setScreen(new Level3(game));
+                    }
+                })));
             };
         });
     }

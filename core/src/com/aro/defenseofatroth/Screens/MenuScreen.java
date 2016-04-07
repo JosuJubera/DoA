@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -93,18 +94,40 @@ public class MenuScreen extends BaseScreen {
 		stage.addActor(ranking);
 
 		// Single player button listener
+//		unjugador.addListener( new ClickListener() {
+//			@Override
+//			public void clicked(InputEvent event, float x, float y) {
+//				game.setScreen(new SinglePlayScreen(game, musica));
+//			};
+//		});
 		unjugador.addListener( new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new SinglePlayScreen(game, musica));
+				stage.addAction(Actions.sequence(Actions.fadeOut(1), Actions.run(new Runnable() {
+					@Override
+					public void run() {
+						((Game) Gdx.app.getApplicationListener()).setScreen(new SinglePlayScreen(game, musica));
+					}
+				})));
 			};
 		});
 
 		// Multi player button listener
+//		multijugador.addListener( new ClickListener() {
+//			@Override
+//			public void clicked(InputEvent event, float x, float y) {
+//				game.setScreen(new GameScreen(game));
+//			};
+//		});
 		multijugador.addListener( new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new GameScreen(game));
+				stage.addAction(Actions.sequence(Actions.fadeOut(1), Actions.run(new Runnable() {
+					@Override
+					public void run() {
+						((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(game));
+					}
+				})));
 			};
 		});
 

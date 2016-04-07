@@ -89,7 +89,7 @@ public class MainClass extends Game {
 //		Gdx.app.exit();
 //	}
 
-	private AssetManager manager;
+	private static AssetManager manager;
 	private SplashScreen splashScreen;
 
 	@Override
@@ -120,7 +120,7 @@ public class MainClass extends Game {
 		setScreen(new LoginScreen(this));
 	}
 
-	public AssetManager getManager() {
+	public static AssetManager getManager() {
 		return manager;
 	}
 }

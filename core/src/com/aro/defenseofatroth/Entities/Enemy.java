@@ -1,6 +1,7 @@
 package com.aro.defenseofatroth.Entities;
 
 import com.aro.defenseofatroth.Levels.Level3;
+import com.aro.defenseofatroth.MainClass;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -76,9 +77,8 @@ public class Enemy extends Actor {
 
 jump = false;
 
-
-        broja = new TextureRegion(new Texture(Gdx.files.internal("barraRojaBuena.png")));
-        bverde = new TextureRegion(new Texture(Gdx.files.internal("barraVerdeBuena.png")));
+        broja = new TextureRegion(MainClass.getManager().get("barraRojaBuena.png", Texture.class));
+        bverde = new TextureRegion(MainClass.getManager().get("barraVerdeBuena.png", Texture.class));
         barraVidaFondo = new NinePatch(broja, 0, 0, 0, 0); //es una prueba
         barraVidaDelante = new NinePatch(bverde,0,0,0,0);
     }
