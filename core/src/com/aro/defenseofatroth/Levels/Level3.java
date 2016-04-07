@@ -5,6 +5,7 @@ import com.aro.defenseofatroth.Entities.Torre;
 import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Screens.BaseScreen;
 import com.aro.defenseofatroth.Screens.Hud;
+import com.aro.defenseofatroth.Screens.Selector;
 import com.aro.defenseofatroth.Tools.GestureHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -31,6 +32,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
+import com.badlogic.gdx.scenes.scene2d.utils.GameDragAndDrop;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -77,6 +79,7 @@ public class Level3 extends BaseScreen{
     OrthographicCamera cam;      // camara pa renderer, debug
 
     private Hud hud;
+    private Selector selector;
     private SpriteBatch batch;
 
     public Level3(final MainClass game) {
@@ -92,7 +95,12 @@ public class Level3 extends BaseScreen{
                 new GestureHandler(camera));
 
         stage = new Stage(viewport);
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage, gestureDetector);
+
+        batch = new SpriteBatch();
+        hud = new Hud(batch);
+        selector = new Selector(batch);
+
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(selector.stage, gestureDetector);
         Gdx.input.setInputProcessor(inputMultiplexer);
         world = new World(new Vector2(0, 0), true);
 
@@ -100,8 +108,7 @@ renderer = new Box2DDebugRenderer(true,true,true,true,true,true);               
         cam = new OrthographicCamera(72,72);                                                      // Camara pa renderer
 cam.update();
 
-        batch = new SpriteBatch();
-        hud = new Hud(batch);
+
 
         // Cuando se haga bien cambiar por WorldContactListener
         world.setContactListener(new ContactListener() {                                           // Poner listener de choque al mundo coge todos los choques
@@ -207,18 +214,24 @@ cam.update();
         skin.add("badlogic", new Texture("badlogic.jpg"));
 
         Image validTargetImage = new Image(skin, "badlogic");
-        validTargetImage.setBounds(2460, 0, 100, 100);
+        validTargetImage.setBounds(1280, 720, 100, 100);
         stage.addActor(validTargetImage);
+
         Image validTargetImage2 = new Image(skin, "badlogic");
-        validTargetImage2.setBounds(0, 1340, 100, 100);
+        validTargetImage2.setBounds(2460, 0, 100, 100);
         stage.addActor(validTargetImage2);
+
+        Image validTargetImage3 = new Image(skin, "badlogic");
+        validTargetImage3.setBounds(0, 1340, 100, 100);
+        stage.addActor(validTargetImage3);
+
 
         Image invalidTargetImage = new Image(skin, "badlogic");
         invalidTargetImage.setBounds(2460, 1340, 100, 100);
         stage.addActor(invalidTargetImage);
 
-        DragAndDrop dragAndDrop = new DragAndDrop();
-        dragAndDrop.addSource(new Source(torre) {
+        GameDragAndDrop dragAndDrop = new GameDragAndDrop();
+        dragAndDrop.addSource(new Source(selector.stage.getActors().first()) {
             @Override
             public Payload dragStart (InputEvent event, float x, float y, int pointer) {
                 Payload payload = new Payload();
@@ -244,8 +257,8 @@ cam.update();
                     Texture torreTex = game.getManager().get("torre.png", Texture.class);
                     Torre torreNew = new Torre(world, torreTex, new Vector2(payload.getDragActor().getX(), payload.getDragActor().getY()));
                     stage.addActor(torreNew);
-                    torre.remove();
-                    world.destroyBody(torre.getBody());
+//                    torre.remove();
+//                    world.destroyBody(torre.getBody());
                 }
             }
         });
@@ -340,6 +353,8 @@ cam.update();                                                                   
 
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+        selector.stage.draw();
+
 
 
         stage.draw();                                                                    // Dibujar el stage
