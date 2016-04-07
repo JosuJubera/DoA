@@ -119,7 +119,7 @@ public class SinglePlayScreen extends BaseScreen {
         n3.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                stage.addAction(Actions.sequence(Actions.fadeOut(1), Actions.run(new Runnable() {
+                stage.addAction(Actions.sequence(Actions.fadeOut(0.2f), Actions.run(new Runnable() {
                     @Override
                     public void run() {
                         ((Game) Gdx.app.getApplicationListener()).setScreen(new Level3(game));

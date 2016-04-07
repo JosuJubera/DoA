@@ -205,9 +205,9 @@ cam.update();
         Timer.schedule(t, 0.5f, 1);                                                         // Fijar timer (cuando empezar desde aki, cada cuanto)
 
 
-        Texture torreTex = game.getManager().get("torre.png", Texture.class);
-        torre = new Torre(world, torreTex, new Vector2(1, 2));;
-        stage.addActor(torre);
+//        Texture torreTex = game.getManager().get("torre.png", Texture.class);
+//        torre = new Torre(world, torreTex, new Vector2(1, 2));;
+//        stage.addActor(torre);
 
         final Skin skin = new Skin();
         skin.add("default", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
@@ -303,7 +303,7 @@ cam.update();
 
     @Override
     public void hide() {
-        torre.remove();
+//        torre.remove();
     }
 
     @Override
@@ -363,7 +363,7 @@ cam.update();                                                                   
     public void spawnBots() {
 
         Texture enemyTex2 = game.getManager().get("barraRoja.png", Texture.class);       // Cargar textura del assetManager
-        Enemy enemy = new Enemy(world, enemyTex2, new Vector2(10, (new Random().nextFloat() * 5)), 100); // Crear un enemigo mundo por ahora no se usa
+        Enemy enemy = new Enemy(world, enemyTex2, new Vector2(40, (new Random().nextFloat() * 10)), 100); // Crear un enemigo mundo por ahora no se usa
         bots.add(enemy);                                                                 // Añadir al array de enemigos
         contadorBotsCreados++;                                                           // Contador de enemigos
     }
