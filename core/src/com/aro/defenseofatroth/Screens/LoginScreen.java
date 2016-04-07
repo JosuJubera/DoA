@@ -36,6 +36,8 @@ public class LoginScreen extends BaseScreen {
     private BitmapFont font;
     private Skin skin;
 
+    public static String userName = "Invitado";
+
     public LoginScreen(MainClass game) {
         super(game);
         this.game = game;
@@ -150,6 +152,7 @@ public class LoginScreen extends BaseScreen {
                 } else {
 
                     if (login(name, pass)) {
+                        userName = name;
                         game.setScreen(new MenuScreen(game));
                     } else {
                         new Dialog("Error", skin) {

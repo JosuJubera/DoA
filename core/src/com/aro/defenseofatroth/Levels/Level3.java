@@ -4,6 +4,7 @@ import com.aro.defenseofatroth.Entities.Enemy;
 import com.aro.defenseofatroth.Entities.Torre;
 import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Screens.BaseScreen;
+import com.aro.defenseofatroth.Screens.Hud;
 import com.aro.defenseofatroth.Tools.GestureHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -74,6 +76,9 @@ public class Level3 extends BaseScreen{
     Box2DDebugRenderer renderer; // Pa debugear
     OrthographicCamera cam;      // camara pa renderer, debug
 
+    private Hud hud;
+    private SpriteBatch batch;
+
     public Level3(final MainClass game) {
 
         super(game);
@@ -94,6 +99,9 @@ public class Level3 extends BaseScreen{
 renderer = new Box2DDebugRenderer(true,true,true,true,true,true);                                 // Renderer pa debug de bodies y cosas
         cam = new OrthographicCamera(72,72);                                                      // Camara pa renderer
 cam.update();
+
+        batch = new SpriteBatch();
+        hud = new Hud(batch);
 
         // Cuando se haga bien cambiar por WorldContactListener
         world.setContactListener(new ContactListener() {                                           // Poner listener de choque al mundo coge todos los choques
@@ -324,6 +332,11 @@ cam.update();                                                                   
             Enemy en = iterator.next();
             stage.addActor(en);                                                          // Añadir actor al stage
         }
+
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
+
+
         stage.draw();                                                                    // Dibujar el stage
     }
 
