@@ -17,7 +17,7 @@ public class Unidad extends Entidad {
     private int vidaActual=100;
     private BarraVida barraVida;
     private float animationTime=0;
-    private float velocidadM;// modulo de la velocidad
+
     public Unidad(){
         super();
         barraVida=new BarraVida();
@@ -33,11 +33,6 @@ public class Unidad extends Entidad {
         barraVida.draw(batch, delta); //tambien podria dibujarlo en el bucle principal... ya veremos k hacemos
 
     }
-
-    @Override
-    public void dispose() {
-        //Si hay k limpiar algo, aqui ira
-    }
     public void danar(int dano){
         this.vidaActual-=dano;
         if (vidaActual<0){
@@ -50,16 +45,9 @@ public class Unidad extends Entidad {
         posicion.y+=velocidad.y*delta;
 
     }
-    //Kizas esto deberia ir en la clase superior... pero no se
+
     @Override
-    public void setDestino(Vector2 destino){
-        float angulo=MathUtils.atan2(destino.y-posicion.y,destino.x-posicion.x); //obtengo el angulo a seguir para el destino
-        velocidad.x=MathUtils.cos(angulo)*velocidadM; //fisica de 1º
-        velocidad.y=MathUtils.sin(angulo)*velocidadM;
+    public void dispose() {
 
-
-    }
-    public void setVelocidad(float velocidad){
-        this.velocidadM=velocidad;
     }
 }

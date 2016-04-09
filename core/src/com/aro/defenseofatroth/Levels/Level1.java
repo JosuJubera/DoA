@@ -3,6 +3,7 @@ package com.aro.defenseofatroth.Levels;
 import com.aro.defenseofatroth.Entidad;
 import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Screens.BaseScreen;
+import com.aro.defenseofatroth.Tools.GestureHandlerPruebas;
 import com.aro.defenseofatroth.Unidad;
 import com.aro.defenseofatroth.Tools.GestureHandler;
 import com.badlogic.gdx.Gdx;
@@ -77,15 +78,6 @@ public class Level1  extends BaseScreen {
 		this.game = game;
 		create();
 		render(Gdx.graphics.getDeltaTime());
-//		try {
-//			music = MainClass.getManager().get("music.ogg", Music.class);
-//		}catch (Exception e){
-//			Gdx.app.error("FILE NOT FOUND", "No se ha encontrado",e);
-//		}
-//		if (musica == true){
-//			music.setLooping(true);
-//			music.play();
-//		}
 	}
 
 
@@ -97,12 +89,11 @@ public class Level1  extends BaseScreen {
 		background = new Sprite(atlas.findRegion("background"));
 		background.setPosition(-background.getWidth() * 0.5f, -background.getHeight() * 0.5f);
 		background.scale(2f);
-//		camposicion = new Vector2(0f, 0f);
 		gestureDetector = new GestureDetector(HALF_TAP_SQUARE_SIZE,
 				TAP_COUNT_INTERVAL,
 				LONG_PRESS_DURATION,
 				MAX_FLING_DELAY,
-				new GestureHandler(/*camposicion,*/ camera));
+				new GestureHandlerPruebas( camera));
 
 		Gdx.input.setInputProcessor(gestureDetector);
 

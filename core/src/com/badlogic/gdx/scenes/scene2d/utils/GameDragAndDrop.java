@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 /**
- * Created by Robert on 5/19/2015. 
+ * Created by Robert on 5/19/2015.
  */
 public class GameDragAndDrop extends DragAndDrop {
 

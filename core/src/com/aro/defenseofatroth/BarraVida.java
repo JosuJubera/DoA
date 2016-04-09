@@ -9,9 +9,11 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 /**
+ * Esta clase representa una barra de Vida.
  * Created by Sergio on 29/03/2016.
  */
 public class BarraVida extends Entidad {
+    //Optimizacion: Que sea un singleton y de una misma barra segun se pida, para solo cargar 1 vez con la imagen
     private NinePatch barraVidaFondo;
     private NinePatch barraVidaDelante;
     private static float ANCHOBARRA=100; //Tamaño de la barra (longitud mundo)
@@ -39,10 +41,6 @@ public class BarraVida extends Entidad {
     }
 
 
-    @Override
-    public void dispose() {
-
-    }
 
     /**
      * Tamaño de la barra en tanto porciento
@@ -50,5 +48,10 @@ public class BarraVida extends Entidad {
      */
     public void setValor(float valorActual) {
         this.valorActual= MathUtils.clamp((valorActual*ANCHOBARRA)*0.01f, PIXELESANCHO*2, ANCHOBARRA);
+    }
+
+    @Override
+    public void dispose() {
+
     }
 }

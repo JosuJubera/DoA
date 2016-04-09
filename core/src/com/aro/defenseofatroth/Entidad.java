@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
@@ -20,6 +22,8 @@ public abstract class Entidad implements Disposable{
     protected Vector2 velocidad; //velocidad del objeto
     protected Vector2 aceleracion; //aceleracion del objeto
     protected Vector2 destino;
+    protected float velocidadM;// modulo de la velocidad
+
 
     Entidad(){
         texture=null;
@@ -68,6 +72,11 @@ public abstract class Entidad implements Disposable{
     }
 
     public void setDestino(Vector2 destino){
-        this.destino=destino;
+        float angulo= MathUtils.atan2(destino.y - posicion.y, destino.x - posicion.x); //obtengo el angulo a seguir para el destino
+        velocidad.x=MathUtils.cos(angulo)*velocidadM; //fisica de 1º
+        velocidad.y=MathUtils.sin(angulo)*velocidadM;
+    }
+    public void setVelocidad(float velocidad){
+        this.velocidadM=velocidad;
     }
 }
