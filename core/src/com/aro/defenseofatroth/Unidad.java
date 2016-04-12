@@ -17,11 +17,13 @@ public class Unidad extends Entidad {
     private int vidaActual=100;
     private BarraVida barraVida;
     private float animationTime=0;
+    private boolean viva;
 
     public Unidad(){
         super();
         barraVida=new BarraVida();
         barraVida.setPosition(posicion);
+        viva=true;
     }
 
     @Override
@@ -37,6 +39,7 @@ public class Unidad extends Entidad {
         this.vidaActual-=dano;
         if (vidaActual<0){
             vidaActual=vidaMaxima;
+            viva=false;
         }
         barraVida.setValor((float)vidaActual);
     }
@@ -49,5 +52,8 @@ public class Unidad extends Entidad {
     @Override
     public void dispose() {
 
+    }
+    public boolean isAlive(){
+        return viva;
     }
 }

@@ -4,10 +4,12 @@ import com.aro.defenseofatroth.Entidad;
 import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Screens.BaseScreen;
 import com.aro.defenseofatroth.Tools.GestureHandlerPruebas;
+import com.aro.defenseofatroth.Torre;
 import com.aro.defenseofatroth.Unidad;
 import com.aro.defenseofatroth.Tools.GestureHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,8 +17,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -27,13 +31,10 @@ public class Level1  extends BaseScreen {
 	private TextureAtlas atlas; //imagen con las texturas Tambien se puede hacer mediante codigo Pag:166
 	private Sprite background; //se usa para manejar tamaño y posicion de texturas (Se puede cargar desde un Atlas)
 	private FitViewport viewport; //representa la imagen en PANTALLA
-	private Texture levelTexture;
-	private Sprite caverman;
 	private GestureDetector gestureDetector;
 //	atencion, ñapa gorda, cuidado!
 	public static Entidad niapa;
-	private Array<Entidad> entidades; //aqui iran todas la sentidades dibujables
-
+	public static Array<Entidad> entidades; //aqui iran todas la sentidades dibujables
 	//prueba
 	TextureAtlas atextura;
 
@@ -107,6 +108,12 @@ public class Level1  extends BaseScreen {
 		prueba.setVelocidad(100f);
 		prueba.setDestino(new Vector2(10f,10f));
 		niapa=prueba;
+        //Dibujamos torre
+        Torre myTorre=new Torre();
+        myTorre.setPosicion(new Vector2(1f, 1f));
+        entidades.add(myTorre);
+
+
 
 	}
 
@@ -116,9 +123,7 @@ public class Level1  extends BaseScreen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-//		camera.translate(camposicion);
 		camera.update();
-//		camposicion.scl(0.95f);
 		batch.setProjectionMatrix(camera.combined);
 		//Preparamos para dibujar
 		batch.begin();
@@ -127,7 +132,6 @@ public class Level1  extends BaseScreen {
 		//Dibujar toda la escena
 		for (int i = 0; i < entidades.size; i++) {
 			entidades.get(i).draw(batch, delta);
-			((Unidad) entidades.get(i)).danar(1);
 		}
 
 		//No nos olvidemos de terminar el dibujo. Si algo se renderiza despues de esto, la aplicacion PETARA!
