@@ -36,15 +36,18 @@ public class Torre extends Actor {
         body = world.createBody(bodyDef);
 
         FixtureDef fixtureDef = new FixtureDef();
-        PolygonShape shape =  new PolygonShape();
-        shape.setAsBox(2, 4);
 
-        fixtureDef.shape = shape;
-        body.createFixture(fixtureDef);
 
-        fixture = body.createFixture(shape, 3);
-        fixture.setUserData("torre");
-//        shape.dispose();
+        // Quitau choque a torre, los enemies ya no chocan contra la torre
+//        PolygonShape shape =  new PolygonShape();
+////        shape.setAsBox(2, 4);
+
+//        fixtureDef.shape = shape;
+//        body.createFixture(fixtureDef);
+
+//        fixture = body.createFixture(shape, 3);
+//        fixture.setUserData("torre");
+////        shape.dispose();
         setSize(PIXELS_IN_METER * 4, PIXELS_IN_METER * 8);
         debug();
 
@@ -56,7 +59,7 @@ public class Torre extends Actor {
         fixtureDef.filter.maskBits = Level3.DEFAULT_BIT | Level3.ENEMY_BIT; // Con los que puede colisionar
 
         body.createFixture(fixtureDef).setUserData("alcance");
-        shape.dispose();
+//        shape.dispose();
     }
 
     @Override
