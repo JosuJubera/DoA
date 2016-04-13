@@ -25,10 +25,10 @@ public class WebServices {
         public static final String DESCARTAR_FOTO = "descartaFoto";*/
     }
 
-    public User login( String user_str, String pass_str) {
+    public User login( String mail_str, String pass_str) {
         User user = null;
         SoapObject request = new SoapObject (NAMESPACE, METHOD_NAMES.LOGIN);
-        request.addProperty("nombre", user_str);
+        request.addProperty("mail", mail_str);
         request.addProperty("pass", pass_str);
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
