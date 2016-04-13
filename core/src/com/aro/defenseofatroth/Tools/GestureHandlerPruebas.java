@@ -7,11 +7,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 /**
- * Created by elementary on 25/03/16.
+ * Esta clase la tengo para las pruebas del lvl 1, que el otro eta modificau y no va
+ * Created by Sergio on 09/04/2016.
  */
-public class GestureHandler implements GestureDetector.GestureListener {
+public class GestureHandlerPruebas implements GestureDetector.GestureListener {
 
-    private static final float CAMERA_ZOOM_MAX = 1.0f; // Lo lejos que esta el zoom
+    private static final float CAMERA_ZOOM_MAX = 3.0f; // Lo lejos que esta el zoom
     private static final float CAMERA_ZOOM_MIN = 0.3f; // Lo creca que esta el zoom
 
     private OrthographicCamera camera;
@@ -19,7 +20,7 @@ public class GestureHandler implements GestureDetector.GestureListener {
     boolean flinging = false;
     float initialScale = 1;
 
-    public GestureHandler(OrthographicCamera camera){
+    public GestureHandlerPruebas(/*Vector2 vec,*/OrthographicCamera camera){
 
         this.camera=camera;
     }
@@ -60,14 +61,14 @@ public class GestureHandler implements GestureDetector.GestureListener {
     public boolean pan(float x, float y, float deltaX, float deltaY) {
         //translate mueve la camara segun esas coordenadas (igual que camera.x+=x)
 
-        if (camera.position.x - deltaX * camera.zoom <= (-50 / 7 * camera.zoom * camera.zoom - 8885 / 7 * camera.zoom + 17895 / 7)         // max x
-                && (camera.position.y + deltaY * camera.zoom) <= (-50 / 7 * camera.zoom * camera.zoom - 4965/7 * camera.zoom + 10055 / 7)  // max y
-                && (camera.position.x - deltaX * camera.zoom) >= (50 / 7 * camera.zoom * camera.zoom + 8885 / 7 * camera.zoom + 25 / 7)    // min x
-                && (camera.position.y + deltaY * camera.zoom) >= (50 / 7 * camera.zoom * camera.zoom + 4965 / 7 * camera.zoom + 25 / 7)){  // min y
+        if (camera.position.x - deltaX * camera.zoom <= (200 / 189 * camera.zoom * camera.zoom - 121760 / 189 * camera.zoom + 121160 / 63)              // 1730
+                && (camera.position.y + deltaY * camera.zoom) <= (-200 / 189 * camera.zoom * camera.zoom - 67240 / 189 * camera.zoom + 67840 / 63)      // 970
+                && (camera.position.x - deltaX * camera.zoom) >= (-200 / 189 * camera.zoom * camera.zoom + 121760 / 189 * camera.zoom - 121160 / 63)    // -1730
+                && (camera.position.y + deltaY * camera.zoom) >= (200 / 189 * camera.zoom * camera.zoom + 67240 / 189 * camera.zoom - 67840 / 63)){     // -970
 
             camera.position.add(-deltaX * camera.zoom, deltaY * camera.zoom, 0);
         }
-//        System.out.println("pan " + camera.position + " zoom " + camera.zoom);
+//			System.out.println("pan" + camera.position + " zoom " + camera.zoom);
         return true;
     }
 
@@ -87,56 +88,56 @@ public class GestureHandler implements GestureDetector.GestureListener {
         if ((nextZoom <= CAMERA_ZOOM_MAX) && (nextZoom >= CAMERA_ZOOM_MIN)) {
             if (nextZoom > zoomPrevio){
 
-                if ((camera.position.x < 1280) && (camera.position.y < 720)) {
-                    if (camera.position.x - camera.viewportWidth * nextZoom/2 < 0) {
+                if ((camera.position.x < 0) && (camera.position.y < 0)) {
+                    if (camera.position.x - camera.viewportWidth * nextZoom/2 < -1920) {
 
-                        camera.position.set((50 / 7 * nextZoom * nextZoom + 8885 / 7 * nextZoom + 25 / 7),
+                        camera.position.set((-200 / 189 * nextZoom * nextZoom + 121760 / 189 * nextZoom - 121160 / 63),
                                 camera.position.y, 0);
                     }
-                    if (camera.position.y - camera.viewportHeight * nextZoom/2 < 0) {
+                    if (camera.position.y - camera.viewportHeight * nextZoom/2 < -1080) {
 
                         camera.position.set(camera.position.x,
-                                (50 / 7 * nextZoom * nextZoom + 4965 / 7 * nextZoom + 25 / 7), 0);
+                                (200 / 189 * nextZoom * nextZoom + 67240 / 189 * nextZoom - 67840 / 63), 0);
                     }
 
                 }
 
-                if ((camera.position.x < 1280) && (camera.position.y > 720)) {
-                    if (camera.position.x - camera.viewportWidth * nextZoom/2 < 0) {
+                if ((camera.position.x < 0) && (camera.position.y > 0)) {
+                    if (camera.position.x - camera.viewportWidth * nextZoom/2 < -1920) {
 
-                        camera.position.set((50 / 7 * nextZoom * nextZoom + 8885 / 7 * nextZoom + 25 / 7),
+                        camera.position.set((-200 / 189 * nextZoom * nextZoom + 121760 / 189 * nextZoom - 121160 / 63),
                                 camera.position.y, 0);
                     }
-                    if (camera.position.y + camera.viewportHeight * nextZoom/2 > 1220) {
+                    if (camera.position.y + camera.viewportHeight * nextZoom/2 > 1080) {
 
                         camera.position.set(camera.position.x,
-                                (-50 / 7 * nextZoom * nextZoom - 4965/7 * nextZoom + 10055 / 7), 0);
+                                (-200 / 189 * nextZoom * nextZoom - 67240 / 189 * nextZoom + 67840 / 63), 0);
                     }
                 }
 
-                if ((camera.position.x > 1280) && (camera.position.y < 720)) {
-                    if (camera.position.x + camera.viewportWidth * nextZoom/2 > 2175 ) {
+                if ((camera.position.x > 0) && (camera.position.y < 0)) {
+                    if (camera.position.x + camera.viewportWidth * nextZoom/2 > 1920) {
 
-                        camera.position.set((-50 / 7 * nextZoom * nextZoom - 8885 / 7 * nextZoom + 17895 / 7),
+                        camera.position.set((200 / 189 * nextZoom * nextZoom - 121760 / 189 * nextZoom + 121160 / 63),
                                 camera.position.y, 0);
                     }
-                    if (camera.position.y - camera.viewportHeight * nextZoom/2 < 0) {
+                    if (camera.position.y - camera.viewportHeight * nextZoom/2 < -1080) {
 
                         camera.position.set(camera.position.x,
-                                (50 / 7 * nextZoom * nextZoom + 4965 / 7 * nextZoom + 25 / 7), 0);
+                                (200 / 189 * nextZoom * nextZoom + 67240 / 189 * nextZoom - 67840 / 63), 0);
                     }
                 }
 
-                if ((camera.position.x > 1280) && (camera.position.y > 720)) {
-                    if (camera.position.x + camera.viewportWidth * nextZoom/2 > 2175) {
+                if ((camera.position.x > 0) && (camera.position.y > 0)) {
+                    if (camera.position.x + camera.viewportWidth * nextZoom/2 > 1920) {
 
-                        camera.position.set((-50 / 7 * nextZoom * nextZoom - 8885 / 7 * nextZoom + 17895 / 7),
+                        camera.position.set((200 / 189 * nextZoom * nextZoom - 121760 / 189 * nextZoom + 121160 / 63),
                                 camera.position.y, 0);
                     }
-                    if (camera.position.y + camera.viewportHeight * nextZoom/2 > 1220){
+                    if (camera.position.y + camera.viewportHeight * nextZoom/2 > 1080){
 
                         camera.position.set(camera.position.x,
-                                (-50 / 7 * nextZoom * nextZoom - 4965 / 7 * nextZoom + 10055 / 7), 0);
+                                (-200 / 189 * nextZoom * nextZoom - 67240 / 189 * nextZoom + 67840 / 63), 0);
                     }
                 }
             }

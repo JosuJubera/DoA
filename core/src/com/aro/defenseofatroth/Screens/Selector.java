@@ -27,12 +27,18 @@ public class Selector {
         stage = new Stage(viewport, spriteBatch);
 
         Table table = new Table();
+        table.defaults().width(100).height(100);
         table.bottom();
         table.setFillParent(true);
 
         Image torre = new Image(MainClass.getManager().get("torre.png", Texture.class));
-        torre.setScale(0.2f, 0.2f);
         table.add(torre);
+
+        Image torre2 = new Image(MainClass.getManager().get("torre.png", Texture.class));
+        table.add(torre2);
+
+        Image torre3 = new Image(MainClass.getManager().get("torre.png", Texture.class));
+        table.add(torre3);
 
         stage.addActor(table);
     }
