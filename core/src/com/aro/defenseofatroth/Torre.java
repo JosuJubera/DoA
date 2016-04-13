@@ -59,7 +59,7 @@ public class Torre extends Entidad {
 
     }
     private void atacar(){
-        Proyectil proyectil=new Proyectil();
+        Proyectil proyectil=Level1.proyectiles.obtain();
         proyectil.setPosicion(this.posicion);
         proyectil.setObjetivo(enemigo);
         proyectil.setDanio(DANIO);

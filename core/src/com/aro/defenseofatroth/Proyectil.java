@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Pool;
 
 /**
- * Esta clase representa un proyectil de una torre
+ * Esta clase representa un proyectil de una torre. Si hay clases hijas, habra que reimplimentar el Pool
  * Created by Sergio on 09/04/2016.
  */
 public class Proyectil extends Entidad implements Pool.Poolable {
@@ -47,7 +47,7 @@ public class Proyectil extends Entidad implements Pool.Poolable {
 
         if ((posicion.x==objetivo.getPosicion().x) && (posicion.y==objetivo.getPosicion().y)){
             objetivo.danar(danio);
-            Level1.entidades.removeValue(this, true);//Quitamos el proyectil
+            Level1.entidades.removeValue(this, true);//Quitamos el proyectil (igual a this.remove() si es un actor)
             Level1.proyectiles.free(this); //Lo marcamos como obtenible
         }
     }
@@ -55,6 +55,7 @@ public class Proyectil extends Entidad implements Pool.Poolable {
     @Override
     public void reset() {
         this.danio=0;
+        this.posicion=null;
         this.objetivo=null;
     }
 }
