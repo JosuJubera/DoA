@@ -2,6 +2,7 @@ package com.aro.defenseofatroth.Levels;
 
 import com.aro.defenseofatroth.Entidad;
 import com.aro.defenseofatroth.MainClass;
+import com.aro.defenseofatroth.Proyectil;
 import com.aro.defenseofatroth.Screens.BaseScreen;
 import com.aro.defenseofatroth.Tools.GestureHandlerPruebas;
 import com.aro.defenseofatroth.Torre;
@@ -22,6 +23,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class Level1  extends BaseScreen {
@@ -35,6 +37,7 @@ public class Level1  extends BaseScreen {
 //	atencion, ñapa gorda, cuidado!
 	public static Entidad niapa;
 	public static Array<Entidad> entidades; //aqui iran todas la sentidades dibujables
+	public static Pool<Proyectil> proyectiles;
 	//prueba
 	TextureAtlas atextura;
 
@@ -97,6 +100,13 @@ public class Level1  extends BaseScreen {
 				new GestureHandlerPruebas( camera));
 
 		Gdx.input.setInputProcessor(gestureDetector);
+		proyectiles=new Pool<Proyectil>() {
+			@Override
+			protected Proyectil newObject() {
+				return new Proyectil();
+			}
+		};
+
 
 		//Dbujamos a una unidad
 		Unidad prueba = new Unidad();

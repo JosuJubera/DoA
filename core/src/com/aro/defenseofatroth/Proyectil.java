@@ -5,18 +5,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Pool;
 
 /**
  * Esta clase representa un proyectil de una torre
  * Created by Sergio on 09/04/2016.
  */
-public class Proyectil extends Entidad {
+public class Proyectil extends Entidad implements Pool.Poolable {
     private Unidad objetivo;
     private int danio;
 
     //Esto deberia de hacerlo las clases inferiors, pero de prueba lo dejo aki
-    Proyectil(){
+    public Proyectil(){
         super();
         texture = new Sprite(new Texture(Gdx.files.internal("barraRoja.png")));
         texture.scale(0.3f);
@@ -47,10 +47,14 @@ public class Proyectil extends Entidad {
 
         if ((posicion.x==objetivo.getPosicion().x) && (posicion.y==objetivo.getPosicion().y)){
             objetivo.danar(danio);
-            this.danio=0;
-            this.objetivo=null;
-            Level1.entidades.removeValue(this,true);
-            this.dispose();
+            Level1.entidades.removeValue(this, true);//Quitamos el proyectil
+            Level1.proyectiles.free(this); //Lo marcamos como obtenible
         }
+    }
+
+    @Override
+    public void reset() {
+        this.danio=0;
+        this.objetivo=null;
     }
 }

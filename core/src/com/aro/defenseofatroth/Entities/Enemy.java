@@ -53,7 +53,7 @@ public class Enemy extends Actor {
         BodyDef def = new BodyDef();
         def.position.set(position);
         def.type = BodyDef.BodyType.DynamicBody;
-        body = world.createBody(def);
+        body=world.createBody(def);
 
         FixtureDef fixtureDef = new FixtureDef();
         CircleShape shape =  new CircleShape();
@@ -71,11 +71,12 @@ public class Enemy extends Actor {
 
         fixtureDef.isSensor = true;
         fixtureDef.filter.categoryBits = Level3.ENEMY_BIT;
+        fixtureDef.filter.groupIndex=Level3.ENEMY_BIT;
         fixtureDef.filter.maskBits = Level3.DEFAULT_BIT | Level3.TORRE_BIT;
         this.alive = true;
-//        body.createFixture(fixtureDef).setUserData("enemy");
+        body.createFixture(fixtureDef).setUserData("enemy");
 
-jump = false;
+        jump = false;
 
         broja = new TextureRegion(MainClass.getManager().get("barraRojaBuena.png", Texture.class));
         bverde = new TextureRegion(MainClass.getManager().get("barraVerdeBuena.png", Texture.class));
