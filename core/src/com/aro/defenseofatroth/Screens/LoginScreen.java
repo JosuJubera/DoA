@@ -85,15 +85,15 @@ public class LoginScreen extends BaseScreen {
             }
         });
 
-        Label nameLabel = new Label("Name",new Label.LabelStyle(font, Color.WHITE));
-        nameLabel.setPosition(VIRTUAL_WIDTH / 16, VIRTUAL_HEIGHT * 8 / 10);
-        stage.addActor(nameLabel);
+        Label mailLabelLogin = new Label("Mail",new Label.LabelStyle(font, Color.WHITE));
+        mailLabelLogin.setPosition(VIRTUAL_WIDTH / 16, VIRTUAL_HEIGHT * 8 / 10);
+        stage.addActor(mailLabelLogin);
 
         // Login & Register
-        final TextField nameFieldLogin = new TextField("", skin);
-        nameFieldLogin.setPosition(3*VIRTUAL_WIDTH /16 , VIRTUAL_HEIGHT * 8 / 10);
-        nameFieldLogin.setSize(VIRTUAL_WIDTH / 10, VIRTUAL_HEIGHT / 10);
-        stage.addActor(nameFieldLogin);
+        final TextField mailFieldLogin = new TextField("", skin);
+        mailFieldLogin.setPosition(3*VIRTUAL_WIDTH /16 , VIRTUAL_HEIGHT * 8 / 10);
+        mailFieldLogin.setSize(VIRTUAL_WIDTH / 10, VIRTUAL_HEIGHT / 10);
+        stage.addActor(mailFieldLogin);
 
         Label passLabel = new Label("Pass",new Label.LabelStyle(font, Color.WHITE));
         passLabel.setPosition(VIRTUAL_WIDTH / 16, VIRTUAL_HEIGHT * 6 / 10);
@@ -106,12 +106,12 @@ public class LoginScreen extends BaseScreen {
         passFieldLogin.setPasswordMode(true);
         stage.addActor(passFieldLogin);
 
-        Label mailLavel = new Label("Email",new Label.LabelStyle(font,Color.WHITE));
-        mailLavel.setPosition(VIRTUAL_WIDTH * 8 / 16, VIRTUAL_HEIGHT * 4 / 10);
-        stage.addActor(mailLavel);
+        Label nameLabelRegister = new Label("Name",new Label.LabelStyle(font,Color.WHITE));
+        nameLabelRegister.setPosition(VIRTUAL_WIDTH * 8 / 16, VIRTUAL_HEIGHT * 4 / 10);
+        stage.addActor(nameLabelRegister);
 
         final TextField nameFieldRegister = new TextField("", skin);
-        nameFieldRegister.setPosition(VIRTUAL_WIDTH * 10 / 16, VIRTUAL_HEIGHT * 8 / 10);
+        nameFieldRegister.setPosition(VIRTUAL_WIDTH * 10 / 16 , VIRTUAL_HEIGHT * 4 / 10);
         nameFieldRegister.setSize(VIRTUAL_WIDTH / 10, VIRTUAL_HEIGHT / 10);
         stage.addActor(nameFieldRegister);
 
@@ -122,10 +122,10 @@ public class LoginScreen extends BaseScreen {
         passFieldRegister.setPasswordMode(true);
         stage.addActor(passFieldRegister);
 
-        final TextField emailField = new TextField("", skin);
-        emailField.setPosition(VIRTUAL_WIDTH * 10 / 16 , VIRTUAL_HEIGHT * 4 / 10);
-        emailField.setSize(VIRTUAL_WIDTH / 10, VIRTUAL_HEIGHT / 10);
-        stage.addActor(emailField);
+        final TextField emailFieldRegister = new TextField("", skin);
+        emailFieldRegister.setPosition(VIRTUAL_WIDTH * 10 / 16, VIRTUAL_HEIGHT * 8 / 10);
+        emailFieldRegister.setSize(VIRTUAL_WIDTH / 10, VIRTUAL_HEIGHT / 10);
+        stage.addActor(emailFieldRegister);
 
         final TextButton submit = new TextButton("SUBMIT", skin);
         submit.setPosition(3*VIRTUAL_WIDTH /16, VIRTUAL_HEIGHT / 10);
@@ -137,10 +137,10 @@ public class LoginScreen extends BaseScreen {
         submit.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                String name = nameFieldLogin.getText();
+                String mail = mailFieldLogin.getText();
                 String pass = passFieldLogin.getText();
 
-                if (name == "" | pass == "") {
+                if (mail == "" | pass == "") {
                     new Dialog("Error", skin) {
                         {
                             text("Some field is empty");
@@ -150,9 +150,9 @@ public class LoginScreen extends BaseScreen {
 
                     submit.setChecked(false);
                 } else {
-
-                    if (login(name, pass)) {
-                        userName = name;
+                    User user=login(mail,pass);
+                    if (user!=null) {
+                        userName = user.getNombre();
                         game.setScreen(new MenuScreen(game));
                     } else {
                         new Dialog("Error", skin) {
@@ -173,7 +173,7 @@ public class LoginScreen extends BaseScreen {
             public void clicked(InputEvent event, float x, float y) {
                 String name = nameFieldRegister.getText();
                 String pass = passFieldRegister.getText();
-                String email = emailField.getText();
+                String email= emailFieldRegister.getText();
 
                 if(name==""|pass==""||email==""){
                     new Dialog("Error",skin){
@@ -225,13 +225,10 @@ public class LoginScreen extends BaseScreen {
         skin.dispose();
     }
 
-    private boolean login(String name, String pass) {
-        User user = new WebServices().login(name,pass);
-        if (user!=null){
-            return true;//entrar
-        }else{
-            return false;//devolver error
-        }
+    private User login(String mail, String pass) {
+        User user = new WebServices().login(mail,pass);
+        return user;//comprobar si es null fuera
+
     }
 
     private String register(String name, String pass, String email){
