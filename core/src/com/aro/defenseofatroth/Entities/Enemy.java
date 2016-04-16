@@ -60,23 +60,24 @@ public class Enemy extends Actor {
         shape.setRadius(0.5f);
 
         fixtureDef.shape = shape;
-        body.createFixture(fixtureDef);
+        //body.createFixture(fixtureDef);
 
-        fixture = body.createFixture(shape, 3);
-        fixture.setUserData("enemy");
+        //fixture = body.createFixture(shape, 3);
 
-        shape.dispose();
+        //shape.dispose();
 
         setSize(PIXELS_IN_METER, PIXELS_IN_METER);
 
-        fixtureDef.isSensor = true;
+        fixtureDef.isSensor = false;
         fixtureDef.filter.categoryBits = Level3.ENEMY_BIT;
-        fixtureDef.filter.groupIndex=Level3.ENEMY_BIT;
+        //fixtureDef.filter.groupIndex=Level3.ENEMY_BIT;
         fixtureDef.filter.maskBits = Level3.DEFAULT_BIT | Level3.TORRE_BIT;
         this.alive = true;
         body.createFixture(fixtureDef).setUserData("enemy");
 
-        jump = false;
+        shape.dispose();//Ahora si podemos liberarlo
+
+jump = false;
 
         broja = new TextureRegion(MainClass.getManager().get("barraRojaBuena.png", Texture.class));
         bverde = new TextureRegion(MainClass.getManager().get("barraVerdeBuena.png", Texture.class));
