@@ -214,7 +214,7 @@ cam.update();
         skin.add("default", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         skin.add("badlogic", new Texture("badlogic.jpg"));
 
-        Image validTargetImage = new Image(skin, "badlogic");
+        final Image validTargetImage = new Image(skin, "badlogic");
         validTargetImage.setBounds(0, 0, 100, 100);
         stage.addActor(validTargetImage);
 
@@ -236,7 +236,7 @@ cam.update();
         stage.addActor(invalidTargetImage);
 
 
-        ArrayList<Image> validTargets = new ArrayList();
+        final ArrayList<Image> validTargets = new ArrayList();
         for (int i = 1; i <= 3; i++) {
             for (int j = 1; j <= 3; j++){
                 Image target = new Image(game.getManager().get("target.png", Texture.class));
@@ -275,6 +275,11 @@ cam.update();
                     Texture torreTex = game.getManager().get("torre.png", Texture.class);
                     Torre torreNew = new Torre(world, torreTex, new Vector2(target.getActor().getX(), target.getActor().getY()));
                     stage.addActor(torreNew);
+                    for (int i = 0; i < validTargets.size(); i++) {
+                        if (validTargets.get(i).equals(target.getActor())) {
+                            validTargets.get(i).remove();
+                        }
+                    }
 //                    torre.remove();
 //                    world.destroyBody(torre.getBody());
                 }
