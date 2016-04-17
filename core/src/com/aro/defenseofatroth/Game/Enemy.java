@@ -100,12 +100,13 @@ public class Enemy extends Actor implements Pool.Poolable {
     }
 
     public void setDestino(Vector2 destino) {
-        if (destino.x!=posicion.x && destino.y!=posicion.y) {
+        if (destino.x!=posicion.x && destino.y!=posicion.y) { //sino el atan2 falla
             angulo = MathUtils.atan2(destino.y - posicion.y, destino.x - posicion.x); //obtengo el angulo a seguir para el destino
             velocidad.x = MathUtils.cos(angulo) * velocidadM; //fisica de 1º
             velocidad.y = MathUtils.sin(angulo) * velocidadM;
             cuerpo.setLinearVelocity(velocidad); //añadimos la velocidad al cuerpo
             this.destino = destino;
+            animacionActual=animacionHorizontal;
         }
         //TODO poner la animacion que sea segun la rotacion
 
@@ -164,6 +165,7 @@ public class Enemy extends Actor implements Pool.Poolable {
     public void draw(Batch batch, float delta){
         animationTime+=delta;
         batch.draw(animacionActual.getKeyFrame(animationTime),posicion.x,posicion.y);
+        //TODO revisar!
     }
 
     @Override

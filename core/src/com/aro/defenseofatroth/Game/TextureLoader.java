@@ -1,5 +1,10 @@
 package com.aro.defenseofatroth.Game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
@@ -9,8 +14,28 @@ import com.badlogic.gdx.utils.Disposable;
  * Created by Sergio on 17/04/2016.
  */
 public class TextureLoader implements Disposable{
+    World mundo; //lo tengo para darselo a las Factorias
+    Stage escenario; //lo tengo para darselo a las Factorias
+
+    private TextureAtlas barrasVida; //las barras de vida (pueden ir en otro atlas , solo son 2)
+    private TextureAtlas torres; //las torres del juego
+    private TextureAtlas proyectiles; //los proyectiles del juego
+
+    //Se deberia de usar un asert manager para mostrar una barra de carga
+    public void cargar(){
+        //TODO hacer. Aqui se cargarian los atlas
+        barrasVida=new TextureAtlas(Gdx.files.internal("barrasVida.atlas"));
+    }
+
+    public TextureRegion obtenerBarraRoja(){
+        return barrasVida.findRegion("barraRoja");
+    }
+    public TextureRegion obtenerBarraVerde(){
+        return barrasVida.findRegion("barraVerde");
+    }
+
     @Override
     public void dispose() {
-
+        barrasVida.dispose();
     }
 }
