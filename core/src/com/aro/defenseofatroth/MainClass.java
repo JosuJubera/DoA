@@ -110,6 +110,7 @@ public class MainClass extends Game {
 		manager.load("NewPiskel2.png", Texture.class);
 		manager.load("prehistoric.png", Texture.class);
 		manager.load("prehistoric2.png", Texture.class);
+		manager.load("target.png", Texture.class);
 		manager.load("title.png", Texture.class);
 
 		splashScreen = new SplashScreen(this);

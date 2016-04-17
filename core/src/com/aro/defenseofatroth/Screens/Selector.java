@@ -1,9 +1,12 @@
 package com.aro.defenseofatroth.Screens;
 
 import com.aro.defenseofatroth.MainClass;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -25,6 +28,11 @@ public class Selector {
 
         viewport = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
+
+        // Shader pa hacer gris guardo el codigo por si sirve
+//        String vertexShader = Gdx.files.internal("vertex.glsl").readString();
+//        String fragmentShader = Gdx.files.internal("fragment.glsl").readString();
+//        ShaderProgram shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
 
         Table table = new Table();
         table.defaults().width(100).height(100);

@@ -24,6 +24,7 @@ public class Torre extends Actor {
     private World world;
     private Body body;
     private Fixture fixture;
+    private static int coste = 100;
 
     public Torre(World world, Texture texture, Vector2 position) {
 
@@ -49,7 +50,7 @@ public class Torre extends Actor {
 //        fixture.setUserData("torre");
 //        shape.dispose();
 
-        setSize(PIXELS_IN_METER * 4, PIXELS_IN_METER * 8);
+        setSize(PIXELS_IN_METER * 1.3f, PIXELS_IN_METER * 2.6f);
         debug();
 
         CircleShape alcance = new CircleShape();
@@ -76,5 +77,9 @@ public class Torre extends Actor {
 
     public Body getBody() {
         return body;
+    }
+
+    public static int getCoste() {
+        return coste;
     }
 }

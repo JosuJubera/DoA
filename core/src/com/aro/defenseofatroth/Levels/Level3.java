@@ -37,6 +37,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -108,7 +109,7 @@ renderer = new Box2DDebugRenderer(true,true,true,true,true,true);               
         cam = new OrthographicCamera(72,72);                                                      // Camara pa renderer
 cam.update();
 
-
+        hud.addGold(200);
 
         // Cuando se haga bien cambiar por WorldContactListener
         world.setContactListener(new ContactListener() {                                           // Poner listener de choque al mundo coge todos los choques
@@ -214,7 +215,7 @@ cam.update();
         skin.add("badlogic", new Texture("badlogic.jpg"));
 
         Image validTargetImage = new Image(skin, "badlogic");
-        validTargetImage.setBounds(1280, 720, 100, 100);
+        validTargetImage.setBounds(0, 0, 100, 100);
         stage.addActor(validTargetImage);
 
         Image validTargetImage2 = new Image(skin, "badlogic");
@@ -225,10 +226,26 @@ cam.update();
         validTargetImage3.setBounds(0, 1340, 100, 100);
         stage.addActor(validTargetImage3);
 
+        Image validTargetImage4 = new Image(skin, "badlogic");
+        validTargetImage4.setBounds(1280, 720, 100, 100);
+        stage.addActor(validTargetImage4);
+
 
         Image invalidTargetImage = new Image(skin, "badlogic");
         invalidTargetImage.setBounds(2460, 1340, 100, 100);
         stage.addActor(invalidTargetImage);
+
+
+        ArrayList<Image> validTargets = new ArrayList();
+        for (int i = 1; i <= 3; i++) {
+            for (int j = 1; j <= 3; j++){
+                Image target = new Image(game.getManager().get("target.png", Texture.class));
+                target.setBounds(650 * i, 380 * j, 100, 100);
+                validTargets.add(target);
+                stage.addActor(target);
+            }
+        }
+
 
         GameDragAndDrop dragAndDrop = new GameDragAndDrop();
         dragAndDrop.addSource(new Source(selector.stage.getActors().first()) {
@@ -253,9 +270,10 @@ cam.update();
             @Override
             public void dragStop(InputEvent event, float x, float y, int pointer, Payload payload, Target target) {
 
-                if (target != null) {
+                if (target != null && hud.getMoney() >= torre.getCoste()) {
+                    hud.addGold(-torre.getCoste());
                     Texture torreTex = game.getManager().get("torre.png", Texture.class);
-                    Torre torreNew = new Torre(world, torreTex, new Vector2(payload.getDragActor().getX(), payload.getDragActor().getY()));
+                    Torre torreNew = new Torre(world, torreTex, new Vector2(target.getActor().getX(), target.getActor().getY()));
                     stage.addActor(torreNew);
 //                    torre.remove();
 //                    world.destroyBody(torre.getBody());
@@ -263,20 +281,21 @@ cam.update();
             }
         });
 
-        dragAndDrop.addTarget(new Target(validTargetImage) {
-            public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
-                getActor().setColor(Color.GREEN);
-                return true;
-            }
+        for (int i = 0; i < validTargets.size(); i++) {
+            dragAndDrop.addTarget(new Target(validTargets.get(i)) {
+                public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
+                    getActor().setColor(Color.GREEN);
+                    return true;
+                }
 
-            public void reset (Source source, Payload payload) {
-                getActor().setColor(Color.WHITE);
-            }
+                public void reset(Source source, Payload payload) {
+                    getActor().setColor(Color.WHITE);
+                }
 
-            public void drop (Source source, Payload payload, float x, float y, int pointer) {
-            }
-        });
-
+                public void drop(Source source, Payload payload, float x, float y, int pointer) {
+                }
+            });
+        }
 
         dragAndDrop.addTarget(new Target(invalidTargetImage) {
             public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
