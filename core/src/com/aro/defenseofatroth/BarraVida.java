@@ -43,8 +43,8 @@ public class BarraVida extends Entidad {
 
 
     /**
-     * Tamaño de la barra en tanto porciento
-     * @param valorActual
+     * Tamaño de la barra en tanto porciento (%)
+     * @param valorActual % de la vida
      */
     public void setValor(float valorActual) {
         this.valorActual= MathUtils.clamp((valorActual*ANCHOBARRA)*0.01f, PIXELESANCHO*2, ANCHOBARRA);
