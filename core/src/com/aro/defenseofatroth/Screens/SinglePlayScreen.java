@@ -110,12 +110,6 @@ public class SinglePlayScreen extends BaseScreen {
         n3.setPosition(VIRTUAL_WIDTH - VIRTUAL_WIDTH * 3 / 10, VIRTUAL_HEIGHT * 4 / 7);
         stage.addActor(n3);
 
-//        n3.addListener( new ClickListener() {
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                game.setScreen(new Level3(game));
-//            };
-//        });
         n3.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

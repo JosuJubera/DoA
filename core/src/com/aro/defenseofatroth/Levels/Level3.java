@@ -71,7 +71,6 @@ public class Level3 extends BaseScreen{
     public static final short DEFAULT_BIT = 1;
     public static final short TORRE_BIT = 2;
     public static final short ENEMY_BIT = 4;
-    public static final short DEAD_BIT = 8;
 
     Timer.Task t;          // Pal spwan crea una tarea
     private int contadorBotsCreados = 0;
@@ -106,7 +105,7 @@ public class Level3 extends BaseScreen{
         world = new World(new Vector2(0, 0), true);
 
 renderer = new Box2DDebugRenderer(true,true,true,true,true,true);                                 // Renderer pa debug de bodies y cosas
-        cam = new OrthographicCamera(72,72);                                                      // Camara pa renderer
+cam = new OrthographicCamera(72,72);                                                      // Camara pa renderer
 cam.update();
 
         hud.addGold(200);
@@ -205,36 +204,8 @@ cam.update();
 
         Timer.schedule(t, 0.5f, 1);                                                         // Fijar timer (cuando empezar desde aki, cada cuanto)
 
-
-//        Texture torreTex = game.getManager().get("torre.png", Texture.class);
-//        torre = new Torre(world, torreTex, new Vector2(1, 2));;
-//        stage.addActor(torre);
-
         final Skin skin = new Skin();
         skin.add("default", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        skin.add("badlogic", new Texture("badlogic.jpg"));
-
-        final Image validTargetImage = new Image(skin, "badlogic");
-        validTargetImage.setBounds(0, 0, 100, 100);
-        stage.addActor(validTargetImage);
-
-        Image validTargetImage2 = new Image(skin, "badlogic");
-        validTargetImage2.setBounds(2460, 0, 100, 100);
-        stage.addActor(validTargetImage2);
-
-        Image validTargetImage3 = new Image(skin, "badlogic");
-        validTargetImage3.setBounds(0, 1340, 100, 100);
-        stage.addActor(validTargetImage3);
-
-        Image validTargetImage4 = new Image(skin, "badlogic");
-        validTargetImage4.setBounds(1280, 720, 100, 100);
-        stage.addActor(validTargetImage4);
-
-
-        Image invalidTargetImage = new Image(skin, "badlogic");
-        invalidTargetImage.setBounds(2460, 1340, 100, 100);
-        stage.addActor(invalidTargetImage);
-
 
         final ArrayList<Image> validTargets = new ArrayList();
         for (int i = 1; i <= 3; i++) {
@@ -280,8 +251,6 @@ cam.update();
                             validTargets.get(i).remove();
                         }
                     }
-//                    torre.remove();
-//                    world.destroyBody(torre.getBody());
                 }
             }
         });
@@ -302,32 +271,29 @@ cam.update();
             });
         }
 
-        dragAndDrop.addTarget(new Target(invalidTargetImage) {
-            public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
-                getActor().setColor(Color.RED);
-                return false;
-            }
-
-            public void reset (Source source, Payload payload) {
-                getActor().setColor(Color.WHITE);
-            }
-
-            public void drop (Source source, Payload payload, float x, float y, int pointer) {
-            }
-        });
-
+//        dragAndDrop.addTarget(new Target(invalidTargetImage) {
+//            public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
+//                getActor().setColor(Color.RED);
+//                return false;
+//            }
+//
+//            public void reset (Source source, Payload payload) {
+//                getActor().setColor(Color.WHITE);
+//            }
+//
+//            public void drop (Source source, Payload payload, float x, float y, int pointer) {
+//            }
+//        });
     }
 
     @Override
     public void show() {
-//        Texture torreTex = game.getManager().get("torre.png", Texture.class);
-//        torre = new Torre(world, torreTex, new Vector2(1, 2));;
-//        stage.addActor(torre);
+
     }
 
     @Override
     public void hide() {
-//        torre.remove();
+
     }
 
     @Override
@@ -343,7 +309,7 @@ cam.update();
         Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 1);                                        // Color de fondo y transparencia
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);                                        // Limpiar el buffer de la pantalla
 cam.update();                                                                            // actualizar camara de renderer
-        renderer.render(world,cam.combined);                                             // mostrar renderer para ver bodies y cosas
+renderer.render(world,cam.combined);                                             // mostrar renderer para ver bodies y cosas
         stage.act();                                                                     // Actualizar stage (movimientos y esas cosas antes de dibujar)
         world.step(delta, 6, 2);                                                         // Actualiza el mundo los parametros no cambiar
 
@@ -378,8 +344,6 @@ cam.update();                                                                   
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
         selector.stage.draw();
-
-
 
         stage.draw();                                                                    // Dibujar el stage
     }

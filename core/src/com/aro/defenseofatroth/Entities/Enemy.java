@@ -28,10 +28,8 @@ public class Enemy extends Actor {
     private World world;
 
     private Body body;
-    private Fixture fixture;
     private boolean alive;
     private boolean herir;
-    public boolean jump;
 
     private float vidaMaxima=100;
     private float vidaActual=100;
@@ -60,28 +58,20 @@ public class Enemy extends Actor {
         shape.setRadius(0.5f);
 
         fixtureDef.shape = shape;
-        //body.createFixture(fixtureDef);
-
-        //fixture = body.createFixture(shape, 3);
-
-        //shape.dispose();
 
         setSize(PIXELS_IN_METER, PIXELS_IN_METER);
 
         fixtureDef.isSensor = false;
         fixtureDef.filter.categoryBits = Level3.ENEMY_BIT;
-        //fixtureDef.filter.groupIndex=Level3.ENEMY_BIT;
         fixtureDef.filter.maskBits = Level3.DEFAULT_BIT | Level3.TORRE_BIT;
         this.alive = true;
         body.createFixture(fixtureDef).setUserData("enemy");
 
-        shape.dispose();//Ahora si podemos liberarlo
-
-jump = false;
+        shape.dispose();
 
         broja = new TextureRegion(MainClass.getManager().get("barraRojaBuena.png", Texture.class));
         bverde = new TextureRegion(MainClass.getManager().get("barraVerdeBuena.png", Texture.class));
-        barraVidaFondo = new NinePatch(broja, 0, 0, 0, 0); //es una prueba
+        barraVidaFondo = new NinePatch(broja, 0, 0, 0, 0);
         barraVidaDelante = new NinePatch(bverde,0,0,0,0);
     }
 
@@ -90,24 +80,17 @@ jump = false;
         setPosition(body.getPosition().x * PIXELS_IN_METER, body.getPosition().y * PIXELS_IN_METER);
         batch.draw(texture, getX(), getY(), getWidth(), getHeight());
 
-
-
         barraVidaFondo.draw(batch, body.getPosition().x * PIXELS_IN_METER,
                 body.getPosition().y * PIXELS_IN_METER + getHeight() + 0.1f * PIXELS_IN_METER,
                 100 * getWidth() / PIXELS_IN_METER / 1.5f, 1 * PIXELS_IN_METER / 7.2f);
         barraVidaDelante.draw(batch, body.getPosition().x * PIXELS_IN_METER,
                 body.getPosition().y * PIXELS_IN_METER + getHeight() + 0.1f * PIXELS_IN_METER,
                 vidaActual / vidaMaxima * 100 * getWidth() / PIXELS_IN_METER / 1.5f, 1 * PIXELS_IN_METER / 7.2f);
-
     }
 
     @Override
     public void act(float delta) {
         body.setLinearVelocity(-1, 0);
-        if (jump) {
-            Vector2 position = body.getPosition();
-            body.applyLinearImpulse(20, 0, position.x, position.y, true);
-        }
     }
 
     public boolean isAlive() {

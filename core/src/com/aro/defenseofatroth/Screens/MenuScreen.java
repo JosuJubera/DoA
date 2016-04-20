@@ -94,12 +94,6 @@ public class MenuScreen extends BaseScreen {
 		stage.addActor(ranking);
 
 		// Single player button listener
-//		unjugador.addListener( new ClickListener() {
-//			@Override
-//			public void clicked(InputEvent event, float x, float y) {
-//				game.setScreen(new SinglePlayScreen(game, musica));
-//			};
-//		});
 		unjugador.addListener( new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -113,12 +107,6 @@ public class MenuScreen extends BaseScreen {
 		});
 
 		// Multi player button listener
-//		multijugador.addListener( new ClickListener() {
-//			@Override
-//			public void clicked(InputEvent event, float x, float y) {
-//				game.setScreen(new GameScreen(game));
-//			};
-//		});
 		multijugador.addListener( new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -159,12 +147,11 @@ public class MenuScreen extends BaseScreen {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
-		//stage = new Stage(viewport);
 	}
 
 	@Override
 	public void hide() {
-		//stage.dispose();
+
 	}
 
 

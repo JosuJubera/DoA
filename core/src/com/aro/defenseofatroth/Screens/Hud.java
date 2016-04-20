@@ -97,7 +97,7 @@ public class Hud implements Disposable {
     public static void addGold(int gold) {
 
         money += gold;
-        moneyLabel.setText(String.format("%08d", money));
+        moneyLabel.setText(String.format("%06d", money));
     }
 
     public static int getMoney() {
