@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Pool;
  */
 public class Enemy extends Actor implements Pool.Poolable {
     private ObjectPool<Enemy> poolOrigen; //Esto es para poder liberarlo cuando no se use mas
+    //Solo hay animaciones, no hay una imagen fija
     //Animaciones del enemigo en movimiento
     protected Animation animacionHorizontal;
     protected Animation animacionVerticalSup;
@@ -39,8 +40,6 @@ public class Enemy extends Actor implements Pool.Poolable {
     protected BarraVida barraVida; //barra de vida del enemigo
     protected boolean viva; //si la unidad esta viva
     protected Array<Vector2> ruta; //ruta a seguir por la unidad
-
-
 
     public void setBarraVida(BarraVida barraVida) {
         this.barraVida = barraVida;
@@ -74,6 +73,10 @@ public class Enemy extends Actor implements Pool.Poolable {
         return cuerpo;
     }
 
+    public void setRuta(Array<Vector2> ruta) {
+        this.ruta = ruta;
+    }
+
     public void setCuerpo(Body cuerpo) {
         this.cuerpo = cuerpo;
     }
@@ -84,6 +87,7 @@ public class Enemy extends Actor implements Pool.Poolable {
 
     public void setPosicion(Vector2 posicion) {
         this.posicion = posicion;
+        super.setPosition(posicion.x,posicion.y);
     }
 
     public Vector2 getVelocidad() {
@@ -108,7 +112,7 @@ public class Enemy extends Actor implements Pool.Poolable {
             this.destino = destino;
             animacionActual=animacionHorizontal;
         }
-        //TODO poner la animacion que sea segun la rotacion
+        //TODO poner la animacion que sea segun la rotacion (si se añaden mas animaciones)
 
     }
 

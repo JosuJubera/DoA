@@ -30,7 +30,7 @@ public class BarraVida extends Entidad {
         barraVidaFondo=new NinePatch(broja,PIXELESANCHO,PIXELESANCHO,0,0);
         barraVidaDelante=new NinePatch(bverde,PIXELESANCHO,PIXELESANCHO,0,0);
     }
-    BarraVida(TextureRegion broja,TextureRegion bverde){
+    public BarraVida(TextureRegion broja,TextureRegion bverde){
         this.valorActual=100;
         barraVidaFondo=new NinePatch(broja,PIXELESANCHO,PIXELESANCHO,0,0);
         barraVidaDelante=new NinePatch(bverde,PIXELESANCHO,PIXELESANCHO,0,0);
