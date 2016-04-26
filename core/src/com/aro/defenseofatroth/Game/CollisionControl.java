@@ -21,7 +21,21 @@ public class CollisionControl implements ContactListener {
         //comprobamos si son enemigo y sensor de torre
         if (isInRange(fixtureA,fixtureB)){
             //Obtenemos la torre y le decimos que ataque.
+            if  (fixtureA.getUserData() instanceof Tower){
+                //La torre ataca
+                Tower torre=(Tower) fixtureA.getUserData();
+                Enemy enemigo=(Enemy) fixtureB.getUserData();
+                torre.establecerObjetivo(enemigo);
+            }
+            if  (fixtureB.getUserData() instanceof Tower){
+                //La torre ataca
+                Tower torre=(Tower) fixtureB.getUserData();
+                Enemy enemigo=(Enemy) fixtureA.getUserData();
+                torre.establecerObjetivo(enemigo);
+            }
         }
+        //Comprobamos si lo que choca es un proyectil con una unidad
+
 
     }
 

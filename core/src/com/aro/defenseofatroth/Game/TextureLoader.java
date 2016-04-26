@@ -37,7 +37,7 @@ public class TextureLoader implements Disposable{
     public void cargar(){
         //TODO hacer. Aqui se cargarian los atlas
         barrasVida=new TextureAtlas(Gdx.files.internal("barrasVida.atlas"));
-        TextureAtlas atextura = new TextureAtlas(Gdx.files.internal("caveman.atlas"));
+        TextureAtlas atextura = new TextureAtlas(Gdx.files.internal("caveman.atlas"));//TODO cambiar por las animaciones buenas
         Array<TextureAtlas.AtlasRegion> anima = new Array<TextureAtlas.AtlasRegion>(atextura.getRegions());
         basicTankHoriz=new Animation(0.05f, anima, Animation.PlayMode.LOOP);
     }
@@ -68,5 +68,10 @@ public class TextureLoader implements Disposable{
     @Override
     public void dispose() {
         barrasVida.dispose();
+    }
+
+    public TextureRegion obtenerBasicTower(){
+        //TODO hacer. Debe devolver un tankeBasico
+        return null;
     }
 }

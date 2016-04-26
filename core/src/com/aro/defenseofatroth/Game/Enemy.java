@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Pool;
  */
 public class Enemy extends Actor implements Pool.Poolable {
     private ObjectPool<Enemy> poolOrigen; //Esto es para poder liberarlo cuando no se use mas
+    public static short ENEMY_BIT=0x02; //Bits de mascara que tendran las unidades
     //Solo hay animaciones, no hay una imagen fija
     //Animaciones del enemigo en movimiento
     protected Animation animacionHorizontal;
@@ -39,7 +40,15 @@ public class Enemy extends Actor implements Pool.Poolable {
     protected int vidaMaxima; //vida maxima del enemigo
     protected BarraVida barraVida; //barra de vida del enemigo
     protected boolean viva; //si la unidad esta viva
-    protected Array<Vector2> ruta; //ruta a seguir por la unidad
+    protected Array<Vector2> ruta; //ruta a seguir por la unidad. Este valor es FINAL. NO SE DEBE CAMBIAR
+    private int posicionEnRuta;
+
+    public void setPosicionEnRuta(int posicionEnRuta) {
+        if (ruta!=null && posicionEnRuta<=ruta.size) {
+            this.posicionEnRuta = posicionEnRuta;
+            this.setDestino(ruta.get(posicionEnRuta));
+        }
+    }
 
     public void setBarraVida(BarraVida barraVida) {
         this.barraVida = barraVida;
@@ -74,7 +83,7 @@ public class Enemy extends Actor implements Pool.Poolable {
     }
 
     public void setRuta(Array<Vector2> ruta) {
-        this.ruta = ruta;
+        this.ruta =ruta;
     }
 
     public void setCuerpo(Body cuerpo) {
@@ -178,8 +187,9 @@ public class Enemy extends Actor implements Pool.Poolable {
             posicion=cuerpo.getPosition();
             super.setPosition(posicion.x,posicion.y);
             if (posicion.x==destino.x && posicion.x==posicion.y){ //comprobamos si llegamos al destino (tambien se puede calcular usando la distancia)
-                if (ruta!=null && ruta.size>0) {
-                    setDestino(ruta.pop()); //ponemos como destino el siguiente punto de la ruta
+                if (ruta!=null && ruta.size<=posicionEnRuta) {
+                    posicionEnRuta+=1;
+                    setDestino(ruta.get(posicionEnRuta)); //ponemos como destino el siguiente punto de la ruta
                 }else{ //hemos llegado al final de la ruta
                     velocidad.setZero();
                     cuerpo.setLinearVelocity(velocidad); //recordard, la velocidad la lleva el CUERPO

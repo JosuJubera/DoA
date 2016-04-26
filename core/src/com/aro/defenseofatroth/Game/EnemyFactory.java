@@ -18,8 +18,6 @@ public class EnemyFactory implements ObjectPool<Enemy> {
     protected Array<Vector2> ruta; //La ruta que seguiran
     private Pool<BasicTank> basicTankPool; //Pool de los tankes basicos
     private TextureLoader textureLoader;
-    private static short TORRE_SENSOR_BIT=0x01; //Bit de colision con la torre
-    private static short ENEMY_BIT=0x02; //Bits de mascara que tendran las unidades
 
     public TextureLoader getTextureLoader() {
         return textureLoader;
@@ -29,6 +27,10 @@ public class EnemyFactory implements ObjectPool<Enemy> {
         this.textureLoader = textureLoader;
     }
 
+    /**
+     * Establece la ruta que seguiran las unidades
+     * @param ruta array con la ruta
+     */
     public void setRuta(Array<Vector2> ruta){
         this.ruta=ruta;
     }
@@ -50,8 +52,8 @@ public class EnemyFactory implements ObjectPool<Enemy> {
                 CircleShape shape =  new CircleShape(); //El shape tambien puede ser un cuadrado, si eso se camia aki
                 shape.setRadius(0.5f);
                 fixtureDef.shape = shape;
-                fixtureDef.filter.categoryBits = EnemyFactory.ENEMY_BIT; //su categoria
-                fixtureDef.filter.maskBits = EnemyFactory.TORRE_SENSOR_BIT; //con quien choca
+                fixtureDef.filter.categoryBits = Enemy.ENEMY_BIT; //su categoria
+                fixtureDef.filter.maskBits = Tower.TORRE_SENSOR_BIT; //con quien choca
                 cuerpo.createFixture(fixtureDef);
                 shape.dispose();
                 //añadimos los datos en el basictank
@@ -72,12 +74,12 @@ public class EnemyFactory implements ObjectPool<Enemy> {
     public BasicTank obtenerTankeBasico(Vector2 posicion,float velocidad){
         //Añadimos los datos al tanke. Ojo, solo añadimos aquellos que se resetean
         BasicTank aux=basicTankPool.obtain();
-        aux.setRuta(ruta);
+        aux.setRuta(ruta); //Ciudadooooo!! Hay que pasar una COPIA del array
         aux.setVida(100);
         aux.setVidaMaxima(100);
         aux.setVelocidadM(velocidad);
         aux.setViva(true);
-        aux.setDestino(ruta.pop());
+        aux.setPosicionEnRuta(0);
         textureLoader.getEscenario().addActor(aux); //lo añadimos al stage para que se dibuje
         return aux;
     }
