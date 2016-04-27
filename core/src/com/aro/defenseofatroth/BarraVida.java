@@ -30,6 +30,11 @@ public class BarraVida extends Entidad {
         barraVidaFondo=new NinePatch(broja,PIXELESANCHO,PIXELESANCHO,0,0);
         barraVidaDelante=new NinePatch(bverde,PIXELESANCHO,PIXELESANCHO,0,0);
     }
+    public BarraVida(TextureRegion broja,TextureRegion bverde){
+        this.valorActual=100;
+        barraVidaFondo=new NinePatch(broja,PIXELESANCHO,PIXELESANCHO,0,0);
+        barraVidaDelante=new NinePatch(bverde,PIXELESANCHO,PIXELESANCHO,0,0);
+    }
     public void setPosition(Vector2 posicion){
         this.posicion=posicion;
     }
@@ -43,8 +48,8 @@ public class BarraVida extends Entidad {
 
 
     /**
-     * Tamaño de la barra en tanto porciento
-     * @param valorActual
+     * Tamaño de la barra en tanto porciento (%)
+     * @param valorActual % de la vida
      */
     public void setValor(float valorActual) {
         this.valorActual= MathUtils.clamp((valorActual*ANCHOBARRA)*0.01f, PIXELESANCHO*2, ANCHOBARRA);
