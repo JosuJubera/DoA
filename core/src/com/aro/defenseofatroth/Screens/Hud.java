@@ -94,6 +94,10 @@ public class Hud implements Disposable {
         waveLabel.setText(String.format("%02d", wave));
     }
 
+    public int getWave() {
+        return wave;
+    }
+
     public static void addGold(int gold) {
 
         money += gold;
