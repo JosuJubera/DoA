@@ -335,6 +335,11 @@ renderer.render(world,cam.combined);                                            
                 Timer.schedule(t, 0.5f, 1);
                 contadorBotsCreados = 0;
             }
+            if (e.getX() < 0) {
+                bots.removeIndex(i);                                                     // Quitar del array
+                e.remove();                                                              // Elimina nose que pero hay que usar
+                world.destroyBody(e.getBody());
+            }
         }
 
         if ( contadorBotsCreados >= (hud.getWave() * 10)){
