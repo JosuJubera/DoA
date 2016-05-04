@@ -204,6 +204,10 @@ public class Enemy extends Actor implements Pool.Poolable {
             }
         }
     }
+    public void liberar(){
+        poolOrigen.remove(this);
+        super.remove(); //no se dibuja
+    }
 
     @Override
     public void reset() {
@@ -211,8 +215,6 @@ public class Enemy extends Actor implements Pool.Poolable {
         super.remove();//ya no se dibuja
         cuerpo.setLinearVelocity(0f,0f);
         cuerpo.setTransform(0f,0f,0f);
-        cuerpo.setAngularVelocity(0f); //no queremos que gire sobre si mismo
-        cuerpo.setLinearDamping(0f); //resistencia
         posicion.setZero();
         velocidad.setZero();
         destino.setZero();

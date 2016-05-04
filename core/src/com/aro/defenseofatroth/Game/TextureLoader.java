@@ -74,4 +74,8 @@ public class TextureLoader implements Disposable{
         //TODO hacer. Debe devolver un tankeBasico
         return null;
     }
+    public TextureRegion obtenerProyectilBasicTower(){
+        //TODO hacer
+        return null;
+    }
 }

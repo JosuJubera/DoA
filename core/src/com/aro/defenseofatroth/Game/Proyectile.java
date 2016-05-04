@@ -36,6 +36,14 @@ public class Proyectile extends Actor implements Pool.Poolable {
         this.textura = textura;
     }
 
+    public void setVelocidad(Vector2 velocidad) {
+        this.velocidad = velocidad;
+    }
+
+    public void setPosicion(Vector2 posicion) {
+        this.posicion = posicion;
+    }
+
     public Enemy getEnemigo() {
         return enemigo;
     }
