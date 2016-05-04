@@ -167,9 +167,12 @@ public class Enemy extends Actor implements Pool.Poolable {
     }
 
     public void daniar(int danio){
-        this.vida-=danio;
+        if (vida>0) {
+            this.vida -= danio;
+        }
         if (vida<=0){
             viva=false;
+            vida=0;
         }
         barraVida.setValor(vida/vidaMaxima);
     }
