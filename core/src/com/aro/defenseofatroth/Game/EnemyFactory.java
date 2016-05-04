@@ -71,7 +71,7 @@ public class EnemyFactory implements ObjectPool<Enemy> {
         };
     }
 
-    public BasicTank obtenerTankeBasico(Vector2 posicion,float velocidad){
+    public BasicTank obtenerTankeBasico(float velocidad){
         //Añadimos los datos al tanke. Ojo, solo añadimos aquellos que se resetean
         BasicTank aux=basicTankPool.obtain();
         aux.setRuta(ruta); //Ciudadooooo!! Hay que pasar una COPIA del array
@@ -80,7 +80,7 @@ public class EnemyFactory implements ObjectPool<Enemy> {
         aux.setVelocidadM(velocidad);
         aux.setViva(true);
         aux.setPosicionEnRuta(0);
-        textureLoader.getEscenario().addActor(aux); //lo añadimos al stage para que se dibuje
+        //textureLoader.getEscenario().addActor(aux); //lo añadimos al stage para que se dibuje //TODO ai revienta al añadir destino
         return aux;
     }
 

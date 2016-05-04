@@ -22,6 +22,9 @@ public class TextureLoader implements Disposable{
     private TextureAtlas barrasVida; //las barras de vida (pueden ir en otro atlas , solo son 2)
     private TextureAtlas torres; //las torres del juego
     private TextureAtlas proyectiles; //los proyectiles del juego
+    private TextureAtlas enemigos; //los enemigos del juego
+
+    private TextureRegion niapa;
 
     //Animaciones
 
@@ -65,14 +68,28 @@ public class TextureLoader implements Disposable{
     public void setMundo(World mundo) {
         this.mundo = mundo;
     }
+
+    public void niapadePrueba(TextureRegion objeto){
+        this.niapa=objeto;
+    }
+
     @Override
     public void dispose() {
         barrasVida.dispose();
+        if (enemigos!=null){
+            enemigos.dispose();
+        }
+        if (torres!=null) {
+            torres.dispose();
+        }
+        if (proyectiles!=null){
+            proyectiles.dispose();
+        }
     }
 
     public TextureRegion obtenerBasicTower(){
         //TODO hacer. Debe devolver un tankeBasico
-        return null;
+        return niapa;
     }
     public TextureRegion obtenerProyectilBasicTower(){
         //TODO hacer

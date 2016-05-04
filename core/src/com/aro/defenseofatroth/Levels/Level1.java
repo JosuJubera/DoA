@@ -1,6 +1,12 @@
 package com.aro.defenseofatroth.Levels;
 
 import com.aro.defenseofatroth.Entidad;
+import com.aro.defenseofatroth.Game.BasicTank;
+import com.aro.defenseofatroth.Game.BasicTower;
+import com.aro.defenseofatroth.Game.EnemyFactory;
+import com.aro.defenseofatroth.Game.ProyectileFactory;
+import com.aro.defenseofatroth.Game.TextureLoader;
+import com.aro.defenseofatroth.Game.TowerFactory;
 import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Proyectil;
 import com.aro.defenseofatroth.Screens.BaseScreen;
@@ -22,6 +28,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -58,11 +65,6 @@ public class Level1  extends BaseScreen {
 		Screen: Ajusta a la pantalla con proporcion. Si se sale, cortara la imagen.
 		Extend: Se mantiene ajustada entre X valores. Si se sale del maximo rellena con bordes negros
 	*/
-	//En pixeles! Para mantener la proporcion
-	private static final float MIN_SCENE_WIDTH = 800.0f;
-	private static final float MIN_SCENE_HEIGHT = 600.0f;
-	private static final float MAX_SCENE_WIDTH = 1280.0f;
-	private static final float MAX_SCENE_HEIGHT = 720.0f;
 
 	//gestion de entrada
 	private static final int MESSAGE_MAX = 20;
@@ -74,7 +76,18 @@ public class Level1  extends BaseScreen {
 
 
 	private Music music;
-	//private Media
+
+
+	//Variables del nivel
+    private TextureLoader textureLoader;
+    private Stage stage;
+    private World world;
+    //Variables auxilires, estas se eliminaran
+    EnemyFactory enemyFactory;
+    ProyectileFactory proyectileFactory;
+    TowerFactory towerFactory;
+
+
 
 
 	public Level1(MainClass game, boolean musica) {
@@ -123,6 +136,34 @@ public class Level1  extends BaseScreen {
         myTorre.setPosicion(new Vector2(1f, 1f));
         entidades.add(myTorre);
 
+		//Se crea el TextureLoader y el mundo, escenario
+        textureLoader=new TextureLoader();
+        world=new World(new Vector2(0,0),false);
+        stage=new Stage(viewport);
+        textureLoader.setMundo(world);
+        textureLoader.setEscenario(stage);
+        textureLoader.cargar();
+        //Variables  auxilires, estas se borrarian
+        enemyFactory=new EnemyFactory();
+        proyectileFactory=new ProyectileFactory();
+        towerFactory=new TowerFactory();
+        enemyFactory.setTextureLoader(textureLoader);
+        enemyFactory.crearPools();
+        proyectileFactory.setTextureLoader(textureLoader);
+        towerFactory.setTextureLoader(textureLoader);
+        towerFactory.setProyectileFactory(proyectileFactory);
+        textureLoader.niapadePrueba(anima.get(1));
+        BasicTower pruebas=towerFactory.obtenerBasicTower(0, 0);
+        Array<Vector2> utas=new Array<Vector2>();
+        utas.add(new Vector2(0,0));
+        utas.add(new Vector2(1,1));
+        utas.add(new Vector2(5,5));
+        enemyFactory.setRuta(utas);
+
+        BasicTank  tankPru=enemyFactory.obtenerTankeBasico(15f);
+
+
+
 
 
 	}
@@ -132,20 +173,11 @@ public class Level1  extends BaseScreen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
+        batch.setProjectionMatrix(camera.combined);
 		camera.update();
-		batch.setProjectionMatrix(camera.combined);
-		//Preparamos para dibujar
-		batch.begin();
-		//Dibujamos, to.do lo que haya que renderizar ira aqui
-		background.draw(batch);
-		//Dibujar toda la escena
-		for (int i = 0; i < entidades.size; i++) {
-			entidades.get(i).draw(batch, delta);
-		}
-
-		//No nos olvidemos de terminar el dibujo. Si algo se renderiza despues de esto, la aplicacion PETARA!
-		batch.end();
+		stage.act();
+        world.step(delta, 6, 2);
+        stage.draw();
 	}
 
 
@@ -161,6 +193,9 @@ public class Level1  extends BaseScreen {
 		batch.dispose();
 		atlas.dispose();
 		atextura.dispose();
+        world.dispose();
+        stage.dispose();
+        textureLoader.dispose();
 		//Camaras y sprites no se necesitan limpiar
 	}
 
