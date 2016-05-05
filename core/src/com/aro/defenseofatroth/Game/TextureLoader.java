@@ -23,6 +23,7 @@ public class TextureLoader implements Disposable{
     private TextureAtlas torres; //las torres del juego
     private TextureAtlas proyectiles; //los proyectiles del juego
     private TextureAtlas enemigos; //los enemigos del juego
+    private Animation basicTankHoriz;
 
     private TextureRegion niapa;
 
@@ -32,7 +33,7 @@ public class TextureLoader implements Disposable{
         return basicTankHoriz;
     }
 
-    private Animation basicTankHoriz;
+
 
 
 

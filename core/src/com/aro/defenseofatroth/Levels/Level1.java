@@ -3,6 +3,7 @@ package com.aro.defenseofatroth.Levels;
 import com.aro.defenseofatroth.Entidad;
 import com.aro.defenseofatroth.Game.BasicTank;
 import com.aro.defenseofatroth.Game.BasicTower;
+import com.aro.defenseofatroth.Game.CollisionControl;
 import com.aro.defenseofatroth.Game.EnemyFactory;
 import com.aro.defenseofatroth.Game.ProyectileFactory;
 import com.aro.defenseofatroth.Game.TextureLoader;
@@ -13,18 +14,14 @@ import com.aro.defenseofatroth.Screens.BaseScreen;
 import com.aro.defenseofatroth.Tools.GestureHandlerPruebas;
 import com.aro.defenseofatroth.Torre;
 import com.aro.defenseofatroth.Unidad;
-import com.aro.defenseofatroth.Tools.GestureHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -82,6 +79,7 @@ public class Level1  extends BaseScreen {
     private TextureLoader textureLoader;
     private Stage stage;
     private World world;
+	private CollisionControl collisionControl;
     //Variables auxilires, estas se eliminaran
     EnemyFactory enemyFactory;
     ProyectileFactory proyectileFactory;
@@ -126,7 +124,7 @@ public class Level1  extends BaseScreen {
 		atextura = new TextureAtlas(Gdx.files.internal("caveman.atlas"));
 		Array<TextureAtlas.AtlasRegion> anima = new Array<TextureAtlas.AtlasRegion>(atextura.getRegions());
 		prueba.animacion = new Animation(0.05f, anima, Animation.PlayMode.LOOP);
-		entidades = new Array();
+		entidades = new Array<Entidad>();
 		entidades.add(prueba);
 		prueba.setVelocidad(100f);
 		prueba.setDestino(new Vector2(10f,10f));
@@ -143,7 +141,9 @@ public class Level1  extends BaseScreen {
         textureLoader.setMundo(world);
         textureLoader.setEscenario(stage);
         textureLoader.cargar();
-        //Variables  auxilires, estas se borrarian
+		collisionControl=new CollisionControl();
+        world.setContactListener(collisionControl);
+		//Variables  auxilires, estas se borrarian
         enemyFactory=new EnemyFactory();
         proyectileFactory=new ProyectileFactory();
         towerFactory=new TowerFactory();
@@ -156,8 +156,11 @@ public class Level1  extends BaseScreen {
         BasicTower pruebas=towerFactory.obtenerBasicTower(0, 0);
         Array<Vector2> utas=new Array<Vector2>();
         utas.add(new Vector2(0,0));
-        utas.add(new Vector2(1,1));
-        utas.add(new Vector2(5,5));
+        utas.add(new Vector2(100,100));
+        utas.add(new Vector2(-500,500));
+		utas.add(new Vector2(100,-150));
+		utas.add(new Vector2(50,600));
+		utas.add(new Vector2(-250,-150));
         enemyFactory.setRuta(utas);
 
         BasicTank  tankPru=enemyFactory.obtenerTankeBasico(15f);

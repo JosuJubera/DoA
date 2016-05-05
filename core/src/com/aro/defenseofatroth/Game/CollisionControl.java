@@ -1,6 +1,5 @@
 package com.aro.defenseofatroth.Game;
 
-import com.aro.defenseofatroth.Proyectil;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;

@@ -1,8 +1,11 @@
 package com.aro.defenseofatroth.Game;
 
 import com.aro.defenseofatroth.BarraVida;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -43,8 +46,17 @@ public class Enemy extends Actor implements Pool.Poolable {
     protected Array<Vector2> ruta; //ruta a seguir por la unidad. Este valor es FINAL. NO SE DEBE CAMBIAR
     private int posicionEnRuta;
 
+    //Debug
+    Sprite posdestino = new Sprite(new Texture(Gdx.files.internal("barraRoja.png")));
+
+    Enemy(){
+        posicion=new Vector2(0,0);
+        velocidad=new Vector2(0,0);
+        destino=new Vector2(0,0);
+    }
+
     public void setPosicionEnRuta(int posicionEnRuta) {
-        if (ruta!=null && posicionEnRuta<=ruta.size) {
+        if (ruta!=null && posicionEnRuta<=ruta.size-1) {
             this.posicionEnRuta = posicionEnRuta;
             this.setDestino(ruta.get(posicionEnRuta));
         }
@@ -96,6 +108,7 @@ public class Enemy extends Actor implements Pool.Poolable {
 
     public void setPosicion(Vector2 posicion) {
         this.posicion = posicion;
+        cuerpo.setTransform(posicion,0);
         super.setPosition(posicion.x,posicion.y);
     }
 
@@ -113,16 +126,32 @@ public class Enemy extends Actor implements Pool.Poolable {
     }
 
     public void setDestino(Vector2 destino) {
-        if (destino.x!=posicion.x && destino.y!=posicion.y) { //sino el atan2 falla
+        if ((destino.x!=posicion.x) && destino.y!=posicion.y) { //sino el atan2 falla
             angulo = MathUtils.atan2(destino.y - posicion.y, destino.x - posicion.x); //obtengo el angulo a seguir para el destino
             velocidad.x = MathUtils.cos(angulo) * velocidadM; //fisica de 1º
             velocidad.y = MathUtils.sin(angulo) * velocidadM;
             cuerpo.setLinearVelocity(velocidad); //añadimos la velocidad al cuerpo
             this.destino = destino;
             animacionActual=animacionHorizontal;
-        }
-        //TODO poner la animacion que sea segun la rotacion (si se añaden mas animaciones)
+            //TODO poner parar que se vea el punto a donde va!
 
+        }else{//estoy en el destino, paso al siguiente punto de la ruta
+            avanzar();
+        }
+
+        //TODO poner la animacion que sea segun la rotacion (si se añaden mas animaciones)
+    animacionActual=animacionHorizontal;
+    }
+
+    private void avanzar() {
+        if ((ruta ==null) || (posicionEnRuta>=(ruta.size-1))){//Estamos en el final, nos liberamos
+            velocidad.setZero();
+            cuerpo.setLinearVelocity(velocidad);
+            //this.liberar();
+        }else{
+            posicionEnRuta++;
+            setPosicionEnRuta(posicionEnRuta);
+        }
     }
 
     public float getVelocidadM() {
@@ -182,6 +211,7 @@ public class Enemy extends Actor implements Pool.Poolable {
         animationTime+=delta;
         batch.draw(animacionActual.getKeyFrame(animationTime),posicion.x,posicion.y);
         //TODO revisar!
+        batch.draw(posdestino.getTexture(),100,100);
     }
 
     @Override
@@ -189,20 +219,15 @@ public class Enemy extends Actor implements Pool.Poolable {
         if (viva){ //esta viva, actualizamos posicion
             posicion=cuerpo.getPosition();
             super.setPosition(posicion.x,posicion.y);
-            if (posicion.x==destino.x && posicion.x==posicion.y){ //comprobamos si llegamos al destino (tambien se puede calcular usando la distancia)
-                if (ruta!=null && ruta.size<=posicionEnRuta) {
-                    posicionEnRuta+=1;
-                    setDestino(ruta.get(posicionEnRuta)); //ponemos como destino el siguiente punto de la ruta
-                }else{ //hemos llegado al final de la ruta
-                    velocidad.setZero();
-                    cuerpo.setLinearVelocity(velocidad); //recordard, la velocidad la lleva el CUERPO
-                }
+            if (posicion.dst(destino)<(50f+velocidadM*delta)){ //comprobamos si llegamos al destino (tambien se puede calcular usando la distancia)
+                   avanzar();
             }
         }else{ //esta muerta, si ya ha pasado su tiempo de animacion, se libera
             if (animacionMuerte.isAnimationFinished(animationTime+delta)){
                 poolOrigen.remove(this); //nos liberamos
             }
         }
+
     }
     public void liberar(){
         poolOrigen.remove(this);

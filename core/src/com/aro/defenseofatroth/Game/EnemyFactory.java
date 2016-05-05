@@ -61,9 +61,7 @@ public class EnemyFactory implements ObjectPool<Enemy> {
                 basicTank.setAnimacionHorizontal(textureLoader.getBasicTankHoriz());
                 //TODO añadir el resto de animaciones, pero por ahora lo dejamso asi.
                 basicTank.setAnimationTime(0);
-                basicTank.setPosicion(new Vector2(0, 0));
-                basicTank.setDestino(new Vector2(0, 0));
-                basicTank.setVelocidad(new Vector2(0, 0));
+                basicTank.setAnimacionHorizontal(textureLoader.getBasicTankHoriz());
                 basicTank.setPoolOrigen(niapa); //añadimos el pool de origen para limpiarlo mas adelante
                 basicTank.setBarraVida(new BarraVida(textureLoader.obtenerBarraRoja(),textureLoader.obtenerBarraVerde()));
                 return basicTank;
@@ -79,8 +77,9 @@ public class EnemyFactory implements ObjectPool<Enemy> {
         aux.setVidaMaxima(100);
         aux.setVelocidadM(velocidad);
         aux.setViva(true);
-        aux.setPosicionEnRuta(0);
-        //textureLoader.getEscenario().addActor(aux); //lo añadimos al stage para que se dibuje //TODO ai revienta al añadir destino
+        aux.setPosicion(ruta.get(0));
+        aux.setPosicionEnRuta(1); //qieremos ir al 2º punto, el 1º es el origen!
+        textureLoader.getEscenario().addActor(aux); //lo añadimos al stage para que se dibuje
         return aux;
     }
 
