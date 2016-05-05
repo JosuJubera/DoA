@@ -47,12 +47,15 @@ public class Enemy extends Actor implements Pool.Poolable {
     private int posicionEnRuta;
 
     //Debug
-    Sprite posdestino = new Sprite(new Texture(Gdx.files.internal("barraRoja.png")));
+    Sprite posdestino;
 
     Enemy(){
         posicion=new Vector2(0,0);
         velocidad=new Vector2(0,0);
         destino=new Vector2(0,0);
+        //Debug, borrar
+        posdestino = new Sprite(new Texture(Gdx.files.internal("barraRoja.png")));
+        posdestino.scale(0.3f);
     }
 
     public void setPosicionEnRuta(int posicionEnRuta) {
@@ -211,7 +214,7 @@ public class Enemy extends Actor implements Pool.Poolable {
         animationTime+=delta;
         batch.draw(animacionActual.getKeyFrame(animationTime),posicion.x,posicion.y);
         //TODO revisar!
-        batch.draw(posdestino.getTexture(),100,100);
+        batch.draw(posdestino.getTexture(),destino.x,destino.y);
     }
 
     @Override

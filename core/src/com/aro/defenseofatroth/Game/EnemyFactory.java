@@ -50,7 +50,7 @@ public class EnemyFactory implements ObjectPool<Enemy> {
                 cuerpo.setUserData(basicTank); //Añadimos un puntero al cuerpo con la informacion del tanke
                 FixtureDef fixtureDef=new FixtureDef();
                 CircleShape shape =  new CircleShape(); //El shape tambien puede ser un cuadrado, si eso se camia aki
-                shape.setRadius(0.5f);
+                shape.setRadius(50f);
                 fixtureDef.shape = shape;
                 fixtureDef.filter.categoryBits = Enemy.ENEMY_BIT; //su categoria
                 fixtureDef.filter.maskBits = Tower.TORRE_SENSOR_BIT; //con quien choca

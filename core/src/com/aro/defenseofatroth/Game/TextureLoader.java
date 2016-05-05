@@ -1,7 +1,9 @@
 package com.aro.defenseofatroth.Game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
@@ -26,6 +28,7 @@ public class TextureLoader implements Disposable{
     private Animation basicTankHoriz;
 
     private TextureRegion niapa;
+    private Texture proyniapa;
 
     //Animaciones
 
@@ -70,8 +73,9 @@ public class TextureLoader implements Disposable{
         this.mundo = mundo;
     }
 
-    public void niapadePrueba(TextureRegion objeto){
-        this.niapa=objeto;
+    public void niapadePrueba(TextureRegion torre,Texture proyectil){
+        this.niapa=torre;
+        this.proyniapa=proyectil;
     }
 
     @Override
@@ -94,6 +98,7 @@ public class TextureLoader implements Disposable{
     }
     public TextureRegion obtenerProyectilBasicTower(){
         //TODO hacer
-        return null;
+
+        return new TextureRegion(proyniapa);
     }
 }
