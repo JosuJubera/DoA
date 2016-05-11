@@ -1,5 +1,6 @@
 package com.aro.defenseofatroth.Levels;
 
+import com.aro.defenseofatroth.ActionResolver;
 import com.aro.defenseofatroth.Entities.Enemy;
 import com.aro.defenseofatroth.Entities.Torre;
 import com.aro.defenseofatroth.Entities.Verde;
@@ -37,6 +38,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.GameDragAndDrop;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.chartboost.sdk.CBLocation;
+import com.chartboost.sdk.Chartboost;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -49,7 +52,7 @@ import static com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.*;
 /**
  * Created by elementary on 28/03/16.
  */
-public class Level3 extends BaseScreen{
+public class Level3 extends BaseScreen implements ActionResolver{
 
     private final OrthographicCamera camera;
     private final FitViewport viewport;
@@ -331,6 +334,7 @@ renderer.render(world,cam.combined);                                            
             }
             if (bots.size == 0) {
                 hud.addWave();
+                showChartBoostIntersititial();
                 bots.clear();
                 Timer.schedule(t, 0.5f, 1);
                 contadorBotsCreados = 0;
@@ -368,5 +372,11 @@ renderer.render(world,cam.combined);                                            
         bots.add(enemy);                                                                 // Añadir al array de enemigos
         bots.add(enemy2);
         contadorBotsCreados+=2;                                                           // Contador de enemigos
+    }
+
+    @Override
+    public void showChartBoostIntersititial() {
+        Chartboost.cacheInterstitial(CBLocation.LOCATION_DEFAULT);
+        Chartboost.showInterstitial(CBLocation.LOCATION_DEFAULT);
     }
 }
