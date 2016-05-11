@@ -1,17 +1,15 @@
 package com.aro.defenseofatroth;
 
 import com.aro.defenseofatroth.Screens.LoginScreen;
-import com.aro.defenseofatroth.Screens.MenuScreen;
 import com.aro.defenseofatroth.Screens.SplashScreen;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Timer;
 
-public class MainClass extends Game {
+
+public class MainClass extends Game{
 
 	private static AssetManager manager;
 	private SplashScreen splashScreen;
