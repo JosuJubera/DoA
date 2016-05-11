@@ -52,7 +52,7 @@ public class BarraVida extends Entidad {
      * @param valorActual % de la vida
      */
     public void setValor(float valorActual) {
-        this.valorActual= MathUtils.clamp((valorActual*ANCHOBARRA)*0.01f, PIXELESANCHO*2, ANCHOBARRA);
+        this.valorActual= MathUtils.clamp((valorActual*ANCHOBARRA), PIXELESANCHO*2, ANCHOBARRA);
     }
 
     @Override

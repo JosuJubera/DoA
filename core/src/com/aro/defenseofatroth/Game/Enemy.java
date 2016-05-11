@@ -206,7 +206,8 @@ public class Enemy extends Actor implements Pool.Poolable {
             viva=false;
             vida=0;
         }
-        barraVida.setValor(vida/vidaMaxima);
+        barraVida.setValor(((float) vida )/((float) vidaMaxima));
+        Gdx.app.log("ENEMY", "Vida disponible: "+vida+" maxima "+vidaMaxima+" Valor: "+(((float)vida)/((float)vidaMaxima)));
     }
 
     @Override
@@ -214,7 +215,7 @@ public class Enemy extends Actor implements Pool.Poolable {
         animationTime+=delta;
         batch.draw(animacionActual.getKeyFrame(animationTime),posicion.x,posicion.y);
         //TODO revisar!
-        batch.draw(posdestino.getTexture(),destino.x,destino.y);
+       // batch.draw(posdestino.getTexture(),destino.x,destino.y);
         barraVida.draw(batch,delta);
     }
 
@@ -230,11 +231,9 @@ public class Enemy extends Actor implements Pool.Poolable {
             }
         }else{ //esta muerta, si ya ha pasado su tiempo de animacion, se libera
            // if (animacionMuerte.isAnimationFinished(animationTime+delta)){
-           //    this.liberar();//liberamos los recursos
+               this.liberar();//liberamos los recursos
            // }
         }
-        barraVida.setValor(vida/vidaMaxima);
-
     }
     public void liberar(){
         poolOrigen.remove(this);
@@ -244,7 +243,7 @@ public class Enemy extends Actor implements Pool.Poolable {
     @Override
     public void reset() {
         //Animaciones, Cuerpos y Pools no se libera, por que son constantes a todos los enemigos (salvo que algun hijo lso modifique)
-        super.remove();//ya no se dibuja
+        //super.remove();//ya no se dibuja
         cuerpo.setLinearVelocity(0f,0f);
         cuerpo.setTransform(0f,0f,0f);
         posicion.setZero();

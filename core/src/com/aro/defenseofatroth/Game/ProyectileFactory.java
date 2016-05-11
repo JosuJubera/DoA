@@ -39,6 +39,7 @@ public class ProyectileFactory implements ObjectPool<Proyectile> {
                 CircleShape shape =  new CircleShape(); //El shape tambien puede ser un cuadrado, si eso se camia aki
                 shape.setRadius(75f);
                 fixtureDef.shape = shape;
+                fixtureDef.isSensor=true;
                 fixtureDef.filter.categoryBits = Proyectile.PROYECTILE_BIT; //su categoria
                 fixtureDef.filter.maskBits = Enemy.ENEMY_BIT; //con quien choca
                 cuerpo.createFixture(fixtureDef);
@@ -46,7 +47,7 @@ public class ProyectileFactory implements ObjectPool<Proyectile> {
                 proyectile.setCuerpo(cuerpo);
                 proyectile.setTextura(textureLoader.obtenerProyectilBasicTower());
                 proyectile.setPoolOrigen(niapa);
-                proyectile.setDanio(25);//Daño del proyectil
+                proyectile.setDanio(5);//Daño del proyectil
                 proyectile.setVelocidadM(200f);
                 proyectile.setPosicion(new Vector2(0,0));
                 proyectile.setVelocidad(new Vector2(0, 0));

@@ -2,11 +2,9 @@ package com.aro.defenseofatroth.Game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 /**
@@ -20,7 +18,6 @@ public class CollisionControl implements ContactListener {
         //Cojemos la fixture de los implicados
         Body cuerpoA = contact.getFixtureA().getBody();
         Body cuerpoB = contact.getFixtureB().getBody();
-        Gdx.app.log("COLLISIONCONTROL", "Se ha establecido un contacto");
         //Comprobamos que choca, si es un sensor o un proyectil
         //comprobamos si son enemigo y sensor de torre
         if (isInRange(cuerpoA,cuerpoB)){
@@ -40,6 +37,7 @@ public class CollisionControl implements ContactListener {
                 torre.establecerObjetivo(enemigo);
             }
         }
+        /* //Por ahora hacemos que se calcule segun la distancia con el objetivo. Asi no se choca antes
         //Comprobamos si lo que choca es un proyectil con una unidad
         if (proyectilcolision(cuerpoA,cuerpoB)){
             if  (cuerpoA.getUserData() instanceof Proyectile){
@@ -57,22 +55,24 @@ public class CollisionControl implements ContactListener {
                 enemigo.daniar(proyectil.getDanio());
                 proyectil.liberar(); //liberamos el proyectil TODO particulas de explosion
             }
-        }
+        }*/
 
     }
 
     @Override
     public void endContact(Contact contact) {
-        Fixture fixtureA = contact.getFixtureA();
-        Fixture fixtureB = contact.getFixtureB();
+        Body cuerpoA = contact.getFixtureA().getBody();
+        Body cuerpoB = contact.getFixtureB().getBody();
         Gdx.app.log("COLLISIONCONTROL", "Se ha perdido un contacto");
         //Salen del rango, la torre deja de atacar
-        if  (fixtureA.getUserData() instanceof Tower){
-            Tower torre=(Tower) fixtureA.getUserData();
+        if  (cuerpoA.getUserData() instanceof Tower){
+            Gdx.app.log("COLLISIONCONTROL", "La torre deja de atacar!");
+            Tower torre=(Tower) cuerpoA.getUserData();
             torre.libre();
         }
-        if  (fixtureB.getUserData() instanceof Tower){
-            Tower torre=(Tower) fixtureB.getUserData();
+        if  (cuerpoB.getUserData() instanceof Tower){
+            Gdx.app.log("COLLISIONCONTROL", "La torre deja de atacar!");
+            Tower torre=(Tower) cuerpoB.getUserData();
             torre.libre();
         }
     }

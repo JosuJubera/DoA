@@ -74,7 +74,7 @@ public class EnemyFactory implements ObjectPool<Enemy> {
         BasicTank aux=basicTankPool.obtain();
         aux.setRuta(ruta); //Ciudadooooo!! Hay que pasar una COPIA del array
         aux.setVida(100);
-        aux.setVidaMaxima(100);
+        aux.setVidaMaxima(101);
         aux.setVelocidadM(velocidad);
         aux.setViva(true);
         aux.setPosicion(ruta.get(0));
