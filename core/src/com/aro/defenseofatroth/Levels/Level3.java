@@ -2,6 +2,7 @@ package com.aro.defenseofatroth.Levels;
 
 import com.aro.defenseofatroth.Entities.Enemy;
 import com.aro.defenseofatroth.Entities.Torre;
+import com.aro.defenseofatroth.Entities.Verde;
 import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Screens.BaseScreen;
 import com.aro.defenseofatroth.Screens.Hud;
@@ -86,7 +87,7 @@ public class Level3 extends BaseScreen{
 
         super(game);
         camera = new OrthographicCamera(); //camara orthografica, es en 2D!
-        camera.zoom = 0.5f;
+        camera.zoom = 1f;
         viewport = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
         gestureDetector = new GestureDetector(HALF_TAP_SQUARE_SIZE,
                 TAP_COUNT_INTERVAL,
@@ -99,6 +100,8 @@ public class Level3 extends BaseScreen{
         batch = new SpriteBatch();
         hud = new Hud(batch);
         selector = new Selector(batch);
+
+
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer(selector.stage, gestureDetector);
         Gdx.input.setInputProcessor(inputMultiplexer);
@@ -309,7 +312,7 @@ cam.update();
         Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 1);                                        // Color de fondo y transparencia
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);                                        // Limpiar el buffer de la pantalla
 cam.update();                                                                            // actualizar camara de renderer
-renderer.render(world,cam.combined);                                             // mostrar renderer para ver bodies y cosas
+renderer.render(world,cam.combined);                                                    // mostrar renderer para ver bodies y cosas
         stage.act();                                                                     // Actualizar stage (movimientos y esas cosas antes de dibujar)
         world.step(delta, 6, 2);                                                         // Actualiza el mundo los parametros no cambiar
 
@@ -328,10 +331,18 @@ renderer.render(world,cam.combined);                                            
             }
             if (bots.size == 0) {
                 hud.addWave();
+                bots.clear();
+                Timer.schedule(t, 0.5f, 1);
+                contadorBotsCreados = 0;
+            }
+            if (e.getX() < 0) {
+                bots.removeIndex(i);                                                     // Quitar del array
+                e.remove();                                                              // Elimina nose que pero hay que usar
+                world.destroyBody(e.getBody());
             }
         }
 
-        if (contadorBotsCreados >= 10){
+        if ( contadorBotsCreados >= (hud.getWave() * 10)){
             t.cancel();                                                                  // Terminar el timer, terminar el spawn
         }
 
@@ -350,9 +361,12 @@ renderer.render(world,cam.combined);                                            
 
     public void spawnBots() {
 
-        Texture enemyTex2 = game.getManager().get("barraRoja.png", Texture.class);       // Cargar textura del assetManager
-        Enemy enemy = new Enemy(world, enemyTex2, new Vector2(40, (new Random().nextFloat() * 10)), 100); // Crear un enemigo mundo por ahora no se usa
+        Texture enemyTex = game.getManager().get("barraRoja.png", Texture.class);       // Cargar textura del assetManager
+        Texture enemyTex2 = game.getManager().get("barraVerde.png", Texture.class);
+        Enemy enemy = new Enemy(world, enemyTex, new Vector2(40, (new Random().nextFloat() * 15)+1), 100); // Crear un enemigo mundo por ahora no se usa
+        Verde enemy2 = new Verde(world, enemyTex2, new Vector2(40, (new Random().nextFloat() * 15)+1), 50); // Crear un enemigo mundo por ahora no se usa
         bots.add(enemy);                                                                 // Añadir al array de enemigos
-        contadorBotsCreados++;                                                           // Contador de enemigos
+        bots.add(enemy2);
+        contadorBotsCreados+=2;                                                           // Contador de enemigos
     }
 }
