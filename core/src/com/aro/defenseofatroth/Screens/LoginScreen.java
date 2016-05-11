@@ -226,6 +226,8 @@ public class LoginScreen extends BaseScreen {
     }
 
     private User login(String mail, String pass) {
+        ResponseWS rws1 = new WebServices().updateScore(mail,100);
+        ResponseWS rws2 = new WebServices().getRanking(5);
         User user = new WebServices().login(mail,pass);
         return user;//comprobar si es null fuera
 

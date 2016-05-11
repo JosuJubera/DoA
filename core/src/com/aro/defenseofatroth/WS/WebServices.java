@@ -19,6 +19,8 @@ public class WebServices {
     private static class METHOD_NAMES{
         public static final String LOGIN = "login";
         public static final String CREAR_USUARIO = "crearUsuario";
+        public static final String UPDATE_SCORE = "updateScore";
+        public static final String GET_RANKING = "getRanking";
         /*public static final String GET_FOTOS = "getFotosPorUsuario";
         public static final String INSERTAR_FOTO = "insertFoto";
         public static final String ACEPTAR_FOTO = "aceptaFoto";
@@ -66,6 +68,42 @@ public class WebServices {
             //TODO CAMBIAR EL PARSEO DE DATA
             //user = new Gson().fromJson(response.getData().toString(), User.class);
         } catch (Exception e) {}
+        return response;
+    }
+
+    public ResponseWS updateScore(String mail_str, int score){
+        ResponseWS response=null;
+        SoapObject request = new SoapObject(NAMESPACE,METHOD_NAMES.UPDATE_SCORE);
+        request.addProperty("mail",mail_str);
+        request.addProperty("score",score);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet=false;
+        envelope.setOutputSoapObject(request);
+
+        HttpTransportSE transporte = new HttpTransportSE(URL_SERVER);
+        try{
+            transporte.call(SOAP_ACTION_PREFIX+METHOD_NAMES.UPDATE_SCORE,envelope);
+            String json = envelope.getResponse().toString();
+            response = new Gson().fromJson(json, ResponseWS.class);
+        }catch(Exception e){}
+        return response;
+    }
+
+    public ResponseWS getRanking(int limit){
+        ResponseWS response=null;
+        SoapObject request = new SoapObject(NAMESPACE,METHOD_NAMES.GET_RANKING);
+        request.addProperty("limit",limit);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet=false;
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE transporte = new HttpTransportSE(URL_SERVER);
+        try{
+            transporte.call(SOAP_ACTION_PREFIX+METHOD_NAMES.GET_RANKING,envelope);
+            String json = envelope.getResponse().toString();
+            response=new Gson().fromJson(json,ResponseWS.class);
+        }catch (Exception e){}
         return response;
     }
 }
