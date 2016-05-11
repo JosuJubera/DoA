@@ -37,7 +37,7 @@ public class ProyectileFactory implements ObjectPool<Proyectile> {
                 cuerpo.setUserData(proyectile); //Añadimos un puntero al cuerpo con la informacion del tanke
                 FixtureDef fixtureDef=new FixtureDef();
                 CircleShape shape =  new CircleShape(); //El shape tambien puede ser un cuadrado, si eso se camia aki
-                shape.setRadius(0.5f);
+                shape.setRadius(75f);
                 fixtureDef.shape = shape;
                 fixtureDef.filter.categoryBits = Proyectile.PROYECTILE_BIT; //su categoria
                 fixtureDef.filter.maskBits = Enemy.ENEMY_BIT; //con quien choca
@@ -47,7 +47,7 @@ public class ProyectileFactory implements ObjectPool<Proyectile> {
                 proyectile.setTextura(textureLoader.obtenerProyectilBasicTower());
                 proyectile.setPoolOrigen(niapa);
                 proyectile.setDanio(25);//Daño del proyectil
-                proyectile.setVelocidadM(200);
+                proyectile.setVelocidadM(200f);
                 proyectile.setPosicion(new Vector2(0,0));
                 proyectile.setVelocidad(new Vector2(0, 0));
                 return proyectile;
@@ -60,5 +60,13 @@ public class ProyectileFactory implements ObjectPool<Proyectile> {
         if (freeObject instanceof BasicTowerProyectile){ //es un tanke basico, limpiamos de su pool
             basicTowerProyectilePool.free((BasicTowerProyectile) freeObject);
         }
+    }
+
+    public BasicTowerProyectile obtenerProyectilTorreBasica(Enemy objetivo,Vector2 posicion){
+        BasicTowerProyectile aux=basicTowerProyectilePool.obtain();
+        aux.setPosicion(posicion);
+        aux.setEnemigo(objetivo);
+        textureLoader.getEscenario().addActor(aux);
+        return aux;
     }
 }

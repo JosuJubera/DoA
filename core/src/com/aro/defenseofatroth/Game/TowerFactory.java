@@ -43,6 +43,7 @@ public class TowerFactory {
         CircleShape shape =  new CircleShape(); //Sensor de la torre
         shape.setRadius(BasicTower.ALCANCE); //Radio del sensor (inicial)
         fixtureDef.shape = shape;
+        fixtureDef.isSensor=true;
         fixtureDef.filter.categoryBits = Tower.TORRE_SENSOR_BIT; //su categoria
         fixtureDef.filter.maskBits = Enemy.ENEMY_BIT; //con quien choca
         cuerpo.createFixture(fixtureDef);
@@ -51,8 +52,8 @@ public class TowerFactory {
         torre.setEstado(1);
         torre.setPosicion(new Vector2(x,y));
         torre.setProyectileFactory(proyectileFactory); //Le añadimos la factoria de proyectiles
-        torre.setTiempoEntreAtaques(1000f); //Tiempo en milisegundos entre ataques
-        torre.setTiempoSiguienteAtaque(1000f); //Tiempo pal siguiente ataque
+        torre.setTiempoEntreAtaques(1f); //Tiempo en milisegundos entre ataques
+        torre.setTiempoSiguienteAtaque(1f); //Tiempo pal siguiente ataque
         textureLoader.getEscenario().addActor(torre); //lo añadimos al stage para que se dibuje
         return torre;
     }

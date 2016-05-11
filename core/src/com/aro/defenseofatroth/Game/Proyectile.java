@@ -82,7 +82,7 @@ public class Proyectile extends Actor implements Pool.Poolable {
         posicion=cuerpo.getPosition();
         super.setPosition(posicion.x,posicion.y); //creo k no es necesario pero bueno
         Vector2 enemyPos=enemigo.getPosicion();
-        angulo = MathUtils.atan2(posicion.y - enemyPos.y, posicion.x - enemyPos.x);
+        angulo = MathUtils.atan2(enemyPos.y - posicion.y, enemyPos.x - posicion.x);
         velocidad.x = MathUtils.cos(angulo) * velocidadM;
         velocidad.y = MathUtils.sin(angulo) * velocidadM;
         cuerpo.setLinearVelocity(velocidad);

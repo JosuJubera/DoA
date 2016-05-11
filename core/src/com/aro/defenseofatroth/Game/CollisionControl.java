@@ -1,5 +1,8 @@
 package com.aro.defenseofatroth.Game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -15,39 +18,42 @@ public class CollisionControl implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
         //Cojemos la fixture de los implicados
-        Fixture fixtureA = contact.getFixtureA();
-        Fixture fixtureB = contact.getFixtureB();
+        Body cuerpoA = contact.getFixtureA().getBody();
+        Body cuerpoB = contact.getFixtureB().getBody();
+        Gdx.app.log("COLLISIONCONTROL", "Se ha establecido un contacto");
         //Comprobamos que choca, si es un sensor o un proyectil
         //comprobamos si son enemigo y sensor de torre
-        if (isInRange(fixtureA,fixtureB)){
+        if (isInRange(cuerpoA,cuerpoB)){
             //Obtenemos la torre y le decimos que ataque.
-            if  (fixtureA.getUserData() instanceof Tower){
+            if  (cuerpoA.getUserData() instanceof Tower){
                 //La torre ataca
-                Tower torre=(Tower) fixtureA.getUserData();
-                Enemy enemigo=(Enemy) fixtureB.getUserData();
+                Gdx.app.log("COLLISIONCONTROL", "La torre atacara!");
+                Tower torre=(Tower) cuerpoA.getUserData();
+                Enemy enemigo=(Enemy) cuerpoB.getUserData();
                 torre.establecerObjetivo(enemigo);
             }
-            if  (fixtureB.getUserData() instanceof Tower){
+            if  (cuerpoB.getUserData() instanceof Tower){
                 //La torre ataca
-                Tower torre=(Tower) fixtureB.getUserData();
-                Enemy enemigo=(Enemy) fixtureA.getUserData();
+                Gdx.app.log("COLLISIONCONTROL", "La torre atacara!");
+                Tower torre=(Tower) cuerpoB.getUserData();
+                Enemy enemigo=(Enemy) cuerpoA.getUserData();
                 torre.establecerObjetivo(enemigo);
             }
         }
         //Comprobamos si lo que choca es un proyectil con una unidad
-        if (proyectilcolision(fixtureA,fixtureB)){
-            if  (fixtureA.getUserData() instanceof Proyectile){
+        if (proyectilcolision(cuerpoA,cuerpoB)){
+            if  (cuerpoA.getUserData() instanceof Proyectile){
                 //La torre ataca
-                Proyectile proyectil=(Proyectile) fixtureA.getUserData();
-                Enemy enemigo=(Enemy) fixtureB.getUserData();
+                Proyectile proyectil=(Proyectile) cuerpoA.getUserData();
+                Enemy enemigo=(Enemy) cuerpoB.getUserData();
                 enemigo.daniar(proyectil.getDanio());
                 proyectil.liberar(); //liveramos el proyectil TODO particulas de explosion
 
             }
-            if  (fixtureB.getUserData() instanceof Proyectile){
+            if  (cuerpoB.getUserData() instanceof Proyectile){
                 //La torre ataca
-                Proyectile proyectil=(Proyectile) fixtureB.getUserData();
-                Enemy enemigo=(Enemy) fixtureA.getUserData();
+                Proyectile proyectil=(Proyectile) cuerpoB.getUserData();
+                Enemy enemigo=(Enemy) cuerpoA.getUserData();
                 enemigo.daniar(proyectil.getDanio());
                 proyectil.liberar(); //liberamos el proyectil TODO particulas de explosion
             }
@@ -59,6 +65,7 @@ public class CollisionControl implements ContactListener {
     public void endContact(Contact contact) {
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
+        Gdx.app.log("COLLISIONCONTROL", "Se ha perdido un contacto");
         //Salen del rango, la torre deja de atacar
         if  (fixtureA.getUserData() instanceof Tower){
             Tower torre=(Tower) fixtureA.getUserData();
@@ -80,10 +87,10 @@ public class CollisionControl implements ContactListener {
 
     }
     //Devuelve si la colision es de una torre y un enemmigo
-    private boolean isInRange(Fixture objectA,Fixture objectB){
+    private boolean isInRange(Body objectA,Body objectB){
        return (((objectA.getUserData() instanceof Enemy)&&(objectB.getUserData() instanceof Tower))||((objectB.getUserData() instanceof Enemy)&&(objectA.getUserData() instanceof Tower)));
     }
-    private boolean proyectilcolision(Fixture objectA,Fixture objectB){
+    private boolean proyectilcolision(Body objectA,Body objectB){
         return (((objectA.getUserData() instanceof Enemy)&&(objectB.getUserData() instanceof Proyectile))||((objectB.getUserData() instanceof Enemy)&&(objectA.getUserData() instanceof Proyectile)));
     }
 }

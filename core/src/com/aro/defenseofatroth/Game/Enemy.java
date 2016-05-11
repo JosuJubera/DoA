@@ -215,21 +215,25 @@ public class Enemy extends Actor implements Pool.Poolable {
         batch.draw(animacionActual.getKeyFrame(animationTime),posicion.x,posicion.y);
         //TODO revisar!
         batch.draw(posdestino.getTexture(),destino.x,destino.y);
+        barraVida.draw(batch,delta);
     }
 
     @Override
     public void act(float delta){
+
         if (viva){ //esta viva, actualizamos posicion
             posicion=cuerpo.getPosition();
             super.setPosition(posicion.x,posicion.y);
+            barraVida.setPosition(posicion);
             if (posicion.dst(destino)<(50f+velocidadM*delta)){ //comprobamos si llegamos al destino (tambien se puede calcular usando la distancia)
                    avanzar();
             }
         }else{ //esta muerta, si ya ha pasado su tiempo de animacion, se libera
-            if (animacionMuerte.isAnimationFinished(animationTime+delta)){
-                poolOrigen.remove(this); //nos liberamos
-            }
+           // if (animacionMuerte.isAnimationFinished(animationTime+delta)){
+           //    this.liberar();//liberamos los recursos
+           // }
         }
+        barraVida.setValor(vida/vidaMaxima);
 
     }
     public void liberar(){
@@ -249,5 +253,10 @@ public class Enemy extends Actor implements Pool.Poolable {
         velocidadM=0;
         vida=vidaMaxima;
         barraVida.setValor(1f);
+    }
+
+    @Override //pa debugear
+    public String toString(){
+        return "Soy un enemigo";
     }
 }

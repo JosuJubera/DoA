@@ -155,6 +155,7 @@ public class Level1  extends BaseScreen {
         towerFactory.setTextureLoader(textureLoader);
         towerFactory.setProyectileFactory(proyectileFactory);
         textureLoader.niapadePrueba(anima.get(1),new Texture(Gdx.files.internal("barraRoja.png")));
+		proyectileFactory.crearPools();
         BasicTower pruebas=towerFactory.obtenerBasicTower(0, 0);
         Array<Vector2> utas=new Array<Vector2>();
         utas.add(new Vector2(0,0));
@@ -165,7 +166,7 @@ public class Level1  extends BaseScreen {
 		utas.add(new Vector2(-250,-150));
         enemyFactory.setRuta(utas);
 
-        BasicTank  tankPru=enemyFactory.obtenerTankeBasico(15f);
+        BasicTank  tankPru=enemyFactory.obtenerTankeBasico(75f);
 
 
 
@@ -180,7 +181,7 @@ public class Level1  extends BaseScreen {
 
         batch.setProjectionMatrix(camera.combined);
 		camera.update();
-		stage.act();
+		stage.act(delta);
         world.step(delta, 6, 2);
         stage.draw();
 	}

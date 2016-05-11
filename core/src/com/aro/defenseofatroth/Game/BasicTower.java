@@ -29,6 +29,7 @@ public class BasicTower extends Tower{
 
     private void atacar(){
         //TODO hacer. Crear proyectil y enviarlo
+        super.proyectileFactory.obtenerProyectilTorreBasica(enemigo,posicion);
     }
 
     @Override

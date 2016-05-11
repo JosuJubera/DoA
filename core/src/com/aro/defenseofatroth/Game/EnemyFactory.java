@@ -53,7 +53,7 @@ public class EnemyFactory implements ObjectPool<Enemy> {
                 shape.setRadius(50f);
                 fixtureDef.shape = shape;
                 fixtureDef.filter.categoryBits = Enemy.ENEMY_BIT; //su categoria
-                fixtureDef.filter.maskBits = Tower.TORRE_SENSOR_BIT; //con quien choca
+                fixtureDef.filter.maskBits = (short) (Tower.TORRE_SENSOR_BIT | Proyectile.PROYECTILE_BIT); //con quien choca
                 cuerpo.createFixture(fixtureDef);
                 shape.dispose();
                 //añadimos los datos en el basictank
