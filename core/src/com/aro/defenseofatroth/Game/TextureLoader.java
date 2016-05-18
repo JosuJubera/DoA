@@ -1,7 +1,9 @@
 package com.aro.defenseofatroth.Game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
@@ -22,6 +24,11 @@ public class TextureLoader implements Disposable{
     private TextureAtlas barrasVida; //las barras de vida (pueden ir en otro atlas , solo son 2)
     private TextureAtlas torres; //las torres del juego
     private TextureAtlas proyectiles; //los proyectiles del juego
+    private TextureAtlas enemigos; //los enemigos del juego
+    private Animation basicTankHoriz;
+
+    private TextureRegion niapa;
+    private Texture proyniapa;
 
     //Animaciones
 
@@ -29,7 +36,7 @@ public class TextureLoader implements Disposable{
         return basicTankHoriz;
     }
 
-    private Animation basicTankHoriz;
+
 
 
 
@@ -65,13 +72,33 @@ public class TextureLoader implements Disposable{
     public void setMundo(World mundo) {
         this.mundo = mundo;
     }
+
+    public void niapadePrueba(TextureRegion torre,Texture proyectil){
+        this.niapa=torre;
+        this.proyniapa=proyectil;
+    }
+
     @Override
     public void dispose() {
         barrasVida.dispose();
+        if (enemigos!=null){
+            enemigos.dispose();
+        }
+        if (torres!=null) {
+            torres.dispose();
+        }
+        if (proyectiles!=null){
+            proyectiles.dispose();
+        }
     }
 
     public TextureRegion obtenerBasicTower(){
         //TODO hacer. Debe devolver un tankeBasico
-        return null;
+        return niapa;
+    }
+    public TextureRegion obtenerProyectilBasicTower(){
+        //TODO hacer
+
+        return new TextureRegion(proyniapa);
     }
 }

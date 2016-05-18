@@ -50,10 +50,10 @@ public class EnemyFactory implements ObjectPool<Enemy> {
                 cuerpo.setUserData(basicTank); //Añadimos un puntero al cuerpo con la informacion del tanke
                 FixtureDef fixtureDef=new FixtureDef();
                 CircleShape shape =  new CircleShape(); //El shape tambien puede ser un cuadrado, si eso se camia aki
-                shape.setRadius(0.5f);
+                shape.setRadius(50f);
                 fixtureDef.shape = shape;
                 fixtureDef.filter.categoryBits = Enemy.ENEMY_BIT; //su categoria
-                fixtureDef.filter.maskBits = Tower.TORRE_SENSOR_BIT; //con quien choca
+                fixtureDef.filter.maskBits = (short) (Tower.TORRE_SENSOR_BIT | Proyectile.PROYECTILE_BIT); //con quien choca
                 cuerpo.createFixture(fixtureDef);
                 shape.dispose();
                 //añadimos los datos en el basictank
@@ -61,9 +61,7 @@ public class EnemyFactory implements ObjectPool<Enemy> {
                 basicTank.setAnimacionHorizontal(textureLoader.getBasicTankHoriz());
                 //TODO añadir el resto de animaciones, pero por ahora lo dejamso asi.
                 basicTank.setAnimationTime(0);
-                basicTank.setPosicion(new Vector2(0, 0));
-                basicTank.setDestino(new Vector2(0, 0));
-                basicTank.setVelocidad(new Vector2(0, 0));
+                basicTank.setAnimacionHorizontal(textureLoader.getBasicTankHoriz());
                 basicTank.setPoolOrigen(niapa); //añadimos el pool de origen para limpiarlo mas adelante
                 basicTank.setBarraVida(new BarraVida(textureLoader.obtenerBarraRoja(),textureLoader.obtenerBarraVerde()));
                 return basicTank;
@@ -71,15 +69,16 @@ public class EnemyFactory implements ObjectPool<Enemy> {
         };
     }
 
-    public BasicTank obtenerTankeBasico(Vector2 posicion,float velocidad){
+    public BasicTank obtenerTankeBasico(float velocidad){
         //Añadimos los datos al tanke. Ojo, solo añadimos aquellos que se resetean
         BasicTank aux=basicTankPool.obtain();
         aux.setRuta(ruta); //Ciudadooooo!! Hay que pasar una COPIA del array
         aux.setVida(100);
-        aux.setVidaMaxima(100);
+        aux.setVidaMaxima(101);
         aux.setVelocidadM(velocidad);
         aux.setViva(true);
-        aux.setPosicionEnRuta(0);
+        aux.setPosicion(ruta.get(0));
+        aux.setPosicionEnRuta(1); //qieremos ir al 2º punto, el 1º es el origen!
         textureLoader.getEscenario().addActor(aux); //lo añadimos al stage para que se dibuje
         return aux;
     }
