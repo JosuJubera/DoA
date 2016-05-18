@@ -334,8 +334,8 @@ renderer.render(world,cam.combined);                                            
             }
             if (bots.size == 0) {
                 hud.addWave();
-                showChartBoostIntersititial();
                 bots.clear();
+                showChartBoostIntersititial();
                 Timer.schedule(t, 0.5f, 1);
                 contadorBotsCreados = 0;
             }
