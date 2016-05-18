@@ -37,8 +37,8 @@ public class Level1  extends BaseScreen {
 
 	private OrthographicCamera camera; //camara principal.
 	private SpriteBatch batch; //representa el MUNDO.
-	private TextureAtlas atlas; //imagen con las texturas Tambien se puede hacer mediante codigo Pag:166
-	private Sprite background; //se usa para manejar tamaño y posicion de texturas (Se puede cargar desde un Atlas)
+//	private TextureAtlas atlas; //imagen con las texturas Tambien se puede hacer mediante codigo Pag:166
+//	private Sprite background; //se usa para manejar tamaño y posicion de texturas (Se puede cargar desde un Atlas)
 	private FitViewport viewport; //representa la imagen en PANTALLA
 	private GestureDetector gestureDetector;
 //	atencion, ñapa gorda, cuidado!
@@ -104,10 +104,10 @@ public class Level1  extends BaseScreen {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(); //camara orthografica, es en 2D!
 		viewport = new FitViewport(SCENE_WIDTH, SCENE_HEIGHT, camera); //al viewport se le pasa la camara ¡Si no no muestra nada!
-		atlas = new TextureAtlas(Gdx.files.internal("prehistoric.atlas"));
+		/*atlas = new TextureAtlas(Gdx.files.internal("prehistoric.atlas"));
 		background = new Sprite(atlas.findRegion("background"));
 		background.setPosition(-background.getWidth() * 0.5f, -background.getHeight() * 0.5f);
-		background.scale(2f);
+		background.scale(2f);*/
 		gestureDetector = new GestureDetector(HALF_TAP_SQUARE_SIZE,
 				TAP_COUNT_INTERVAL,
 				LONG_PRESS_DURATION,
@@ -200,7 +200,7 @@ public class Level1  extends BaseScreen {
 		//Se libera memoria, necesario para evitar memory leaks
 		//Liberar batch y atlas sobretodo!!!
 		batch.dispose();
-		atlas.dispose();
+		//atlas.dispose();
 		atextura.dispose();
         world.dispose();
         stage.dispose();

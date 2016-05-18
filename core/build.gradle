@@ -6,5 +6,5 @@ eclipse.project {
     name = appName + "-core"
 }
 dependencies {
-    compile files('/home/elementary/Documentos/doa/android/libs/chartboost.jar')
+    compile files('chartboost.jar')
 }

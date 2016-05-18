@@ -110,9 +110,10 @@ idea {
                 def builder = NodeBuilder.newInstance();
                 builder.current = node;
                 builder.component(name: "FacetManager") {
-                    facet(type: "android", name: "Android") {dependencies {
-                        compile 'com.google.android.gms:play-services-ads:+'
-                    }
+                    facet(type: "android", name: "Android") {
+                        dependencies {
+                            compile 'com.google.android.gms:play-services-ads:+'
+                        }
                         dependen
                         configuration {
                             option(name: "UPDATE_PROPERTY_FILES", value: "true")
