@@ -44,7 +44,7 @@ public class CollisionControl implements ContactListener {
                 //La torre ataca
                 Proyectile proyectil=(Proyectile) cuerpoA.getUserData();
                 Enemy enemigo=(Enemy) cuerpoB.getUserData();
-                enemigo.daniar(proyectil.getDanio());
+                enemigo.dainar(proyectil.getDaino());
                 proyectil.liberar(); //liveramos el proyectil TODO particulas de explosion
 
             }
@@ -52,7 +52,7 @@ public class CollisionControl implements ContactListener {
                 //La torre ataca
                 Proyectile proyectil=(Proyectile) cuerpoB.getUserData();
                 Enemy enemigo=(Enemy) cuerpoA.getUserData();
-                enemigo.daniar(proyectil.getDanio());
+                enemigo.dainar(proyectil.getDaino());
                 proyectil.liberar(); //liberamos el proyectil TODO particulas de explosion
             }
         }*/

@@ -17,7 +17,7 @@ public class Proyectile extends Actor implements Pool.Poolable {
     public static short PROYECTILE_BIT=0x08;
     private TextureRegion textura;
     private Enemy enemigo;
-    private int danio;
+    private int daino;
     protected Body cuerpo;
     protected Vector2 posicion;
     protected Vector2 velocidad;
@@ -53,12 +53,12 @@ public class Proyectile extends Actor implements Pool.Poolable {
         this.enemigo = enemigo;
     }
 
-    public int getDanio() {
-        return danio;
+    public int getDaino() {
+        return daino;
     }
 
-    public void setDanio(int danio) {
-        this.danio = danio;
+    public void setDaino(int daino) {
+        this.daino = daino;
     }
 
     public Vector2 getPosicion() {
@@ -94,13 +94,13 @@ public class Proyectile extends Actor implements Pool.Poolable {
         cuerpo.setLinearVelocity(velocidad);
         //Si esta lo suficientemente cerca
         if (posicion.dst(enemyPos)<=20f*velocidadM*delta){
-            enemigo.daniar(danio);
+            enemigo.dainar(daino);
             this.liberar();
         }
     }
     @Override
     public void reset() {
-        this.danio=0;
+        this.daino =0;
         this.enemigo=null;
         cuerpo.setLinearVelocity(0f, 0f);
         cuerpo.setTransform(0f,0f,0f);

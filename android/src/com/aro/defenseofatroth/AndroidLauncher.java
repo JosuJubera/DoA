@@ -44,10 +44,6 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 				});
 		exitDialog.setMessage(R.string.exit_msg);
 		exitDialog.show();
-		if (Chartboost.onBackPressed())
-			return;
-		else
-			super.onBackPressed();
 	}
 
 	@Override

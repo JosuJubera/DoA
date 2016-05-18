@@ -198,9 +198,9 @@ public class Enemy extends Actor implements Pool.Poolable {
         this.viva = viva;
     }
 
-    public void daniar(int danio){
+    public void dainar(int daino){
         if (vida>0) {
-            this.vida -= danio;
+            this.vida -= daino;
         }
         if (vida<=0){
             viva=false;
