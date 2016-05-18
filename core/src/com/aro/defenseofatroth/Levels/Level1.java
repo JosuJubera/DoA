@@ -26,6 +26,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
@@ -86,6 +87,7 @@ public class Level1  extends BaseScreen {
     EnemyFactory enemyFactory;
     ProyectileFactory proyectileFactory;
     TowerFactory towerFactory;
+	Box2DDebugRenderer debug;
 
 
 
@@ -163,9 +165,9 @@ public class Level1  extends BaseScreen {
         utas.add(new Vector2(-500,500));
 		utas.add(new Vector2(100,-150));
 		utas.add(new Vector2(50,600));
-		utas.add(new Vector2(-250,-150));
+		utas.add(new Vector2(-250, -150));
         enemyFactory.setRuta(utas);
-
+		debug=new Box2DDebugRenderer(true,true,true,true,true,true);
         BasicTank  tankPru=enemyFactory.obtenerTankeBasico(75f);
 
 
@@ -183,7 +185,8 @@ public class Level1  extends BaseScreen {
 		camera.update();
 		stage.act(delta);
         world.step(delta, 6, 2);
-        stage.draw();
+		debug.render(world, camera.combined);
+		stage.draw();
 	}
 
 

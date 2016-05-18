@@ -78,6 +78,6 @@ public class Tower extends Actor {
     }
     @Override
     public void draw(Batch bach,float delta){
-        bach.draw(textura,posicion.x,posicion.y);
+        bach.draw(textura,posicion.x-textura.getRegionWidth()*0.5f,posicion.y-textura.getRegionHeight()*0.5f);
     }
 }

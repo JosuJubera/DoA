@@ -63,7 +63,6 @@ public class CollisionControl implements ContactListener {
     public void endContact(Contact contact) {
         Body cuerpoA = contact.getFixtureA().getBody();
         Body cuerpoB = contact.getFixtureB().getBody();
-        Gdx.app.log("COLLISIONCONTROL", "Se ha perdido un contacto");
         //Salen del rango, la torre deja de atacar
         if  (cuerpoA.getUserData() instanceof Tower){
             Gdx.app.log("COLLISIONCONTROL", "La torre deja de atacar!");

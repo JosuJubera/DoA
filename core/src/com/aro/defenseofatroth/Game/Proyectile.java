@@ -23,7 +23,7 @@ public class Proyectile extends Actor implements Pool.Poolable {
     protected Vector2 velocidad;
     protected float velocidadM;
     private float angulo;
-    private boolean dibujable;// que niapa mas grande
+
 
     public void setCuerpo(Body cuerpo) {
         this.cuerpo = cuerpo;
@@ -35,7 +35,6 @@ public class Proyectile extends Actor implements Pool.Poolable {
 
     public void setTextura(TextureRegion textura) {
         this.textura = textura;
-        dibujable=true;
     }
 
     public void setVelocidad(Vector2 velocidad) {
@@ -77,12 +76,14 @@ public class Proyectile extends Actor implements Pool.Poolable {
 
     @Override
     public void draw(Batch batch, float delta){
-        if (dibujable) {
-            batch.draw(textura, posicion.x, posicion.y);
-        }
+        batch.draw(textura, posicion.x-textura.getRegionWidth()*0.5f, posicion.y-textura.getRegionHeight()*0.5f);
     }
     @Override
     public void act(float delta){
+        if (enemigo==null || !enemigo.isViva()){ //por si muere antes de llegar el proyectil )deberia ir en la clase hija?(
+            this.liberar();
+            return;
+        }
         //Calculo de la direccion
         posicion=cuerpo.getPosition();
         super.setPosition(posicion.x,posicion.y); //creo k no es necesario pero bueno
@@ -93,7 +94,7 @@ public class Proyectile extends Actor implements Pool.Poolable {
         cuerpo.setLinearVelocity(velocidad);
         //Si esta lo suficientemente cerca
         if (posicion.dst(enemyPos)<=20f*velocidadM*delta){
-            enemigo.daniar(1);
+            enemigo.daniar(danio);
             this.liberar();
         }
     }
@@ -106,7 +107,8 @@ public class Proyectile extends Actor implements Pool.Poolable {
         posicion.setZero();
         velocidad.setZero();
         velocidadM=0;
-        dibujable=false;
+        super.setPosition(0,0);
+        super.remove();
     }
     public void liberar(){
         super.remove();

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -136,7 +137,6 @@ public class Enemy extends Actor implements Pool.Poolable {
             cuerpo.setLinearVelocity(velocidad); //añadimos la velocidad al cuerpo
             this.destino = destino;
             animacionActual=animacionHorizontal;
-            //TODO poner parar que se vea el punto a donde va!
 
         }else{//estoy en el destino, paso al siguiente punto de la ruta
             avanzar();
@@ -207,15 +207,16 @@ public class Enemy extends Actor implements Pool.Poolable {
             vida=0;
         }
         barraVida.setValor(((float) vida )/((float) vidaMaxima));
-        Gdx.app.log("ENEMY", "Vida disponible: "+vida+" maxima "+vidaMaxima+" Valor: "+(((float)vida)/((float)vidaMaxima)));
+        //Gdx.app.log("ENEMY", "Vida disponible: "+vida+" maxima "+vidaMaxima+" Valor: "+(((float)vida)/((float)vidaMaxima)));
     }
 
     @Override
     public void draw(Batch batch, float delta){
         animationTime+=delta;
-        batch.draw(animacionActual.getKeyFrame(animationTime),posicion.x,posicion.y);
-        //TODO revisar!
-       // batch.draw(posdestino.getTexture(),destino.x,destino.y);
+        TextureRegion fotograma=animacionActual.getKeyFrame(animationTime);
+
+        batch.draw(fotograma,posicion.x-fotograma.getRegionWidth()*0.5f,posicion.y-fotograma.getRegionHeight()*0.5f);
+        //batch.draw(posdestino.getTexture(),destino.x,destino.y); //debug, para pintar el destino
         barraVida.draw(batch,delta);
     }
 
@@ -250,8 +251,7 @@ public class Enemy extends Actor implements Pool.Poolable {
         velocidad.setZero();
         destino.setZero();
         velocidadM=0;
-        vida=vidaMaxima;
-        barraVida.setValor(1f);
+        viva=false;
     }
 
     @Override //pa debugear

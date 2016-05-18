@@ -1,5 +1,6 @@
 package com.aro.defenseofatroth.Game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -47,9 +48,7 @@ public class ProyectileFactory implements ObjectPool<Proyectile> {
                 proyectile.setCuerpo(cuerpo);
                 proyectile.setTextura(textureLoader.obtenerProyectilBasicTower());
                 proyectile.setPoolOrigen(niapa);
-                proyectile.setDanio(5);//Daño del proyectil
-                proyectile.setVelocidadM(200f);
-                proyectile.setPosicion(new Vector2(0,0));
+                proyectile.setPosicion(new Vector2(0, 0));
                 proyectile.setVelocidad(new Vector2(0, 0));
                 return proyectile;
             }
@@ -58,7 +57,7 @@ public class ProyectileFactory implements ObjectPool<Proyectile> {
 
     @Override
     public void remove(Proyectile freeObject) {
-        if (freeObject instanceof BasicTowerProyectile){ //es un tanke basico, limpiamos de su pool
+        if (freeObject instanceof BasicTowerProyectile){
             basicTowerProyectilePool.free((BasicTowerProyectile) freeObject);
         }
     }
@@ -67,6 +66,7 @@ public class ProyectileFactory implements ObjectPool<Proyectile> {
         BasicTowerProyectile aux=basicTowerProyectilePool.obtain();
         aux.setPosicion(posicion);
         aux.setEnemigo(objetivo);
+        aux.setVelocidadM(200);
         textureLoader.getEscenario().addActor(aux);
         return aux;
     }
