@@ -47,6 +47,8 @@ public class Enemy extends Actor implements Pool.Poolable {
     protected Array<Vector2> ruta; //ruta a seguir por la unidad. Este valor es FINAL. NO SE DEBE CAMBIAR
     private int posicionEnRuta;
 
+    protected int money; //Dinero que deja al morir
+
     //Debug
     Sprite posdestino;
 
@@ -252,6 +254,14 @@ public class Enemy extends Actor implements Pool.Poolable {
         destino.setZero();
         velocidadM=0;
         viva=false;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
     }
 
     @Override //pa debugear

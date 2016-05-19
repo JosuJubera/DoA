@@ -1,6 +1,8 @@
 package com.aro.defenseofatroth.Game;
 
 import com.aro.defenseofatroth.BarraVida;
+import com.aro.defenseofatroth.Levels.Level1;
+import com.aro.defenseofatroth.Levels.Level2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -19,6 +21,11 @@ public class EnemyFactory implements ObjectPool<Enemy> {
     private Pool<BasicTank> basicTankPool; //Pool de los tankes basicos
     private TextureLoader textureLoader;
     Array<Enemy> enemies;
+    private Level2 ñapaMoney; //Con que no habia huevos a poner una variable con Ñ eeehhh???
+
+    public void addÑapa(Level2 ñapaMoney){
+        this.ñapaMoney=ñapaMoney;
+    }
 
     public Array<Enemy> getEnemies() {
         return enemies;
@@ -75,7 +82,7 @@ public class EnemyFactory implements ObjectPool<Enemy> {
         };
     }
 
-    public BasicTank obtenerTankeBasico(){
+    public BasicTank obtenerTankeBasico(/*int nivel //Por si queremos que sean mas fuertes*/){
         //Añadimos los datos al tanke. Ojo, solo añadimos aquellos que se resetean
         BasicTank aux=basicTankPool.obtain();
         aux.setRuta(ruta); //Ciudadooooo!! Hay que pasar una COPIA del array
@@ -85,14 +92,16 @@ public class EnemyFactory implements ObjectPool<Enemy> {
         aux.setViva(true);
         aux.setPosicion(ruta.get(0));
         aux.setPosicionEnRuta(1); //qieremos ir al 2º punto, el 1º es el origen!
-        textureLoader.getEscenario().addActor(aux); //lo añadimos al stage para que se dibuje
         enemies.add(aux); //Se añade al array de enemigos
+        aux.setMoney(50); //Dinero que  deja al morir
+        textureLoader.getEscenario().addActor(aux); //lo añadimos al stage para que se dibuje
         return aux;
     }
 
     @Override
     public void remove(Enemy freeObject) {
         enemies.removeValue(freeObject,true); //Lo quitamos del array
+        ñapaMoney.addMoney(freeObject.getMoney()); //Mis ojossss. Pero cacho ñapaaaaaaa!!!!!
         if (freeObject instanceof BasicTank){ //es un tanke basico, limpiamos de su pool
             basicTankPool.free((BasicTank) freeObject);
         }

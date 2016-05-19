@@ -32,6 +32,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.GameDragAndDrop;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.chartboost.sdk.CBLocation;
@@ -109,6 +110,7 @@ public class Level2 extends BaseScreen implements ActionResolver{
         towerFactory=new TowerFactory();
         enemyFactory.setTextureLoader(textureLoader);
         enemyFactory.crearPools();
+        enemyFactory.addÑapa(this); //Es una ñapa muy gorda, pero es necesaria. God Save the Ñapas!
         proyectileFactory.setTextureLoader(textureLoader);
         towerFactory.setTextureLoader(textureLoader);
         towerFactory.setProyectileFactory(proyectileFactory);
@@ -118,7 +120,7 @@ public class Level2 extends BaseScreen implements ActionResolver{
         generator.setEnemyFactory(enemyFactory);
         generator.setDefault(); //Pa debugear
         //Imagenes diciendo donde se pueden poner las  torres
-        final ArrayList<Image> validTargets = new ArrayList();
+        final Array<Image> validTargets = new Array();
         for (int i = 1; i <= 3; i++) {
             for (int j = 1; j <= 3; j++){
                 Image target = new Image(game.getManager().get("target.png", Texture.class));
@@ -128,6 +130,7 @@ public class Level2 extends BaseScreen implements ActionResolver{
             }
         }
         //Drag and drop. Sacar en otra clase. Ver documentacion y que sea por cada torre correspondiente
+        DragAndDrop dragAndDrop; //El drag&drop
         GameDragAndDrop dragAndDrop=new GameDragAndDrop();
         dragAndDrop.addSource(new DragAndDrop.Source(selector.stage.getActors().first()) {
             @Override
@@ -200,9 +203,9 @@ public class Level2 extends BaseScreen implements ActionResolver{
         if (enemyFactory.getEnemies().size==0){ //No hay mas enemigos en pantalla
             //Se genera la siguiente oleada
             hud.addWave();
-            generator.setSize(generator.getSize()+3); //Se crean 3 enemigos mas
+            generator.setSize(generator.getSize() + 3); //Se crean 3 enemigos mas
             generator.generate();
-            //showChartBoostIntersititial(); //si juber kiere ser muchimillonario descomentar esto
+            //showChartBoostIntersititial(); //si jub3r kiere ser muchimillonario descomentar esto
         }
     }
     @Override
@@ -220,4 +223,7 @@ public class Level2 extends BaseScreen implements ActionResolver{
         Chartboost.showInterstitial(CBLocation.LOCATION_DEFAULT);
     }
 
+    public void addMoney(int modey) {
+        hud.addGold(modey);
+    }
 }
