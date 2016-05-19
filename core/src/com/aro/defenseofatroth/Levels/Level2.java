@@ -3,6 +3,7 @@ package com.aro.defenseofatroth.Levels;
 import com.aro.defenseofatroth.ActionResolver;
 import com.aro.defenseofatroth.Entities.Torre;
 import com.aro.defenseofatroth.Game.CollisionControl;
+import com.aro.defenseofatroth.Game.CustomDragAndDrop;
 import com.aro.defenseofatroth.Game.EnemyFactory;
 import com.aro.defenseofatroth.Game.Generator;
 import com.aro.defenseofatroth.Game.ProyectileFactory;
@@ -21,7 +22,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -33,7 +33,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.GameDragAndDrop;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.chartboost.sdk.CBLocation;
 import com.chartboost.sdk.Chartboost;
@@ -63,7 +62,6 @@ public class Level2 extends BaseScreen implements ActionResolver{
     //ELementos del HUD
     private Hud hud;
     private Selector selector;
-    private SpriteBatch hudBatch;
 
     //Cargador de las texturas, necesarios para crear las factorias
     private TextureLoader textureLoader;
@@ -76,11 +74,13 @@ public class Level2 extends BaseScreen implements ActionResolver{
     //Lineas de debug
     Box2DDebugRenderer debugRenderer;
 
+    //Drag and drop
+    CustomDragAndDrop customDragAndDrop;
 
 
     public Level2(MainClass game) {
         super(game);
-   //     create();
+        create();
         render(Gdx.graphics.getDeltaTime());
     }
 
@@ -94,8 +94,6 @@ public class Level2 extends BaseScreen implements ActionResolver{
                 LONG_PRESS_DURATION,
                 MAX_FLING_DELAY,
                 new GestureHandlerPruebas( camera));
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(selector.stage,gestureDetector);
-        Gdx.input.setInputProcessor(inputMultiplexer);
         world = new World(new Vector2(0f,0f),true);
         textureLoader = new TextureLoader();
         stage = new Stage(viewport);
@@ -104,6 +102,9 @@ public class Level2 extends BaseScreen implements ActionResolver{
         textureLoader.cargar();
         collisionControl = new CollisionControl();
         world.setContactListener(collisionControl);
+
+        hud=new Hud(mundoBatch);
+        selector=new Selector(mundoBatch);
         //Factorias
         enemyFactory=new EnemyFactory();
         proyectileFactory=new ProyectileFactory();
@@ -119,72 +120,19 @@ public class Level2 extends BaseScreen implements ActionResolver{
         generator=new Generator();
         generator.setEnemyFactory(enemyFactory);
         generator.setDefault(); //Pa debugear
-        //Imagenes diciendo donde se pueden poner las  torres
-        final Array<Image> validTargets = new Array();
-        for (int i = 1; i <= 3; i++) {
-            for (int j = 1; j <= 3; j++){
-                Image target = new Image(game.getManager().get("target.png", Texture.class));
-                target.setBounds(650 * i, 380 * j, 100, 100);
-                validTargets.add(target);
-                stage.addActor(target);
-            }
-        }
-        //Drag and drop. Sacar en otra clase. Ver documentacion y que sea por cada torre correspondiente
-        DragAndDrop dragAndDrop; //El drag&drop
-        GameDragAndDrop dragAndDrop=new GameDragAndDrop();
-        dragAndDrop.addSource(new DragAndDrop.Source(selector.stage.getActors().first()) {
-            @Override
-            public DragAndDrop.Payload dragStart (InputEvent event, float x, float y, int pointer) {
-                DragAndDrop.Payload payload = new DragAndDrop.Payload();
-
-                payload.setDragActor(new Label("Some payload!", skin)); //Aqui iria la imagen de la torre
-
-                Label validLabel = new Label("Some payload!", skin);
-                validLabel.setColor(0, 1, 0, 1);
-                payload.setValidDragActor(validLabel); //Imagen que aparece si es valido (tintar de verde)
-
-                Label invalidLabel = new Label("Some payload!", skin); //Idem que antes
-                invalidLabel.setColor(1, 0, 0, 1);
-                payload.setInvalidDragActor(invalidLabel);
-
-                return payload;
-            }
-
-            @Override //Se llama cuando dejas de mover el objeto. En target va el actor sobre el que estas. Cambiar TORRE por la correspondiendte
-            public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
-
-                if (target != null && hud.getMoney() >= Torre.getCoste()) {
-                    hud.addGold(-Torre.getCoste());
-                    Texture torreTex = game.getManager().get("torre.png", Texture.class);
-                    Torre torreNew = new Torre(world, torreTex, new Vector2(target.getActor().getX(), target.getActor().getY())); //Se añade en la posicion de la imagen que genera
-                    stage.addActor(torreNew);
-                    for (int i = 0; i < validTargets.size(); i++) {
-                        if (validTargets.get(i).equals(target.getActor())) {
-                            validTargets.get(i).remove();
-                        }
-                    }
-                }
-            }
-        });
-
-        //Añade los actores que señalan las posiciones que señalan las zonas validas
-        for (int i = 0; i < validTargets.size(); i++) {
-            dragAndDrop.addTarget(new DragAndDrop.Target(validTargets.get(i)) {
-                public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                    getActor().setColor(Color.GREEN);
-                    return true;
-                }
-
-                public void reset(DragAndDrop.Source source, DragAndDrop.Payload payload) {
-                    getActor().setColor(Color.WHITE);
-                }
-
-                public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                }
-            });
-        }
-
-
+        //Se crea el dragAndDrop
+        customDragAndDrop=new CustomDragAndDrop();
+        Array<Vector2> posciones=new Array<Vector2>();
+        posciones.add(new Vector2(500,500));
+        posciones.add(new Vector2(300,100));
+        customDragAndDrop.setSources(selector.getImagenes());
+        customDragAndDrop.setTowerFactory(towerFactory);
+        customDragAndDrop.setStage(stage);
+        customDragAndDrop.setHud(hud);
+        customDragAndDrop.setPosiciones(posciones);
+        customDragAndDrop.bind();
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(selector.stage,gestureDetector);
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override
@@ -211,7 +159,6 @@ public class Level2 extends BaseScreen implements ActionResolver{
     @Override
     public void dispose() {
         world.dispose();
-        hudBatch.dispose();
         mundoBatch.dispose();
         stage.dispose();
         textureLoader.dispose();

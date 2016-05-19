@@ -168,7 +168,7 @@ public class Level1  extends BaseScreen {
 		utas.add(new Vector2(-250, -150));
         enemyFactory.setRuta(utas);
 		debug=new Box2DDebugRenderer(true,true,true,true,true,true);
-        BasicTank  tankPru=enemyFactory.obtenerTankeBasico(75f);
+        BasicTank  tankPru=enemyFactory.obtenerTankeBasico();
 
 
 
