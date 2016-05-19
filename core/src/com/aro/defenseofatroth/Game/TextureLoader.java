@@ -1,5 +1,6 @@
 package com.aro.defenseofatroth.Game;
 
+import com.aro.defenseofatroth.MainClass;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -42,9 +43,9 @@ public class TextureLoader implements Disposable{
 
     //Se deberia de usar un asert manager para mostrar una barra de carga
     public void cargar(){
-        //TODO hacer. Aqui se cargarian los atlas
-        barrasVida=new TextureAtlas(Gdx.files.internal("barrasVida.atlas"));
-        TextureAtlas atextura = new TextureAtlas(Gdx.files.internal("caveman.atlas"));//TODO cambiar por las animaciones buenas
+        //TODO hacer. Aqui se cargarian los atlas  caveman.atlas
+        barrasVida=MainClass.getManager().get("barrasVida.atlas", TextureAtlas.class);
+        TextureAtlas atextura = MainClass.getManager().get("caveman.atlas", TextureAtlas.class);
         Array<TextureAtlas.AtlasRegion> anima = new Array<TextureAtlas.AtlasRegion>(atextura.getRegions());
         basicTankHoriz=new Animation(0.05f, anima, Animation.PlayMode.LOOP);
     }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 
@@ -34,6 +35,10 @@ public class MainClass extends Game{
 		manager.load("prehistoric2.png", Texture.class);
 		manager.load("target.png", Texture.class);
 		manager.load("title.png", Texture.class);
+		//Carga de las texturas del juego en si
+		manager.load("barrasVida.atlas", TextureAtlas.class);
+        manager.load("caveman.atlas", TextureAtlas.class);
+       // manager.load("barraRoja.png", Texture.class);
 
 		splashScreen = new SplashScreen(this);
 		setScreen(splashScreen);

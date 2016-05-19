@@ -18,6 +18,11 @@ public class EnemyFactory implements ObjectPool<Enemy> {
     protected Array<Vector2> ruta; //La ruta que seguiran
     private Pool<BasicTank> basicTankPool; //Pool de los tankes basicos
     private TextureLoader textureLoader;
+    Array<Enemy> enemies;
+
+    public Array<Enemy> getEnemies() {
+        return enemies;
+    }
 
     public TextureLoader getTextureLoader() {
         return textureLoader;
@@ -37,6 +42,7 @@ public class EnemyFactory implements ObjectPool<Enemy> {
 
     //A una mala esto puede ir en otra clase
     public void crearPools(){
+        enemies=new Array<Enemy>();
         final EnemyFactory niapa=this; //referencia a si mismo, usado por los generadores de los pools
         //Creamos el pools de BasicTank, hay que redefirnir el metodo newObject y añadir la informacion del mundo y del cuerpo
         basicTankPool=new Pool<BasicTank>() {
@@ -69,22 +75,24 @@ public class EnemyFactory implements ObjectPool<Enemy> {
         };
     }
 
-    public BasicTank obtenerTankeBasico(float velocidad){
+    public BasicTank obtenerTankeBasico(){
         //Añadimos los datos al tanke. Ojo, solo añadimos aquellos que se resetean
         BasicTank aux=basicTankPool.obtain();
         aux.setRuta(ruta); //Ciudadooooo!! Hay que pasar una COPIA del array
         aux.setVida(100);
         aux.setVidaMaxima(101);
-        aux.setVelocidadM(velocidad);
+        aux.setVelocidadM(100);
         aux.setViva(true);
         aux.setPosicion(ruta.get(0));
         aux.setPosicionEnRuta(1); //qieremos ir al 2º punto, el 1º es el origen!
         textureLoader.getEscenario().addActor(aux); //lo añadimos al stage para que se dibuje
+        enemies.add(aux); //Se añade al array de enemigos
         return aux;
     }
 
     @Override
     public void remove(Enemy freeObject) {
+        enemies.removeValue(freeObject,true); //Lo quitamos del array
         if (freeObject instanceof BasicTank){ //es un tanke basico, limpiamos de su pool
             basicTankPool.free((BasicTank) freeObject);
         }

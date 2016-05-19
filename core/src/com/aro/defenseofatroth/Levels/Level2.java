@@ -4,6 +4,7 @@ import com.aro.defenseofatroth.ActionResolver;
 import com.aro.defenseofatroth.Entities.Torre;
 import com.aro.defenseofatroth.Game.CollisionControl;
 import com.aro.defenseofatroth.Game.EnemyFactory;
+import com.aro.defenseofatroth.Game.Generator;
 import com.aro.defenseofatroth.Game.ProyectileFactory;
 import com.aro.defenseofatroth.Game.TextureLoader;
 import com.aro.defenseofatroth.Game.TowerFactory;
@@ -35,10 +36,8 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.chartboost.sdk.CBLocation;
 import com.chartboost.sdk.Chartboost;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
-import java.sql.Time;
-import java.util.ArrayList;
+
 
 /** TODO completar. El drag and drop debe de ir en otra clase, junto con el generador
  * Created by Sergio on 18/05/2016.
@@ -58,7 +57,7 @@ public class Level2 extends BaseScreen implements ActionResolver{
     private static final float MAX_FLING_DELAY = 0.15f;
 
     //Generador de bots, al final ira en otra clase
-    Timer.Task t;
+    Generator generator;
 
     //ELementos del HUD
     private Hud hud;
@@ -80,7 +79,7 @@ public class Level2 extends BaseScreen implements ActionResolver{
 
     public Level2(MainClass game) {
         super(game);
-        create();
+   //     create();
         render(Gdx.graphics.getDeltaTime());
     }
 
@@ -104,14 +103,20 @@ public class Level2 extends BaseScreen implements ActionResolver{
         textureLoader.cargar();
         collisionControl = new CollisionControl();
         world.setContactListener(collisionControl);
-        t= new Timer.Task() {
-            @Override
-            public void run() {
-                spawnBots();
-            }
-        };
-        //Generador de enemigos (falta lo mio)
-        Timer.schedule(t,0.5f,1);
+        //Factorias
+        enemyFactory=new EnemyFactory();
+        proyectileFactory=new ProyectileFactory();
+        towerFactory=new TowerFactory();
+        enemyFactory.setTextureLoader(textureLoader);
+        enemyFactory.crearPools();
+        proyectileFactory.setTextureLoader(textureLoader);
+        towerFactory.setTextureLoader(textureLoader);
+        towerFactory.setProyectileFactory(proyectileFactory);
+        proyectileFactory.crearPools();
+       //Generador de enemigos
+        generator=new Generator();
+        generator.setEnemyFactory(enemyFactory);
+        generator.setDefault(); //Pa debugear
         //Imagenes diciendo donde se pueden poner las  torres
         final ArrayList<Image> validTargets = new ArrayList();
         for (int i = 1; i <= 3; i++) {
@@ -176,23 +181,12 @@ public class Level2 extends BaseScreen implements ActionResolver{
             });
         }
 
-        //Factorias. Deberan estar en la clase generador
-        //Variables  auxilires, estas se borrarian
-        enemyFactory=new EnemyFactory();
-        proyectileFactory=new ProyectileFactory();
-        towerFactory=new TowerFactory();
-        enemyFactory.setTextureLoader(textureLoader);
-        enemyFactory.crearPools();
-        proyectileFactory.setTextureLoader(textureLoader);
-        towerFactory.setTextureLoader(textureLoader);
-        towerFactory.setProyectileFactory(proyectileFactory);
-        //textureLoader.niapadePrueba(anima.get(1),new Texture(Gdx.files.internal("barraRoja.png")));
-        proyectileFactory.crearPools();
 
     }
 
     @Override
     public void render(float delta) {
+        updateGame();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
@@ -200,10 +194,17 @@ public class Level2 extends BaseScreen implements ActionResolver{
         mundoBatch.setProjectionMatrix(camera.combined);
         hud.stage.draw();
         selector.stage.draw();
-
-
     }
 
+    private void updateGame(){
+        if (enemyFactory.getEnemies().size==0){ //No hay mas enemigos en pantalla
+            //Se genera la siguiente oleada
+            hud.addWave();
+            generator.setSize(generator.getSize()+3); //Se crean 3 enemigos mas
+            generator.generate();
+            //showChartBoostIntersititial(); //si juber kiere ser muchimillonario descomentar esto
+        }
+    }
     @Override
     public void dispose() {
         world.dispose();
@@ -218,4 +219,5 @@ public class Level2 extends BaseScreen implements ActionResolver{
         Chartboost.cacheInterstitial(CBLocation.LOCATION_DEFAULT);
         Chartboost.showInterstitial(CBLocation.LOCATION_DEFAULT);
     }
+
 }
