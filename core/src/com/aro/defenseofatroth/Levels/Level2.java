@@ -2,6 +2,7 @@ package com.aro.defenseofatroth.Levels;
 
 import com.aro.defenseofatroth.ActionResolver;
 import com.aro.defenseofatroth.Entities.Torre;
+import com.aro.defenseofatroth.Game.BasicTower;
 import com.aro.defenseofatroth.Game.CollisionControl;
 import com.aro.defenseofatroth.Game.CustomDragAndDrop;
 import com.aro.defenseofatroth.Game.EnemyFactory;
@@ -133,6 +134,11 @@ public class Level2 extends BaseScreen implements ActionResolver{
         customDragAndDrop.bind();
         InputMultiplexer inputMultiplexer = new InputMultiplexer(selector.stage,gestureDetector);
         Gdx.input.setInputProcessor(inputMultiplexer);
+        //Crear torre de pueba
+        BasicTower prueba=towerFactory.obtenerBasicTower(0,0);
+        debugRenderer=new Box2DDebugRenderer(true,true,true,true,true,true);
+
+        //Gdx.input.setInputProcessor(gestureDetector);
     }
 
     @Override
@@ -143,6 +149,8 @@ public class Level2 extends BaseScreen implements ActionResolver{
         stage.act();
         world.step(delta, 6, 2);
         mundoBatch.setProjectionMatrix(camera.combined);
+        stage.draw();
+        debugRenderer.render(world,camera.combined);
         hud.stage.draw();
         selector.stage.draw();
     }

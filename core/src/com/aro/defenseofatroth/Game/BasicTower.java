@@ -36,7 +36,7 @@ public class BasicTower extends Tower{
     private void atacar(){
         //TODO hacer. Crear proyectil y enviarlo
         Proyectile aux=super.proyectileFactory.obtenerProyectilTorreBasica(enemigo,posicion);
-        aux.setDaino(5); //Se puede subir el lvl de la torre y que meta mas?
+        aux.setDaino(50); //Se puede subir el lvl de la torre y que meta mas?
     }
 
     public void draw(Batch bach,float delta){

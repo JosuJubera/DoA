@@ -174,6 +174,7 @@ public class Level1  extends BaseScreen {
 
 
 
+
 	}
 
 	public void render(float delta) {

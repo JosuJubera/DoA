@@ -100,8 +100,10 @@ public class EnemyFactory implements ObjectPool<Enemy> {
 
     @Override
     public void remove(Enemy freeObject) {
-        enemies.removeValue(freeObject,true); //Lo quitamos del array
-        ñapaMoney.addMoney(freeObject.getMoney()); //Mis ojossss. Pero cacho ñapaaaaaaa!!!!!
+        enemies.removeValue(freeObject, true); //Lo quitamos del array
+        if (ñapaMoney!=null) {
+            ñapaMoney.addMoney(freeObject.getMoney()); //Mis ojossss. Pero cacho ñapaaaaaaa!!!!!
+        }
         if (freeObject instanceof BasicTank){ //es un tanke basico, limpiamos de su pool
             basicTankPool.free((BasicTank) freeObject);
         }
