@@ -74,7 +74,6 @@ public class Level1  extends BaseScreen {
 	private static final float MAX_FLING_DELAY = 0.15f;
 	protected MainClass game;
 
-
 	private Music music;
 
 
@@ -158,7 +157,7 @@ public class Level1  extends BaseScreen {
         towerFactory.setProyectileFactory(proyectileFactory);
         textureLoader.niapadePrueba(anima.get(1),MainClass.getManager().get("barraRoja.png",Texture.class));
 		proyectileFactory.crearPools();
-        BasicTower pruebas=towerFactory.obtenerBasicTower(0, 0);
+        BasicTower pruebas=towerFactory.obtenerBasicTower(400, 400);
         Array<Vector2> utas=new Array<Vector2>();
         utas.add(new Vector2(0,0));
         utas.add(new Vector2(100,100));

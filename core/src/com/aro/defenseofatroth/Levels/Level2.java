@@ -59,6 +59,7 @@ public class Level2 extends BaseScreen implements ActionResolver{
 
     //Generador de bots, al final ira en otra clase
     Generator generator;
+    private boolean rondaActiva;
 
     //ELementos del HUD
     private Hud hud;
@@ -124,43 +125,42 @@ public class Level2 extends BaseScreen implements ActionResolver{
         //Se crea el dragAndDrop
         customDragAndDrop=new CustomDragAndDrop();
         Array<Vector2> posciones=new Array<Vector2>();
+        posciones.add(new Vector2(500,-200));
         posciones.add(new Vector2(500,500));
-        posciones.add(new Vector2(300,100));
-        customDragAndDrop.setSources(selector.getImagenes());
+       /* customDragAndDrop.setSources(selector.getImagenes());
         customDragAndDrop.setTowerFactory(towerFactory);
         customDragAndDrop.setStage(stage);
         customDragAndDrop.setHud(hud);
         customDragAndDrop.setPosiciones(posciones);
-        customDragAndDrop.bind();
+        customDragAndDrop.bind();*/
         InputMultiplexer inputMultiplexer = new InputMultiplexer(selector.stage,gestureDetector);
         Gdx.input.setInputProcessor(inputMultiplexer);
-        //Crear torre de pueba
-        BasicTower prueba=towerFactory.obtenerBasicTower(0,0);
         debugRenderer=new Box2DDebugRenderer(true,true,true,true,true,true);
-
+        towerFactory.obtenerBasicTower(500,-200);
+        towerFactory.obtenerBasicTower(500,500);
+        rondaActiva=false;
         //Gdx.input.setInputProcessor(gestureDetector);
     }
 
     @Override
     public void render(float delta) {
-        updateGame();
+        updateGame(delta);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         world.step(delta, 6, 2);
         mundoBatch.setProjectionMatrix(camera.combined);
         stage.draw();
-        debugRenderer.render(world,camera.combined);
+        debugRenderer.render(world, camera.combined);
         hud.stage.draw();
         selector.stage.draw();
     }
 
-    private void updateGame(){
+    private void updateGame(float delta){
+        generator.actualizar(delta);
         if (enemyFactory.getEnemies().size==0){ //No hay mas enemigos en pantalla
             //Se genera la siguiente oleada
             hud.addWave();
-            generator.setSize(generator.getSize() + 3); //Se crean 3 enemigos mas
-            generator.generate();
             //showChartBoostIntersititial(); //si jub3r kiere ser muchimillonario descomentar esto
         }
     }

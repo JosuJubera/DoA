@@ -41,7 +41,8 @@ public class CustomDragAndDrop {
             if (validTargets.contains(this,true)){ //Es un target valido
                 getActor().remove();//Deja de dibujarse
                 Integer tipo=(Integer) payload.getObject(); //Obtenemos el tipo de torre
-                towerFactory.obtenerBasicTower(getActor().getX(),getActor().getY()); //Pnemos la torre
+                Actor actor=getActor();
+                towerFactory.obtenerBasicTower(actor.getX()+actor.getWidth()*0.5f,actor.getY()+actor.getHeight()*0.5f); //Pnemos la torre
                 dragAndDrop.removeTarget(this); //Creo k no hace falta, pero bueno
             }
 

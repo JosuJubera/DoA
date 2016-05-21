@@ -62,11 +62,12 @@ public class ProyectileFactory implements ObjectPool<Proyectile> {
         }
     }
 
-    public BasicTowerProyectile obtenerProyectilTorreBasica(Enemy objetivo,Vector2 posicion){
+    public BasicTowerProyectile obtenerProyectilTorreBasica(Enemy objetivo,Vector2 posicion,int daño){
         BasicTowerProyectile aux=basicTowerProyectilePool.obtain();
         aux.setPosicion(posicion);
         aux.setEnemigo(objetivo);
         aux.setVelocidadM(200);
+        aux.setDaino(daño);
         textureLoader.getEscenario().addActor(aux);
         return aux;
     }

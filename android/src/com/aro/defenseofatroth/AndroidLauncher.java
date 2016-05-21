@@ -3,7 +3,6 @@ package com.aro.defenseofatroth;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-
 import com.badlogic.gdx.backends.android.*;
 import com.chartboost.sdk.Chartboost;
 import com.chartboost.sdk.CBLocation;
@@ -19,7 +18,6 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 		String chartBoostAppSignature = "cdec3ab3d2bfccd738a75728472ecfe3615b5c07";
 		Chartboost.startWithAppId(this, chartBoostAppId, chartBoostAppSignature);
 		Chartboost.onCreate(this);
-
 		showChartBoostIntersititial();
 		initialize(new MainClass(), config);
 

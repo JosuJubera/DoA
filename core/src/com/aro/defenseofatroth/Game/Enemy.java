@@ -173,6 +173,9 @@ public class Enemy extends Actor implements Pool.Poolable {
 
     public void setVida(int vida) {
         this.vida = vida;
+        if (vidaMaxima!=0){
+        barraVida.setValor(((float)vida)/((float)vidaMaxima));
+        }
     }
 
     public int getVidaMaxima() {
@@ -181,6 +184,9 @@ public class Enemy extends Actor implements Pool.Poolable {
 
     public void setVidaMaxima(int vidaMaxima) {
         this.vidaMaxima = vidaMaxima;
+        if (vidaMaxima!=0){
+            barraVida.setValor(((float)vida)/((float)vidaMaxima));
+        }
     }
     public void setPoolOrigen(ObjectPool<Enemy> origen){
         this.poolOrigen=origen;
@@ -239,8 +245,8 @@ public class Enemy extends Actor implements Pool.Poolable {
         }
     }
     public void liberar(){
-        poolOrigen.remove(this);
         super.remove(); //no se dibuja
+        poolOrigen.remove(this);
     }
 
     @Override
@@ -248,12 +254,15 @@ public class Enemy extends Actor implements Pool.Poolable {
         //Animaciones, Cuerpos y Pools no se libera, por que son constantes a todos los enemigos (salvo que algun hijo lso modifique)
         //super.remove();//ya no se dibuja
         cuerpo.setLinearVelocity(0f,0f);
-        cuerpo.setTransform(0f,0f,0f);
+        cuerpo.setTransform(0f,0f, 0f);
         posicion.setZero();
         velocidad.setZero();
         destino.setZero();
         velocidadM=0;
         viva=false;
+        posicionEnRuta=0;
+        animationTime=0;
+        animacionActual=null;
     }
 
     public int getMoney() {

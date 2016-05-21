@@ -14,36 +14,44 @@ public class Generator{
     int size; //Numero de enemigos a generar
     float entropy; //Entropia en la ruta. Solo afecta a la altura. Es para que sean paralelos
     float delay; //Delay entre enemigos
+    int creados=0;
+    float frecuency;
+    float tiempo;
 
 
-
-    /**
-     * Crea una oleada segun los parametros internos
-     */
-    public void generate(){
-        Timer.Task next=new Timer.Task() {
-            @Override
-            public void run() {
-                Enemy tank=enemyFactory.obtenerTankeBasico();
-            }
-        };
-        Timer.schedule(next,0,delay,size);
+    public void actualizar(float delta){
+        tiempo-=delta;
+        if ((tiempo<0) && (creados<size)){
+            tiempo=frecuency;
+            enemyFactory.obtenerTankeBasico();
+            creados++;
+        }
     }
 
+    public void reset(){
+        creados=0;
+    }
+
+    public int getCreados() {
+        return creados;
+    }
     /**
      * Para debugear, genera enemigos con la configuracion por defecto
      */
     public void setDefault(){
+        creados=0;
         entropy=2;
-        delay=0.5f;
-        size=15;
+        delay=3f;
+        size=6;
+        frecuency=0.5f;
+        tiempo=0.5f;
         ruta=new Array<Vector2>();
         ruta.add(new Vector2(0, 0));
-        ruta.add(new Vector2(100, 100));
-        ruta.add(new Vector2(-500, 500));
-        ruta.add(new Vector2(100, -150));
-        ruta.add(new Vector2(50, 600));
-        ruta.add(new Vector2(-250, -150));
+        ruta.add(new Vector2(300, 100));
+        ruta.add(new Vector2(400, 400));
+        ruta.add(new Vector2(500, 200));
+        ruta.add(new Vector2(600, 600));
+        ruta.add(new Vector2(1000, 0));
         enemyFactory.setRuta(ruta);
     }
 

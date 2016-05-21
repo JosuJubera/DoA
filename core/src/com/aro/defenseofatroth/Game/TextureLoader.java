@@ -48,7 +48,7 @@ public class TextureLoader implements Disposable{
         TextureAtlas atextura = MainClass.getManager().get("caveman.atlas", TextureAtlas.class);
         Array<TextureAtlas.AtlasRegion> anima = new Array<TextureAtlas.AtlasRegion>(atextura.getRegions());
         basicTankHoriz=new Animation(0.05f, anima, Animation.PlayMode.LOOP);
-        niapa=new TextureRegion(MainClass.getManager().get("torre.png", Texture.class));
+        niapa=new TextureRegion(anima.get(1));
         proyniapa=MainClass.getManager().get("barraRoja.png", Texture.class);
     }
 

@@ -43,6 +43,7 @@ public class Proyectile extends Actor implements Pool.Poolable {
 
     public void setPosicion(Vector2 posicion) {
         this.posicion = posicion;
+        cuerpo.setTransform(posicion.x,posicion.y,0);
     }
 
     public Enemy getEnemigo() {

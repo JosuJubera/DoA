@@ -27,14 +27,14 @@ public class CollisionControl implements ContactListener {
                 Gdx.app.log("COLLISIONCONTROL", "La torre atacara!");
                 Tower torre=(Tower) cuerpoA.getUserData();
                 Enemy enemigo=(Enemy) cuerpoB.getUserData();
-                torre.establecerObjetivo(enemigo);
+                torre.enemyInRange(enemigo);
             }
             if  (cuerpoB.getUserData() instanceof Tower){
                 //La torre ataca
                 Gdx.app.log("COLLISIONCONTROL", "La torre atacara!");
                 Tower torre=(Tower) cuerpoB.getUserData();
                 Enemy enemigo=(Enemy) cuerpoA.getUserData();
-                torre.establecerObjetivo(enemigo);
+                torre.enemyInRange(enemigo);
             }
         }
         /* //Por ahora hacemos que se calcule segun la distancia con el objetivo. Asi no se choca antes
@@ -67,12 +67,12 @@ public class CollisionControl implements ContactListener {
         if  (cuerpoA.getUserData() instanceof Tower){
             Gdx.app.log("COLLISIONCONTROL", "La torre deja de atacar!");
             Tower torre=(Tower) cuerpoA.getUserData();
-            torre.libre();
+            torre.enemyOutRange((Enemy) cuerpoB.getUserData());
         }
         if  (cuerpoB.getUserData() instanceof Tower){
             Gdx.app.log("COLLISIONCONTROL", "La torre deja de atacar!");
             Tower torre=(Tower) cuerpoB.getUserData();
-            torre.libre();
+            torre.enemyOutRange((Enemy) cuerpoA.getUserData());
         }
     }
 
