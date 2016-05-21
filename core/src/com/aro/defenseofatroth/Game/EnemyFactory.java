@@ -85,7 +85,7 @@ public class EnemyFactory implements ObjectPool<Enemy> {
     public BasicTank obtenerTankeBasico(/*int nivel //Por si queremos que sean mas fuertes*/){
         //Añadimos los datos al tanke. Ojo, solo añadimos aquellos que se resetean
         BasicTank aux=basicTankPool.obtain();
-        aux.setRuta(ruta); //Ciudadooooo!! Hay que pasar una COPIA del array
+        aux.setRuta(ruta); //Ciudadooooo NO HAY QUE MODIFICAR EL ARRAY o se modificaran TODAS las rutas de TODOS los enemigos
         aux.setVida(100);
         aux.setVidaMaxima(101);
         aux.setVelocidadM(100);

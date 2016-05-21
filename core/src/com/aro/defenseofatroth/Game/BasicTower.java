@@ -35,7 +35,7 @@ public class BasicTower extends Tower{
 
     private void atacar(){
         //TODO hacer. Crear proyectil y enviarlo
-        super.proyectileFactory.obtenerProyectilTorreBasica(objetivo,posicion,56);
+        super.proyectileFactory.obtenerProyectilTorreBasica(objetivo,posicion,102);
     }
 
     public void draw(Batch bach,float delta){

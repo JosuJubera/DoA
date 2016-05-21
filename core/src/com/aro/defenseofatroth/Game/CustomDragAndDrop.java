@@ -57,9 +57,9 @@ public class CustomDragAndDrop {
         @Override
         public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
             DragAndDrop.Payload payload = new DragAndDrop.Payload();
-            payload.setObject(getActor().getUserObject()); //Se establece el mismo ID que el actor
-            //TODO que la imagen de la torre corresponda payload.setDragActor(getActor()) podira ir, ambos son image
-            //Imagen de la torre
+            Integer id=(Integer) getActor().getUserObject(); //Se obtiene el tipo de torre
+            payload.setObject(id); //Se establece el mismo ID que el actor
+            //Imagen de la torre TODO poner la imagen segun el ID
             Image dragging=new Image(MainClass.getManager().get("torre.png", Texture.class));
             dragging.setScale(0.5f);
             Gdx.app.log("Drag&Drop", "Escenario "+dragging.getStage());

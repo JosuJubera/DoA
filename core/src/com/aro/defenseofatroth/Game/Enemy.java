@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -46,11 +47,11 @@ public class Enemy extends Actor implements Pool.Poolable {
     protected boolean viva; //si la unidad esta viva
     protected Array<Vector2> ruta; //ruta a seguir por la unidad. Este valor es FINAL. NO SE DEBE CAMBIAR
     private int posicionEnRuta;
-
     protected int money; //Dinero que deja al morir
 
     //Debug
     Sprite posdestino;
+    BitmapFont font= new BitmapFont(Gdx.files.internal("data/default.fnt"),Gdx.files.internal("data/default.png"), false);
 
     Enemy(){
         posicion=new Vector2(0,0);
@@ -224,7 +225,8 @@ public class Enemy extends Actor implements Pool.Poolable {
         TextureRegion fotograma=animacionActual.getKeyFrame(animationTime);
 
         batch.draw(fotograma,posicion.x-fotograma.getRegionWidth()*0.5f,posicion.y-fotograma.getRegionHeight()*0.5f);
-        //batch.draw(posdestino.getTexture(),destino.x,destino.y); //debug, para pintar el destino
+        batch.draw(posdestino.getTexture(),destino.x,destino.y); //debug, para pintar el destino
+        font.draw(batch,"Destino: "+destino+" ruta: "+posicionEnRuta,posicion.x,posicion.y-25);
         barraVida.draw(batch,delta);
     }
 
@@ -232,6 +234,9 @@ public class Enemy extends Actor implements Pool.Poolable {
     public void act(float delta){
 
         if (viva){ //esta viva, actualizamos posicion
+            //Creo k esto soluciona una ñapa
+            //this.setDestino(destino);
+            //
             posicion=cuerpo.getPosition();
             super.setPosition(posicion.x,posicion.y);
             barraVida.setPosition(posicion);
@@ -257,7 +262,7 @@ public class Enemy extends Actor implements Pool.Poolable {
         cuerpo.setTransform(0f,0f, 0f);
         posicion.setZero();
         velocidad.setZero();
-        destino.setZero();
+        this.destino=null;
         velocidadM=0;
         viva=false;
         posicionEnRuta=0;
