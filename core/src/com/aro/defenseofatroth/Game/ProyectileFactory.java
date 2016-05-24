@@ -96,7 +96,7 @@ public class ProyectileFactory implements ObjectPool<Proyectile> {
         BasicTowerProyectile aux=basicTowerProyectilePool.obtain();
         aux.setPosicion(posicion);
         aux.setEnemigo(objetivo);
-        aux.setVelocidadM(10000);
+        aux.setVelocidadM(200);
         aux.setDaino(daño);
         textureLoader.getEscenario().addActor(aux);
         return aux;

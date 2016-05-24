@@ -7,6 +7,7 @@ import com.aro.defenseofatroth.Game.CollisionControl;
 import com.aro.defenseofatroth.Game.CustomDragAndDrop;
 import com.aro.defenseofatroth.Game.EnemyFactory;
 import com.aro.defenseofatroth.Game.Generator;
+import com.aro.defenseofatroth.Game.Message;
 import com.aro.defenseofatroth.Game.ProyectileFactory;
 import com.aro.defenseofatroth.Game.TextureLoader;
 import com.aro.defenseofatroth.Game.TowerFactory;
@@ -147,19 +148,21 @@ public class Level2 extends BaseScreen implements ActionResolver{
         logger=new FPSLogger();
 
         towerFactory.obtenerBasicTower(1500,-200);
-        towerFactory.obtenerMissileTower(1500,500);
+        towerFactory.obtenerMissileTower(1500, 500);
 
-        towerFactory.obtenerBasicTower(2500,-200);
-        towerFactory.obtenerMissileTower(2500,500);
+        towerFactory.obtenerBasicTower(2500, -200);
+        towerFactory.obtenerMissileTower(2500, 500);
 
-        towerFactory.obtenerBasicTower(3500,-200);
-        towerFactory.obtenerMissileTower(3500,500);
+        towerFactory.obtenerBasicTower(3500, -200);
+        towerFactory.obtenerMissileTower(3500, 500);
 
-        towerFactory.obtenerBasicTower(5500,-200);
-        towerFactory.obtenerMissileTower(5500,500);
+        towerFactory.obtenerBasicTower(5500, -200);
+        towerFactory.obtenerMissileTower(5500, 500);
 
-        towerFactory.obtenerBasicTower(6500,-200);
-        towerFactory.obtenerMissileTower(6500,500);
+        towerFactory.obtenerBasicTower(6500, -200);
+        towerFactory.obtenerMissileTower(6500, 500);
+
+        Message.getInstance().setStage(hud.stage);
 
     }
 
@@ -174,6 +177,7 @@ public class Level2 extends BaseScreen implements ActionResolver{
         mundoBatch.setProjectionMatrix(camera.combined);
         debugRenderer.render(world, camera.combined);
         stage.draw();
+        hud.stage.act();
         hud.stage.draw();
         selector.stage.draw();
     }
@@ -202,5 +206,10 @@ public class Level2 extends BaseScreen implements ActionResolver{
 
     public void addMoney(int modey) {
         hud.addGold(modey);
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height);
     }
 }

@@ -2,8 +2,10 @@ package com.aro.defenseofatroth.Game;
 
 import com.aro.defenseofatroth.Screens.MenuScreen;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -41,7 +43,7 @@ public class Tower extends Actor {
     public void setPosicion(Vector2 posicion) {
         this.posicion = posicion;
         cuerpo.setTransform(posicion,0);
-        this.setPosition(posicion.x,posicion.y);
+        super.setPosition(posicion.x - textura.getRegionWidth() * 0.5f, posicion.y - textura.getRegionHeight() * 0.5f); //Cuidado. Hacer cuentas en papel, ya que en el actor esta posicion se refiere a la parte SUPERIOR IZQUIERDA, NO AL CENTRO
     }
 
     public void setCuerpo(Body cuerpo) {
@@ -74,11 +76,18 @@ public class Tower extends Actor {
     }
     public void ñapa(){
         this.setWidth(textura.getRegionWidth());
+        this.setDebug(true);
         this.setHeight(textura.getRegionHeight());
-        this.addListener(new ClickListener(){
+        this.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("LISTENER", "Le has dado a un actor!");
+                if (event.getTarget() instanceof Tower) {
+                    Gdx.app.log("LISTENER", "Es una torre");
+                    Message.getInstance().say("Error, no lo has hecho bien!!");
+                }else{
+                    Gdx.app.log("LISTENER", "Timador!");
+                }
             }
 
         });

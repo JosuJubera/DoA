@@ -49,17 +49,10 @@ public class Enemy extends Actor implements Pool.Poolable {
     private int posicionEnRuta;
     protected int money; //Dinero que deja al morir
 
-    //Debug
-    Sprite posdestino;
-    BitmapFont font= new BitmapFont(Gdx.files.internal("data/default.fnt"),Gdx.files.internal("data/default.png"), false);
-
     Enemy(){
         posicion=new Vector2(0,0);
         velocidad=new Vector2(0,0);
         destino=new Vector2(0,0);
-        //Debug, borrar
-        posdestino = new Sprite(new Texture(Gdx.files.internal("barraRoja.png")));
-        posdestino.scale(0.3f);
     }
 
     public void setPosicionEnRuta(int posicionEnRuta) {
@@ -225,8 +218,6 @@ public class Enemy extends Actor implements Pool.Poolable {
         TextureRegion fotograma=animacionActual.getKeyFrame(animationTime);
 
         batch.draw(fotograma,posicion.x-fotograma.getRegionWidth()*0.5f,posicion.y-fotograma.getRegionHeight()*0.5f);
-        batch.draw(posdestino.getTexture(),destino.x,destino.y); //debug, para pintar el destino
-        font.draw(batch,"Destino: "+destino+" ruta: "+posicionEnRuta,posicion.x,posicion.y-25);
         barraVida.draw(batch,delta);
     }
 
