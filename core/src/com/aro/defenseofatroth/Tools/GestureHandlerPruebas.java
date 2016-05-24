@@ -61,13 +61,13 @@ public class GestureHandlerPruebas implements GestureDetector.GestureListener {
     public boolean pan(float x, float y, float deltaX, float deltaY) {
         //translate mueve la camara segun esas coordenadas (igual que camera.x+=x)
 
-        if (camera.position.x - deltaX * camera.zoom <= (200 / 189 * camera.zoom * camera.zoom - 121760 / 189 * camera.zoom + 121160 / 63)              // 1730
+/*        if (camera.position.x - deltaX * camera.zoom <= (200 / 189 * camera.zoom * camera.zoom - 121760 / 189 * camera.zoom + 121160 / 63)              // 1730
                 && (camera.position.y + deltaY * camera.zoom) <= (-200 / 189 * camera.zoom * camera.zoom - 67240 / 189 * camera.zoom + 67840 / 63)      // 970
                 && (camera.position.x - deltaX * camera.zoom) >= (-200 / 189 * camera.zoom * camera.zoom + 121760 / 189 * camera.zoom - 121160 / 63)    // -1730
                 && (camera.position.y + deltaY * camera.zoom) >= (200 / 189 * camera.zoom * camera.zoom + 67240 / 189 * camera.zoom - 67840 / 63)){     // -970
-
+*/
             camera.position.add(-deltaX * camera.zoom, deltaY * camera.zoom, 0);
-        }
+//        }
 //			System.out.println("pan" + camera.position + " zoom " + camera.zoom);
         return true;
     }

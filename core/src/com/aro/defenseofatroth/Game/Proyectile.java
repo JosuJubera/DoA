@@ -94,7 +94,7 @@ public class Proyectile extends Actor implements Pool.Poolable {
         velocidad.y = MathUtils.sin(angulo) * velocidadM;
         cuerpo.setLinearVelocity(velocidad);
         //Si esta lo suficientemente cerca
-        if (posicion.dst(enemyPos)<=20f*velocidadM*delta){
+        if (posicion.dst(enemyPos)<=20f+velocidadM*delta){
             enemigo.dainar(daino);
             this.liberar();
         }

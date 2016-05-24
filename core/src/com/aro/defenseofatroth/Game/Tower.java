@@ -1,10 +1,16 @@
 package com.aro.defenseofatroth.Game;
 
+import com.aro.defenseofatroth.Screens.MenuScreen;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 
 /**
@@ -60,10 +66,21 @@ public class Tower extends Actor {
      * enemigo esta muerto.
      */
     public void enemyOutRange(Enemy enemigo){
-        enemigosEnRango.removeValue(enemigo,true);
+        enemigosEnRango.removeValue(enemigo, true);
     }
     @Override
     public void draw(Batch bach,float delta){
-        bach.draw(textura,posicion.x-textura.getRegionWidth()*0.5f,posicion.y-textura.getRegionHeight()*0.5f);
+        bach.draw(textura, posicion.x - textura.getRegionWidth() * 0.5f, posicion.y - textura.getRegionHeight() * 0.5f);
+    }
+    public void ñapa(){
+        this.setWidth(textura.getRegionWidth());
+        this.setHeight(textura.getRegionHeight());
+        this.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.log("LISTENER", "Le has dado a un actor!");
+            }
+
+        });
     }
 }

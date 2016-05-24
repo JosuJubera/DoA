@@ -33,7 +33,7 @@ public class MissileTower extends Tower {
 
     private void atacar(){
         //TODO hacer. Crear proyectil y enviarlo
-        super.proyectileFactory.obtenerMisil(objetivo,posicion,99);
+        super.proyectileFactory.obtenerMisil(objetivo,posicion,120);
     }
 
     @Override

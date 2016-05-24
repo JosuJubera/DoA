@@ -40,9 +40,9 @@ public class Generator{
     public void setDefault(){
         creados=0;
         entropy=2;
-        size=6;
-        frecuency=1f;
-        tiempo=1f;
+        size=40;
+        frecuency=1.5f;
+        tiempo=1.5f;
         ruta=new Array<Vector2>();
         ruta.add(new Vector2(0, 0));
         ruta.add(new Vector2(300, 100));
@@ -50,6 +50,7 @@ public class Generator{
         ruta.add(new Vector2(500, 200));
         ruta.add(new Vector2(600, 600));
         ruta.add(new Vector2(1000, 0));
+        ruta.add(new Vector2(100000, 0));
         enemyFactory.setRuta(ruta);
     }
 

@@ -28,8 +28,10 @@ public class TextureLoader implements Disposable{
     private TextureAtlas enemigos; //los enemigos del juego
     private Animation basicTankHoriz;
 
+    //TODO pasar esto a atlas
     private TextureRegion niapa;
-    private Texture proyniapa;
+    private TextureRegion proyniapa;
+    private TextureRegion misil;
 
     //Animaciones
 
@@ -49,7 +51,8 @@ public class TextureLoader implements Disposable{
         Array<TextureAtlas.AtlasRegion> anima = new Array<TextureAtlas.AtlasRegion>(atextura.getRegions());
         basicTankHoriz=new Animation(0.05f, anima, Animation.PlayMode.LOOP);
         niapa=new TextureRegion(anima.get(1));
-        proyniapa=MainClass.getManager().get("barraRoja.png", Texture.class);
+        proyniapa=new TextureRegion(MainClass.getManager().get("barraRoja.png", Texture.class));
+        misil=new TextureRegion(MainClass.getManager().get("barraVerde.png", Texture.class));
     }
 
     public TextureRegion obtenerBarraRoja(){
@@ -78,12 +81,10 @@ public class TextureLoader implements Disposable{
 
     public void niapadePrueba(TextureRegion torre,Texture proyectil){
         this.niapa=torre;
-        this.proyniapa=proyectil;
     }
 
     public TextureRegion obtenerMissile(){
-        //WARNING!!! ÑAPA INSIDE!!!
-        return new TextureRegion(MainClass.getManager().get("barraVerde.png", Texture.class));
+        return misil;
     }
 
     @Override

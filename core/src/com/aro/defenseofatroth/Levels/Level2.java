@@ -19,12 +19,14 @@ import com.aro.defenseofatroth.Tools.GestureHandlerPruebas;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -79,6 +81,7 @@ public class Level2 extends BaseScreen implements ActionResolver{
 
     //Drag and drop
     CustomDragAndDrop customDragAndDrop;
+    FPSLogger logger;
 
 
     public Level2(MainClass game) {
@@ -134,25 +137,43 @@ public class Level2 extends BaseScreen implements ActionResolver{
         customDragAndDrop.setHud(hud);
         customDragAndDrop.setPosiciones(posciones);
         customDragAndDrop.bind();*/
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(selector.stage,gestureDetector);
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage,selector.stage,gestureDetector);
         Gdx.input.setInputProcessor(inputMultiplexer);
         debugRenderer=new Box2DDebugRenderer(true,true,true,true,true,true);
-        towerFactory.obtenerBasicTower(500,-200);
+        towerFactory.obtenerBasicTower(500, -200);
         towerFactory.obtenerMissileTower(500,500);
         rondaActiva=false;
         //Gdx.input.setInputProcessor(gestureDetector);
+        logger=new FPSLogger();
+
+        towerFactory.obtenerBasicTower(1500,-200);
+        towerFactory.obtenerMissileTower(1500,500);
+
+        towerFactory.obtenerBasicTower(2500,-200);
+        towerFactory.obtenerMissileTower(2500,500);
+
+        towerFactory.obtenerBasicTower(3500,-200);
+        towerFactory.obtenerMissileTower(3500,500);
+
+        towerFactory.obtenerBasicTower(5500,-200);
+        towerFactory.obtenerMissileTower(5500,500);
+
+        towerFactory.obtenerBasicTower(6500,-200);
+        towerFactory.obtenerMissileTower(6500,500);
+
     }
 
     @Override
     public void render(float delta) {
+        logger.log();
         updateGame(delta);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act();
+        stage.act(delta);
         world.step(delta, 6, 2);
         mundoBatch.setProjectionMatrix(camera.combined);
-        stage.draw();
         debugRenderer.render(world, camera.combined);
+        stage.draw();
         hud.stage.draw();
         selector.stage.draw();
     }

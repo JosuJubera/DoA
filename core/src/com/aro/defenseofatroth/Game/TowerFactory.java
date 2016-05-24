@@ -55,6 +55,7 @@ public class TowerFactory {
         torre.setTiempoEntreAtaques(1f); //Tiempo en milisegundos entre ataques
         torre.setTiempoSiguienteAtaque(1f); //Tiempo pal siguiente ataque
         textureLoader.getEscenario().addActor(torre); //lo añadimos al stage para que se dibuje
+        torre.ñapa();
         return torre;
     }
 
