@@ -6,12 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 /**
- * Esta clase representa a una torre en el juego, concretamente a una torre basica.
- * Created by Sergio on 17/04/2016.
+ * Created by Sergio on 24/05/2016.
  */
-public class BasicTower extends Tower{
-    protected static float ALCANCE=400f; //Si se modifica e alcance, hay que modificarlo en el sensor tambien (por si hacemos que aumente al subir de lvl)
-    private BitmapFont font= new BitmapFont(Gdx.files.internal("data/default.fnt"),Gdx.files.internal("data/default.png"), false); //para debugear
+public class MissileTower extends Tower {
+    protected static float ALCANCE=600f; //Si se modifica e alcance, hay que modificarlo en el sensor tambien (por si hacemos que aumente al subir de lvl)
     protected Enemy objetivo;
     protected int estado; //1 ociosa, 2 atacando
     protected float tiempoEntreAtaques; //Tiemmpo entre ataques
@@ -35,13 +33,7 @@ public class BasicTower extends Tower{
 
     private void atacar(){
         //TODO hacer. Crear proyectil y enviarlo
-        super.proyectileFactory.obtenerProyectilTorreBasica(objetivo,posicion,25);
-    }
-
-    public void draw(Batch bach,float delta){
-        super.draw(bach, delta);
-        font.setColor(Color.WHITE);
-        font.draw(bach, "Estado: " + estado + "\n Tiempo sigueinte Ataque " + tiempoSiguienteAtaque, posicion.x - textura.getRegionWidth() * 0.5f, posicion.y - textura.getRegionWidth() * 0.5f - 10);//Debug, borrrar
+        super.proyectileFactory.obtenerMisil(objetivo,posicion,99);
     }
 
     @Override
@@ -92,6 +84,5 @@ public class BasicTower extends Tower{
             objetivo=null;
         }
     }
-
 
 }

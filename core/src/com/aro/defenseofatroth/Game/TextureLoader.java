@@ -81,6 +81,11 @@ public class TextureLoader implements Disposable{
         this.proyniapa=proyectil;
     }
 
+    public TextureRegion obtenerMissile(){
+        //WARNING!!! ÑAPA INSIDE!!!
+        return new TextureRegion(MainClass.getManager().get("barraVerde.png", Texture.class));
+    }
+
     @Override
     public void dispose() {
         barrasVida.dispose();

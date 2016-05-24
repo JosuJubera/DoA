@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
@@ -137,7 +138,7 @@ public class Level2 extends BaseScreen implements ActionResolver{
         Gdx.input.setInputProcessor(inputMultiplexer);
         debugRenderer=new Box2DDebugRenderer(true,true,true,true,true,true);
         towerFactory.obtenerBasicTower(500,-200);
-        towerFactory.obtenerBasicTower(500,500);
+        towerFactory.obtenerMissileTower(500,500);
         rondaActiva=false;
         //Gdx.input.setInputProcessor(gestureDetector);
     }
