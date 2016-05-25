@@ -96,11 +96,12 @@ public class Level2 extends BaseScreen implements ActionResolver{
         mundoBatch = new SpriteBatch();
         camera = new OrthographicCamera(); //camara orthografica, es en 2D!
         viewport = new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT, camera);
+        GestureHandlerPruebas gestureHandler=new GestureHandlerPruebas( camera);
         gestureDetector = new GestureDetector(HALF_TAP_SQUARE_SIZE,
                 TAP_COUNT_INTERVAL,
                 LONG_PRESS_DURATION,
                 MAX_FLING_DELAY,
-                new GestureHandlerPruebas( camera));
+                gestureHandler);
         world = new World(new Vector2(0f,0f),true);
         textureLoader = new TextureLoader();
         stage = new Stage(viewport);
@@ -118,11 +119,11 @@ public class Level2 extends BaseScreen implements ActionResolver{
         towerFactory=new TowerFactory();
         enemyFactory.setTextureLoader(textureLoader);
         enemyFactory.crearPools();
-        enemyFactory.addÑapa(this); //Es una ñapa muy gorda, pero es necesaria. God Save the Ñapas!
         proyectileFactory.setTextureLoader(textureLoader);
         towerFactory.setTextureLoader(textureLoader);
         towerFactory.setProyectileFactory(proyectileFactory);
         proyectileFactory.crearPools();
+        gestureHandler.setTowerFactory(towerFactory); // <-------Ñapa
        //Generador de enemigos
         generator=new Generator();
         generator.setEnemyFactory(enemyFactory);
@@ -195,6 +196,8 @@ public class Level2 extends BaseScreen implements ActionResolver{
         world.dispose();
         mundoBatch.dispose();
         stage.dispose();
+        hud.dispose();
+        selector.stage.dispose();
         textureLoader.dispose();
     }
 

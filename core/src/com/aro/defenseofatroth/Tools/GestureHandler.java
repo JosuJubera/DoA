@@ -39,7 +39,7 @@ public class GestureHandler implements GestureDetector.GestureListener {
 
     @Override
     public boolean longPress(float x, float y) {
-        //atencion, ñapa gorda, tapense los ojos. Esta ñapa puede herir su sensibilidad
+        //atencion, setButtonUpdate gorda, tapense los ojos. Esta setButtonUpdate puede herir su sensibilidad
         Vector3 pantallacorr=new Vector3(x,y,0);
         pantallacorr=camera.unproject(pantallacorr);
 

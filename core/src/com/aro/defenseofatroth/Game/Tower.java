@@ -1,5 +1,6 @@
 package com.aro.defenseofatroth.Game;
 
+import com.aro.defenseofatroth.Screens.Hud;
 import com.aro.defenseofatroth.Screens.MenuScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -26,6 +27,8 @@ public class Tower extends Actor {
     protected ProyectileFactory proyectileFactory;
     protected TextureRegion textura;
     protected Array<Enemy> enemigosEnRango;
+    protected UpButton upButton;
+    protected int costeMejora;
 
     public Tower(){
         enemigosEnRango=new Array<Enemy>();
@@ -35,6 +38,9 @@ public class Tower extends Actor {
         this.textura = textura;
     }
 
+    public void setCosteMejora(int costeMejora) {
+        this.costeMejora = costeMejora;
+    }
 
     public Vector2 getPosicion() {
         return posicion;
@@ -74,22 +80,30 @@ public class Tower extends Actor {
     public void draw(Batch bach,float delta){
         bach.draw(textura, posicion.x - textura.getRegionWidth() * 0.5f, posicion.y - textura.getRegionHeight() * 0.5f);
     }
-    public void ñapa(){
+    public void setButtonUpdate(){
         this.setWidth(textura.getRegionWidth());
         this.setDebug(true);
         this.setHeight(textura.getRegionHeight());
+        final Tower ñapa=this;
         this.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("LISTENER", "Le has dado a un actor!");
-                if (event.getTarget() instanceof Tower) {
-                    Gdx.app.log("LISTENER", "Es una torre");
-                    Message.getInstance().say("Error, no lo has hecho bien!!");
-                }else{
-                    Gdx.app.log("LISTENER", "Timador!");
-                }
+                upButton = new UpButton(ñapa, costeMejora, getX(), getY() + textura.getRegionHeight()+30);
+                getStage().addActor(upButton);
             }
 
         });
+    }
+
+    public boolean mejorar(){
+        //Las clases hijas lo implementa. Deberia ser abstracto? Si, pero no pienso cambiar toda la estructura ahora
+        Message.getInstance().say("Imposible mejorar");
+        return false;
+    }
+    public void ocultar(){
+        if (upButton!=null) {
+            upButton.remove();
+            upButton=null;
+        }
     }
 }

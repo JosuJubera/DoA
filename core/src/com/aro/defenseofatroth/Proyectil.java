@@ -25,7 +25,7 @@ public class Proyectil extends Entidad implements Pool.Poolable {
     @Override
     public void draw(Batch batch, float delta) {
         actuar(delta);
-        texture.setPosition(posicion.x,posicion.y);//Esto es un ñapa
+        texture.setPosition(posicion.x,posicion.y);//Esto es un setButtonUpdate
         texture.draw(batch);
     }
 

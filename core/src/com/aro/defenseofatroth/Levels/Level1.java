@@ -41,7 +41,7 @@ public class Level1  extends BaseScreen {
 //	private Sprite background; //se usa para manejar tamaño y posicion de texturas (Se puede cargar desde un Atlas)
 	private FitViewport viewport; //representa la imagen en PANTALLA
 	private GestureDetector gestureDetector;
-//	atencion, ñapa gorda, cuidado!
+//	atencion, setButtonUpdate gorda, cuidado!
 	public static Entidad niapa;
 	public static Array<Entidad> entidades; //aqui iran todas la sentidades dibujables
 	public static Pool<Proyectil> proyectiles;

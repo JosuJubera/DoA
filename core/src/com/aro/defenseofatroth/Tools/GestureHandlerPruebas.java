@@ -1,10 +1,15 @@
 package com.aro.defenseofatroth.Tools;
 
+import com.aro.defenseofatroth.Game.Tower;
+import com.aro.defenseofatroth.Game.TowerFactory;
 import com.aro.defenseofatroth.Levels.Level1;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+
+import java.util.Iterator;
+import java.util.function.Consumer;
 
 /**
  * Esta clase la tengo para las pruebas del lvl 1, que el otro eta modificau y no va
@@ -19,9 +24,13 @@ public class GestureHandlerPruebas implements GestureDetector.GestureListener {
     float velX, velY;
     boolean flinging = false;
     float initialScale = 1;
+    TowerFactory towerFactory; //Ñapa inside!
 
-    public GestureHandlerPruebas(/*Vector2 vec,*/OrthographicCamera camera){
+    public void setTowerFactory(TowerFactory towerFactory) {
+        this.towerFactory = towerFactory;
+    }
 
+    public GestureHandlerPruebas(OrthographicCamera camera){
         this.camera=camera;
     }
 
@@ -35,12 +44,20 @@ public class GestureHandlerPruebas implements GestureDetector.GestureListener {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
+        if (towerFactory!=null){
+            Iterator<Tower> it=towerFactory.getTowers().iterator();
+            while (it.hasNext()){
+                Tower aux=it.next();
+                aux.ocultar();
+            }
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean longPress(float x, float y) {
-        //atencion, ñapa gorda, tapense los ojos. Esta ñapa puede herir su sensibilidad
+        //atencion, setButtonUpdate gorda, tapense los ojos. Esta setButtonUpdate puede herir su sensibilidad
         Vector3 pantallacorr=new Vector3(x,y,0);
         pantallacorr=camera.unproject(pantallacorr);
 

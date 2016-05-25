@@ -3,6 +3,7 @@ package com.aro.defenseofatroth.Game;
 import com.aro.defenseofatroth.BarraVida;
 import com.aro.defenseofatroth.Levels.Level1;
 import com.aro.defenseofatroth.Levels.Level2;
+import com.aro.defenseofatroth.Tools.Constants;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -21,11 +22,6 @@ public class EnemyFactory implements ObjectPool<Enemy> {
     private Pool<BasicTank> basicTankPool; //Pool de los tankes basicos
     private TextureLoader textureLoader;
     Array<Enemy> enemies;
-    private Level2 ñapaMoney; //Con que no habia huevos a poner una variable con Ñ eeehhh???
-
-    public void addÑapa(Level2 ñapaMoney){
-        this.ñapaMoney=ñapaMoney;
-    }
 
     public Array<Enemy> getEnemies() {
         return enemies;
@@ -101,9 +97,6 @@ public class EnemyFactory implements ObjectPool<Enemy> {
     @Override
     public void remove(Enemy freeObject) {
         enemies.removeValue(freeObject, true); //Lo quitamos del array
-        if (ñapaMoney!=null) {
-            ñapaMoney.addMoney(freeObject.getMoney()); //Mis ojossss. Pero cacho ñapaaaaaaa!!!!!
-        }
         if (freeObject instanceof BasicTank){ //es un tanke basico, limpiamos de su pool
             basicTankPool.free((BasicTank) freeObject);
         }

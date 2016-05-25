@@ -1,6 +1,7 @@
 package com.aro.defenseofatroth.Game;
 
 import com.aro.defenseofatroth.BarraVida;
+import com.aro.defenseofatroth.Screens.Hud;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -209,7 +210,6 @@ public class Enemy extends Actor implements Pool.Poolable {
             vida=0;
         }
         barraVida.setValor(((float) vida )/((float) vidaMaxima));
-        //Gdx.app.log("ENEMY", "Vida disponible: "+vida+" maxima "+vidaMaxima+" Valor: "+(((float)vida)/((float)vidaMaxima)));
     }
 
     @Override
@@ -225,7 +225,7 @@ public class Enemy extends Actor implements Pool.Poolable {
     public void act(float delta){
 
         if (viva){ //esta viva, actualizamos posicion
-            //Creo k esto soluciona una ñapa
+            //Creo k esto soluciona una setButtonUpdate
             //this.setDestino(destino);
             //
             posicion=cuerpo.getPosition();
@@ -241,6 +241,7 @@ public class Enemy extends Actor implements Pool.Poolable {
         }
     }
     public void liberar(){
+        Hud.addGold(money);
         super.remove(); //no se dibuja
         poolOrigen.remove(this);
     }

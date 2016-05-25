@@ -4,6 +4,7 @@ import com.aro.defenseofatroth.MainClass;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -27,6 +28,8 @@ public class TextureLoader implements Disposable{
     private TextureAtlas proyectiles; //los proyectiles del juego
     private TextureAtlas enemigos; //los enemigos del juego
     private Animation basicTankHoriz;
+    private Texture mejora;
+    private BitmapFont font;
 
     //TODO pasar esto a atlas
     private TextureRegion niapa;
@@ -53,6 +56,8 @@ public class TextureLoader implements Disposable{
         niapa=new TextureRegion(anima.get(1));
         proyniapa=new TextureRegion(MainClass.getManager().get("barraRoja.png", Texture.class));
         misil=new TextureRegion(MainClass.getManager().get("barraVerde.png", Texture.class));
+        font=new BitmapFont(Gdx.files.internal("data/default.fnt"),Gdx.files.internal("data/default.png"), false);
+        mejora=MainClass.getManager().get("mejorar.png", Texture.class);
     }
 
     public TextureRegion obtenerBarraRoja(){
@@ -92,12 +97,23 @@ public class TextureLoader implements Disposable{
         barrasVida.dispose();
         if (enemigos!=null){
             enemigos.dispose();
+            enemigos=null;
         }
         if (torres!=null) {
             torres.dispose();
+            torres=null;
         }
         if (proyectiles!=null){
             proyectiles.dispose();
+            proyectiles=null;
+        }
+        if (font!=null){
+            font.dispose();
+            font=null;
+        }
+        if (mejora!=null){
+            mejora.dispose();
+            mejora=null;
         }
     }
 

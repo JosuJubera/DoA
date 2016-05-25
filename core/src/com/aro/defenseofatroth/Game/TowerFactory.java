@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * Esta clase es la encargada de generar las diferentes torres que hay en el juego.
@@ -13,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 public class TowerFactory {
     private TextureLoader textureLoader;
     private ProyectileFactory proyectileFactory;
+    private Array<Tower> towers=new Array<Tower>();
 
     public TextureLoader getTextureLoader() {
         return textureLoader;
@@ -49,13 +51,16 @@ public class TowerFactory {
         cuerpo.createFixture(fixtureDef);
         shape.dispose();
         torre.setCuerpo(cuerpo);
+        torre.setDaño(25);
         torre.setEstado(1);
-        torre.setPosicion(new Vector2(x,y));
+        torre.setPosicion(new Vector2(x, y));
         torre.setProyectileFactory(proyectileFactory); //Le añadimos la factoria de proyectiles
         torre.setTiempoEntreAtaques(1f); //Tiempo en milisegundos entre ataques
         torre.setTiempoSiguienteAtaque(1f); //Tiempo pal siguiente ataque
         textureLoader.getEscenario().addActor(torre); //lo añadimos al stage para que se dibuje
-        torre.ñapa();
+        torre.setButtonUpdate();
+        torre.setCosteMejora(400);
+        towers.add(torre);
         return torre;
     }
 
@@ -79,12 +84,18 @@ public class TowerFactory {
         shape.dispose();
         torre.setCuerpo(cuerpo);
         torre.setEstado(1);
-        torre.setPosicion(new Vector2(x,y));
+        torre.setPosicion(new Vector2(x, y));
         torre.setProyectileFactory(proyectileFactory); //Le añadimos la factoria de proyectiles
         torre.setTiempoEntreAtaques(2.5f); //Tiempo en milisegundos entre ataques
         torre.setTiempoSiguienteAtaque(2.5f); //Tiempo pal siguiente ataque
+        torre.setButtonUpdate();
+        torre.setCosteMejora(500);
         textureLoader.getEscenario().addActor(torre); //lo añadimos al stage para que se dibuje
+        towers.add(torre);
         return torre;
     }
 
+    public Array<Tower> getTowers() {
+        return towers;
+    }
 }

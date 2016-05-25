@@ -1,5 +1,6 @@
 package com.aro.defenseofatroth.Game;
 
+import com.aro.defenseofatroth.Screens.Hud;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -16,6 +17,7 @@ public class BasicTower extends Tower{
     protected int estado; //1 ociosa, 2 atacando
     protected float tiempoEntreAtaques; //Tiemmpo entre ataques
     protected float tiempoSiguienteAtaque; //Tiempo restante para el siguiente ataque
+    protected int daño;
 
     public float getTiempoEntreAtaques() {
         return tiempoEntreAtaques;
@@ -23,6 +25,10 @@ public class BasicTower extends Tower{
 
     public void setTiempoEntreAtaques(float tiempoEntreAtaques) {
         this.tiempoEntreAtaques = tiempoEntreAtaques;
+    }
+
+    public void setDaño(int daño) {
+        this.daño = daño;
     }
 
     public float getTiempoSiguienteAtaque() {
@@ -35,7 +41,7 @@ public class BasicTower extends Tower{
 
     private void atacar(){
         //TODO hacer. Crear proyectil y enviarlo
-        super.proyectileFactory.obtenerProyectilTorreBasica(objetivo,posicion,25);
+        super.proyectileFactory.obtenerProyectilTorreBasica(objetivo,posicion,daño);
     }
 
     public void draw(Batch bach,float delta){
@@ -93,4 +99,16 @@ public class BasicTower extends Tower{
         }
     }
 
+    public boolean mejorar(){
+        if (Hud.getMoney()>=costeMejora){
+            Hud.addGold(-costeMejora);
+            this.tiempoEntreAtaques=tiempoEntreAtaques*0.7f;
+            this.daño=daño+5;
+            Message.getInstance().say("Torre mejorada");
+            return true;
+        }else {
+            Message.getInstance().say("No hay suficiente oro");
+            return false;
+        }
+    }
 }
