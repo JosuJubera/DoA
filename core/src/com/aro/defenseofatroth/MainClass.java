@@ -26,14 +26,9 @@ public class MainClass extends Game{
 		manager.load("barraRojaBuena.png", Texture.class);
 		manager.load("barraVerdeBuena.png", Texture.class);
 		manager.load("music.ogg", Music.class);
-		manager.load("badlogic.jpg", Texture.class);
 		manager.load("barraVerde.png", Texture.class);
 		manager.load("caveman-sheet.png", Texture.class);
-		manager.load("libgdx.png", Texture.class);
-		manager.load("loading.png", Texture.class);
-		manager.load("NewPiskel2.png", Texture.class);
 		manager.load("prehistoric.png", Texture.class);
-		manager.load("prehistoric2.png", Texture.class);
 		manager.load("target.png", Texture.class);
 		manager.load("title.png", Texture.class);
 		//Carga de las texturas del juego en si
