@@ -1,0 +1,89 @@
+
+Camion.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+cam1
+  rotate: false
+  xy: 1, 621
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+cam10
+  rotate: false
+  xy: 1, 311
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+cam11
+  rotate: false
+  xy: 251, 621
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+cam12
+  rotate: false
+  xy: 1, 1
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+cam2
+  rotate: false
+  xy: 251, 311
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+cam3
+  rotate: false
+  xy: 501, 621
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+cam4
+  rotate: false
+  xy: 251, 1
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+cam5
+  rotate: false
+  xy: 501, 311
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+cam6
+  rotate: false
+  xy: 751, 621
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+cam7
+  rotate: false
+  xy: 501, 1
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+cam8
+  rotate: false
+  xy: 751, 311
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+cam9
+  rotate: false
+  xy: 751, 1
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1

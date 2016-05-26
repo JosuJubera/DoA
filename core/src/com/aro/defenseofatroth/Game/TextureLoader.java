@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
@@ -24,9 +23,7 @@ public class TextureLoader implements Disposable{
     Stage escenario; //lo tengo para darselo a las Factorias
 
     private TextureAtlas barrasVida; //las barras de vida (pueden ir en otro atlas , solo son 2)
-    private TextureAtlas torres; //las torres del juego
-    private TextureAtlas proyectiles; //los proyectiles del juego
-    private TextureAtlas enemigos; //los enemigos del juego
+    private TextureAtlas texturas; //las torres del juego
     private Animation basicTankHoriz;
     private Texture mejora;
     private BitmapFont font;
@@ -58,6 +55,7 @@ public class TextureLoader implements Disposable{
         misil=new TextureRegion(MainClass.getManager().get("barraVerde.png", Texture.class));
         font=new BitmapFont(Gdx.files.internal("data/default.fnt"),Gdx.files.internal("data/default.png"), false);
         mejora=MainClass.getManager().get("mejorar.png", Texture.class);
+
     }
 
     public TextureRegion obtenerBarraRoja(){
@@ -95,13 +93,9 @@ public class TextureLoader implements Disposable{
     @Override
     public void dispose() {
         barrasVida.dispose();
-        if (enemigos!=null){
-            enemigos.dispose();
-            enemigos=null;
-        }
-        if (torres!=null) {
-            torres.dispose();
-            torres=null;
+        if (texturas !=null) {
+            texturas.dispose();
+            texturas =null;
         }
         if (proyectiles!=null){
             proyectiles.dispose();

@@ -1,0 +1,75 @@
+
+texturas.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mejorar
+  rotate: false
+  xy: 1, 231
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
+Basiktower
+  rotate: false
+  xy: 1, 121
+  size: 88, 108
+  orig: 88, 108
+  offset: 0, 0
+  index: -1
+camion
+  rotate: false
+  xy: 263, 383
+  size: 88, 108
+  orig: 88, 108
+  offset: 0, 0
+  index: -1
+infanteria
+  rotate: false
+  xy: 1, 11
+  size: 88, 108
+  orig: 88, 108
+  offset: 0, 0
+  index: -1
+LaserTower_I
+  rotate: false
+  xy: 91, 121
+  size: 88, 108
+  orig: 88, 108
+  offset: 0, 0
+  index: -1
+LaseTower_D
+  rotate: false
+  xy: 263, 273
+  size: 88, 108
+  orig: 88, 108
+  offset: 0, 0
+  index: -1
+MisileTower_D
+  rotate: false
+  xy: 353, 383
+  size: 88, 108
+  orig: 88, 108
+  offset: 0, 0
+  index: -1
+MisileTower_I
+  rotate: false
+  xy: 91, 11
+  size: 88, 108
+  orig: 88, 108
+  offset: 0, 0
+  index: -1
+sprinter
+  rotate: false
+  xy: 353, 273
+  size: 88, 108
+  orig: 88, 108
+  offset: 0, 0
+  index: -1
+misil
+  rotate: false
+  xy: 1, 1
+  size: 54, 8
+  orig: 54, 8
+  offset: 0, 0
+  index: -1
