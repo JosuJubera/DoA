@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import java.util.Iterator;
-import java.util.function.Consumer;
 
 /**
  * Esta clase la tengo para las pruebas del lvl 1, que el otro eta modificau y no va

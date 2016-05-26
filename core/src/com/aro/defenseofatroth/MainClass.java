@@ -21,6 +21,7 @@ public class MainClass extends Game{
 
 		manager = new AssetManager();
 		manager.load("torre.png", Texture.class);
+		manager.load("torre2.png", Texture.class);
 		manager.load("data/uiskin.json", Skin.class);
 		manager.load("barraRoja.png", Texture.class);
 		manager.load("barraRojaBuena.png", Texture.class);
