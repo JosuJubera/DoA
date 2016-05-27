@@ -1,74 +1,94 @@
-
 texturas.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 mejorar
   rotate: false
-  xy: 1, 231
+  xy: 1, 243
   size: 260, 260
   orig: 260, 260
   offset: 0, 0
   index: -1
+target
+  rotate: false
+  xy: 263, 247
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
 Basiktower
   rotate: false
-  xy: 1, 121
+  xy: 1, 133
   size: 88, 108
   orig: 88, 108
   offset: 0, 0
   index: -1
 camion
   rotate: false
-  xy: 263, 383
+  xy: 521, 395
   size: 88, 108
   orig: 88, 108
   offset: 0, 0
   index: -1
 infanteria
   rotate: false
-  xy: 1, 11
+  xy: 1, 23
   size: 88, 108
   orig: 88, 108
   offset: 0, 0
   index: -1
 LaserTower_I
   rotate: false
-  xy: 91, 121
+  xy: 91, 133
   size: 88, 108
   orig: 88, 108
   offset: 0, 0
   index: -1
 LaseTower_D
   rotate: false
-  xy: 263, 273
+  xy: 521, 285
   size: 88, 108
   orig: 88, 108
   offset: 0, 0
   index: -1
 MisileTower_D
   rotate: false
-  xy: 353, 383
+  xy: 611, 395
   size: 88, 108
   orig: 88, 108
   offset: 0, 0
   index: -1
 MisileTower_I
   rotate: false
-  xy: 91, 11
+  xy: 91, 23
   size: 88, 108
   orig: 88, 108
   offset: 0, 0
   index: -1
 sprinter
   rotate: false
-  xy: 353, 273
+  xy: 611, 285
   size: 88, 108
   orig: 88, 108
   offset: 0, 0
   index: -1
-misil
+barraRoja
   rotate: false
   xy: 1, 1
+  size: 58, 20
+  orig: 58, 20
+  offset: 0, 0
+  index: -1
+barraVerde
+  rotate: false
+  xy: 181, 221
+  size: 58, 20
+  orig: 58, 20
+  offset: 0, 0
+  index: -1
+misil
+  rotate: false
+  xy: 521, 275
   size: 54, 8
   orig: 54, 8
   offset: 0, 0

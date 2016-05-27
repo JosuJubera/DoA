@@ -62,7 +62,6 @@ public class CustomDragAndDrop {
             //Imagen de la torre TODO poner la imagen segun el ID
             Image dragging=new Image(MainClass.getManager().get("torre.png", Texture.class));
             dragging.setScale(0.5f);
-            Gdx.app.log("Drag&Drop", "Escenario "+dragging.getStage());
             payload.setDragActor(dragging);
             //Imagen torre Valida
             Image validPosition=new Image(MainClass.getManager().get("torre.png", Texture.class));
@@ -117,7 +116,7 @@ public class CustomDragAndDrop {
 
         for (int i = 0; i < posiciones.size; i++) {
             //Se crean las imagenes de las posiciones
-            Image target = new Image(MainClass.getManager().get("target.png", Texture.class));
+            Image target = new Image(TextureLoader.getInstance().obtenerTarget());
             target.setPosition(posiciones.get(i).x,posiciones.get(i).y);
             stage.addActor(target);
             //Se crean los targets del drag&drop a partir de las imagenes

@@ -21,50 +21,83 @@ import com.badlogic.gdx.utils.Disposable;
 public class TextureLoader implements Disposable{
     World mundo; //lo tengo para darselo a las Factorias
     Stage escenario; //lo tengo para darselo a las Factorias
-
-    private TextureAtlas barrasVida; //las barras de vida (pueden ir en otro atlas , solo son 2)
     private TextureAtlas texturas; //las torres del juego
-    private Animation basicTankHoriz;
-    private Texture mejora;
     private BitmapFont font;
+    private Animation sprinter;
+    private Animation camion;
+    private Animation infanteria;
+   //Ahora es un singleton
+    private static TextureLoader textureLoader=new TextureLoader();
 
-    //TODO pasar esto a atlas
-    private TextureRegion niapa;
-    private TextureRegion proyniapa;
-    private TextureRegion misil;
-
-    //Animaciones
-
-    public Animation getBasicTankHoriz() {
-        return basicTankHoriz;
+    public static TextureLoader getInstance(){
+        return textureLoader;
     }
 
-
-
-
-
-    //Se deberia de usar un asert manager para mostrar una barra de carga
     public void cargar(){
-        //TODO hacer. Aqui se cargarian los atlas  caveman.atlas
-        barrasVida=MainClass.getManager().get("barrasVida.atlas", TextureAtlas.class);
-        TextureAtlas atextura = MainClass.getManager().get("caveman.atlas", TextureAtlas.class);
-        Array<TextureAtlas.AtlasRegion> anima = new Array<TextureAtlas.AtlasRegion>(atextura.getRegions());
-        basicTankHoriz=new Animation(0.05f, anima, Animation.PlayMode.LOOP);
-        niapa=new TextureRegion(anima.get(1));
-        proyniapa=new TextureRegion(MainClass.getManager().get("barraRoja.png", Texture.class));
-        misil=new TextureRegion(MainClass.getManager().get("barraVerde.png", Texture.class));
+        texturas=MainClass.getManager().get("atlas/texturas.pack", TextureAtlas.class);
+        Array<TextureAtlas.AtlasRegion> auxspr=MainClass.getManager().get("atlas/spr.pack", TextureAtlas.class).getRegions();
+        sprinter=new Animation(3.5f,auxspr, Animation.PlayMode.NORMAL);
+        Array<TextureAtlas.AtlasRegion> auxcam=MainClass.getManager().get("atlas/Camion.pack", TextureAtlas.class).getRegions();
+        camion=new Animation(3.5f,auxcam, Animation.PlayMode.NORMAL);
+        Array<TextureAtlas.AtlasRegion> auxinf=MainClass.getManager().get("atlas/Inf.pack", TextureAtlas.class).getRegions();
+        infanteria=new Animation(3.5f,auxinf, Animation.PlayMode.NORMAL);
         font=new BitmapFont(Gdx.files.internal("data/default.fnt"),Gdx.files.internal("data/default.png"), false);
-        mejora=MainClass.getManager().get("mejorar.png", Texture.class);
-
     }
 
     public TextureRegion obtenerBarraRoja(){
-        return barrasVida.findRegion("barraRoja");
+        return texturas.findRegion("barraRoja");
     }
     public TextureRegion obtenerBarraVerde(){
-        return barrasVida.findRegion("barraVerde");
+        return texturas.findRegion("barraVerde");
     }
-
+    public TextureRegion obtenerMejorar(){
+        return texturas.findRegion("mejorar");
+    }
+    public TextureRegion obtenerTarget(){
+        return texturas.findRegion("target");
+    }
+    public TextureRegion obtenerBasicTower(){
+        return texturas.findRegion("Basiktower");
+    }
+    public TextureRegion obtenerProyectilBasicTower(){
+        return texturas.findRegion("Basiktower");//TODO hacer
+    }
+    public TextureRegion obtenerMissile(){
+        return texturas.findRegion("misil");
+    }
+    public TextureRegion obtenerCamion(){
+        return texturas.findRegion("camion");
+    }
+    public TextureRegion obtenerInfanteria(){
+        return texturas.findRegion("infanteria");
+    }
+    public TextureRegion obtenerLaserTower_I(){
+        return texturas.findRegion("LaserTower_I");
+    }
+    public TextureRegion obtenerLaserTower_D(){
+        return texturas.findRegion("LaseTower_D");
+    }
+    public TextureRegion obtenerMisileTower_D(){
+        return texturas.findRegion("MisileTower_D");
+    }
+    public TextureRegion obtenerMisileTower_I(){
+        return texturas.findRegion("MisileTower_I");
+    }
+    public TextureRegion obtenerSprinter(){
+        return texturas.findRegion("sprinter");
+    }
+    public Animation obtenerAnimaSprinter(){
+        return sprinter;
+    }
+    public Animation obtenerAnimaInfanteria(){
+        return infanteria;
+    }
+    public Animation obtenerAnimaCamion(){
+        return camion;
+    }
+    public BitmapFont obtenerFont(){
+        return font;
+    }
 
     public Stage getEscenario() {
         return escenario;
@@ -81,43 +114,15 @@ public class TextureLoader implements Disposable{
     public void setMundo(World mundo) {
         this.mundo = mundo;
     }
-
-    public void niapadePrueba(TextureRegion torre,Texture proyectil){
-        this.niapa=torre;
-    }
-
-    public TextureRegion obtenerMissile(){
-        return misil;
-    }
-
     @Override
     public void dispose() {
-        barrasVida.dispose();
         if (texturas !=null) {
             texturas.dispose();
             texturas =null;
-        }
-        if (proyectiles!=null){
-            proyectiles.dispose();
-            proyectiles=null;
         }
         if (font!=null){
             font.dispose();
             font=null;
         }
-        if (mejora!=null){
-            mejora.dispose();
-            mejora=null;
-        }
-    }
-
-    public TextureRegion obtenerBasicTower(){
-        //TODO hacer. Debe devolver un tankeBasico
-        return niapa;
-    }
-    public TextureRegion obtenerProyectilBasicTower(){
-        //TODO hacer
-
-        return new TextureRegion(proyniapa);
     }
 }

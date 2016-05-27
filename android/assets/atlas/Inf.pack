@@ -3,9 +3,65 @@ Inf.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-inf1
+inf01
   rotate: false
   xy: 1, 621
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+inf02
+  rotate: false
+  xy: 1, 1
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+inf03
+  rotate: false
+  xy: 251, 311
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+inf04
+  rotate: false
+  xy: 501, 621
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+inf05
+  rotate: false
+  xy: 251, 1
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+inf06
+  rotate: false
+  xy: 501, 311
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+inf07
+  rotate: false
+  xy: 751, 621
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+inf08
+  rotate: false
+  xy: 501, 1
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+inf09
+  rotate: false
+  xy: 751, 311
   size: 248, 308
   orig: 248, 308
   offset: 0, 0
@@ -20,62 +76,6 @@ inf10
 inf11
   rotate: false
   xy: 251, 621
-  size: 248, 308
-  orig: 248, 308
-  offset: 0, 0
-  index: -1
-inf2
-  rotate: false
-  xy: 1, 1
-  size: 248, 308
-  orig: 248, 308
-  offset: 0, 0
-  index: -1
-inf3
-  rotate: false
-  xy: 251, 311
-  size: 248, 308
-  orig: 248, 308
-  offset: 0, 0
-  index: -1
-inf4
-  rotate: false
-  xy: 501, 621
-  size: 248, 308
-  orig: 248, 308
-  offset: 0, 0
-  index: -1
-inf5
-  rotate: false
-  xy: 251, 1
-  size: 248, 308
-  orig: 248, 308
-  offset: 0, 0
-  index: -1
-inf6
-  rotate: false
-  xy: 501, 311
-  size: 248, 308
-  orig: 248, 308
-  offset: 0, 0
-  index: -1
-inf7
-  rotate: false
-  xy: 751, 621
-  size: 248, 308
-  orig: 248, 308
-  offset: 0, 0
-  index: -1
-inf8
-  rotate: false
-  xy: 501, 1
-  size: 248, 308
-  orig: 248, 308
-  offset: 0, 0
-  index: -1
-inf9
-  rotate: false
-  xy: 751, 311
   size: 248, 308
   orig: 248, 308
   offset: 0, 0

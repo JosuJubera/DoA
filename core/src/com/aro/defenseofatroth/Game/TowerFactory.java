@@ -50,6 +50,7 @@ public class TowerFactory {
         fixtureDef.filter.maskBits = Enemy.ENEMY_BIT; //con quien choca
         cuerpo.createFixture(fixtureDef);
         shape.dispose();
+        torre.setFont(TextureLoader.getInstance().obtenerFont());
         torre.setCuerpo(cuerpo);
         torre.setDaño(25);
         torre.setEstado(1);

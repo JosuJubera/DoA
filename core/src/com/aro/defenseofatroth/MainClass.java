@@ -20,8 +20,13 @@ public class MainClass extends Game{
 	public void create() {
 
 		manager = new AssetManager();
+		manager.load("atlas/texturas.pack", TextureAtlas.class);
+        manager.load("atlas/Camion.pack", TextureAtlas.class);
+        manager.load("atlas/Inf.pack", TextureAtlas.class);
+        manager.load("atlas/spr.pack", TextureAtlas.class);
+        manager.load("data/uiskin.json", Skin.class);
+        //
 		manager.load("torre.png", Texture.class);
-		manager.load("data/uiskin.json", Skin.class);
 		manager.load("barraRoja.png", Texture.class);
 		manager.load("barraRojaBuena.png", Texture.class);
 		manager.load("barraVerdeBuena.png", Texture.class);

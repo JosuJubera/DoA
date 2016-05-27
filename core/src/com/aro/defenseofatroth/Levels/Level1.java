@@ -155,7 +155,6 @@ public class Level1  extends BaseScreen {
         proyectileFactory.setTextureLoader(textureLoader);
         towerFactory.setTextureLoader(textureLoader);
         towerFactory.setProyectileFactory(proyectileFactory);
-        textureLoader.niapadePrueba(anima.get(1),MainClass.getManager().get("barraRoja.png",Texture.class));
 		proyectileFactory.crearPools();
         BasicTower pruebas=towerFactory.obtenerBasicTower(400, 400);
         Array<Vector2> utas=new Array<Vector2>();

@@ -5,4 +5,5 @@ package com.aro.defenseofatroth.Game;
  * Created by Sergio on 17/04/2016.
  */
 public class BasicTank extends Enemy{
+
 }

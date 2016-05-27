@@ -38,6 +38,10 @@ public class BarraVida extends Entidad {
     public void setPosition(Vector2 posicion){
         this.posicion=posicion;
     }
+    public void setPosition(float x, float y){
+        this.posicion.x=x;
+        this.posicion.y=y;
+    }
 
     @Override
     public void draw(Batch batch, float delta) {

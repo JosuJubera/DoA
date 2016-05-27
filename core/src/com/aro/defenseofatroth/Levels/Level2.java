@@ -102,9 +102,9 @@ public class Level2 extends BaseScreen implements ActionResolver{
                 LONG_PRESS_DURATION,
                 MAX_FLING_DELAY,
                 gestureHandler);
-        world = new World(new Vector2(0f,0f),true);
-        textureLoader = new TextureLoader();
+        world = new World(new Vector2(0f,0f),false);
         stage = new Stage(viewport);
+        textureLoader=TextureLoader.getInstance();
         textureLoader.setMundo(world);
         textureLoader.setEscenario(stage);
         textureLoader.cargar();
@@ -171,7 +171,7 @@ public class Level2 extends BaseScreen implements ActionResolver{
     public void render(float delta) {
         logger.log();
         updateGame(delta);
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         world.step(delta, 6, 2);
@@ -185,9 +185,10 @@ public class Level2 extends BaseScreen implements ActionResolver{
 
     private void updateGame(float delta){
         generator.actualizar(delta);
-        if (enemyFactory.getEnemies().size==0){ //No hay mas enemigos en pantalla
+        if ((enemyFactory.getEnemies().size==0) && ((generator.getCreados()-generator.getSize())==0)){ //No hay mas enemigos en pantalla ni se ban a generar
             //Se genera la siguiente oleada
             hud.addWave();
+            generator.reset();
             //showChartBoostIntersititial(); //si jub3r kiere ser muchimillonario descomentar esto
         }
     }

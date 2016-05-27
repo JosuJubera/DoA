@@ -67,10 +67,9 @@ public class EnemyFactory implements ObjectPool<Enemy> {
                 shape.dispose();
                 //añadimos los datos en el basictank
                 basicTank.setCuerpo(cuerpo);
-                basicTank.setAnimacionHorizontal(textureLoader.getBasicTankHoriz());
-                //TODO añadir el resto de animaciones, pero por ahora lo dejamso asi.
+                basicTank.setTextura(textureLoader.obtenerInfanteria());
+                basicTank.setAnimacionMuerte(textureLoader.obtenerAnimaInfanteria());
                 basicTank.setAnimationTime(0);
-                basicTank.setAnimacionHorizontal(textureLoader.getBasicTankHoriz());
                 basicTank.setPoolOrigen(niapa); //añadimos el pool de origen para limpiarlo mas adelante
                 basicTank.setBarraVida(new BarraVida(textureLoader.obtenerBarraRoja(),textureLoader.obtenerBarraVerde()));
                 return basicTank;

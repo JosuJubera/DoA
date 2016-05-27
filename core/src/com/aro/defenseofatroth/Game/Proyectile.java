@@ -15,14 +15,14 @@ import com.badlogic.gdx.utils.Pool;
 public class Proyectile extends Actor implements Pool.Poolable {
     private ObjectPool<Proyectile> poolOrigen;
     public static short PROYECTILE_BIT=0x08;
-    private TextureRegion textura;
-    private Enemy enemigo;
-    private int daino;
+    protected TextureRegion textura;
+    protected Enemy enemigo;
+    protected int daino;
     protected Body cuerpo;
     protected Vector2 posicion;
     protected Vector2 velocidad;
     protected float velocidadM;
-    private float angulo;
+    protected float angulo;
 
 
     public void setCuerpo(Body cuerpo) {
@@ -90,9 +90,10 @@ public class Proyectile extends Actor implements Pool.Poolable {
         super.setPosition(posicion.x,posicion.y); //creo k no es necesario pero bueno
         Vector2 enemyPos=enemigo.getPosicion();
         angulo = MathUtils.atan2(enemyPos.y - posicion.y, enemyPos.x - posicion.x);
-        velocidad.x = MathUtils.cos(angulo) * velocidadM;
-        velocidad.y = MathUtils.sin(angulo) * velocidadM;
-        cuerpo.setLinearVelocity(velocidad);
+        velocidad.x = MathUtils.cos(angulo) * velocidadM * (1+delta);
+        velocidad.y = MathUtils.sin(angulo) * velocidadM * (1+delta);
+        //cuerpo.setLinearVelocity(velocidad);
+        cuerpo.setLinearVelocity(velocidad.x,velocidad.y);
         //Si esta lo suficientemente cerca
         if (posicion.dst(enemyPos)<=20f+velocidadM*delta){
             enemigo.dainar(daino);

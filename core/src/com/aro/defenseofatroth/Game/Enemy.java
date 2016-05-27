@@ -25,14 +25,9 @@ public class Enemy extends Actor implements Pool.Poolable {
     private ObjectPool<Enemy> poolOrigen; //Esto es para poder liberarlo cuando no se use mas
     public static short ENEMY_BIT=0x02; //Bits de mascara que tendran las unidades
     //Solo hay animaciones, no hay una imagen fija
-    //Animaciones del enemigo en movimiento
-    protected Animation animacionHorizontal;
-    protected Animation animacionVerticalSup;
-    protected Animation animacionVerticalInf;
-    protected Animation animacionDiagonalSup;
-    protected Animation animacionDiagonalInf;
+    //Animaciones
     protected Animation animacionMuerte;
-    private Animation animacionActual; //animacion actual
+    protected TextureRegion textura;
     private boolean flip; //Si hay que girar la animacion
     protected float animationTime; //se usa para cojer el frame de la animacion correcto
     private float angulo;
@@ -46,6 +41,7 @@ public class Enemy extends Actor implements Pool.Poolable {
     protected int vidaMaxima; //vida maxima del enemigo
     protected BarraVida barraVida; //barra de vida del enemigo
     protected boolean viva; //si la unidad esta viva
+    protected boolean muriendose; //si la unidad se esta muriendo
     protected Array<Vector2> ruta; //ruta a seguir por la unidad. Este valor es FINAL. NO SE DEBE CAMBIAR
     private int posicionEnRuta;
     protected int money; //Dinero que deja al morir
@@ -71,26 +67,6 @@ public class Enemy extends Actor implements Pool.Poolable {
         this.animationTime = animationTime;
     }
 
-    public void setAnimacionHorizontal(Animation animacionHorizontal) {
-        this.animacionHorizontal = animacionHorizontal;
-    }
-
-
-    public void setAnimacionVerticalSup(Animation animacionVerticalSup) {
-        this.animacionVerticalSup = animacionVerticalSup;
-    }
-
-    public void setAnimacionVerticalInf(Animation animacionVerticalInf) {
-        this.animacionVerticalInf = animacionVerticalInf;
-    }
-
-    public void setAnimacionDiagonalSup(Animation animacionDiagonalSup) {
-        this.animacionDiagonalSup = animacionDiagonalSup;
-    }
-    public void setAnimacionDiagonalInf(Animation animacionDiagonalInf) {
-        this.animacionDiagonalInf = animacionDiagonalInf;
-    }
-
     public Body getCuerpo() {
         return cuerpo;
     }
@@ -113,6 +89,10 @@ public class Enemy extends Actor implements Pool.Poolable {
         super.setPosition(posicion.x,posicion.y);
     }
 
+    public void setMuriendose(boolean muriendose) {
+        this.muriendose = muriendose;
+    }
+
     public Vector2 getVelocidad() {
         return velocidad;
     }
@@ -133,14 +113,10 @@ public class Enemy extends Actor implements Pool.Poolable {
             velocidad.y = MathUtils.sin(angulo) * velocidadM;
             cuerpo.setLinearVelocity(velocidad); //añadimos la velocidad al cuerpo
             this.destino = destino;
-            animacionActual=animacionHorizontal;
 
         }else{//estoy en el destino, paso al siguiente punto de la ruta
             avanzar();
         }
-
-        //TODO poner la animacion que sea segun la rotacion (si se añaden mas animaciones)
-    animacionActual=animacionHorizontal;
     }
 
     private void avanzar() {
@@ -199,6 +175,7 @@ public class Enemy extends Actor implements Pool.Poolable {
 
     public void setViva(boolean viva) {
         this.viva = viva;
+        this.muriendose=false;
     }
 
     public void dainar(int daino){
@@ -208,15 +185,25 @@ public class Enemy extends Actor implements Pool.Poolable {
         if (vida<=0){
             viva=false;
             vida=0;
+            muriendose=true;
+            cuerpo.setLinearVelocity(0,0);
         }
         barraVida.setValor(((float) vida )/((float) vidaMaxima));
     }
 
+    public void setTextura(TextureRegion textura) {
+        this.textura = textura;
+    }
+
     @Override
     public void draw(Batch batch, float delta){
-        animationTime+=delta;
-        TextureRegion fotograma=animacionActual.getKeyFrame(animationTime);
-
+        TextureRegion fotograma;
+        if (muriendose){
+            fotograma=animacionMuerte.getKeyFrame(animationTime);
+            animationTime+=delta;
+        }else{
+            fotograma=textura;
+        }
         batch.draw(fotograma,posicion.x-fotograma.getRegionWidth()*0.5f,posicion.y-fotograma.getRegionHeight()*0.5f);
         barraVida.draw(batch,delta);
     }
@@ -230,14 +217,14 @@ public class Enemy extends Actor implements Pool.Poolable {
             //
             posicion=cuerpo.getPosition();
             super.setPosition(posicion.x,posicion.y);
-            barraVida.setPosition(posicion);
+            barraVida.setPosition(posicion.x-textura.getRegionWidth()*0.5f,getY()+textura.getRegionHeight()*0.5f-25);
             if (posicion.dst(destino)<(50f+velocidadM*delta)){ //comprobamos si llegamos al destino (tambien se puede calcular usando la distancia)
                    avanzar();
             }
-        }else{ //esta muerta, si ya ha pasado su tiempo de animacion, se libera
-           // if (animacionMuerte.isAnimationFinished(animationTime+delta)){
+        }else if (muriendose){ //Esta muriendo (animacion de muerte)
+            if (animacionMuerte.isAnimationFinished(animationTime)){
                this.liberar();//liberamos los recursos
-           // }
+            }
         }
     }
     public void liberar(){
@@ -250,8 +237,8 @@ public class Enemy extends Actor implements Pool.Poolable {
     public void reset() {
         //Animaciones, Cuerpos y Pools no se libera, por que son constantes a todos los enemigos (salvo que algun hijo lso modifique)
         //super.remove();//ya no se dibuja
-        cuerpo.setLinearVelocity(0f,0f);
-        cuerpo.setTransform(0f,0f, 0f);
+        cuerpo.setLinearVelocity(0f, 0f);
+        cuerpo.setTransform(0f, 0f, 0f);
         posicion.setZero();
         velocidad.setZero();
         this.destino=null;
@@ -259,7 +246,6 @@ public class Enemy extends Actor implements Pool.Poolable {
         viva=false;
         posicionEnRuta=0;
         animationTime=0;
-        animacionActual=null;
     }
 
     public int getMoney() {

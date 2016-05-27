@@ -29,6 +29,7 @@ public class Generator{
 
     public void reset(){
         creados=0;
+        setSize(size+3);
     }
 
     public int getCreados() {
@@ -40,7 +41,7 @@ public class Generator{
     public void setDefault(){
         creados=0;
         entropy=2;
-        size=40;
+        size=1;
         frecuency=1.5f;
         tiempo=1.5f;
         ruta=new Array<Vector2>();

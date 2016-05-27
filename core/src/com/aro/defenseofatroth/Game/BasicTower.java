@@ -12,12 +12,16 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
  */
 public class BasicTower extends Tower{
     protected static float ALCANCE=400f; //Si se modifica e alcance, hay que modificarlo en el sensor tambien (por si hacemos que aumente al subir de lvl)
-    private BitmapFont font= new BitmapFont(Gdx.files.internal("data/default.fnt"),Gdx.files.internal("data/default.png"), false); //para debugear
+    private BitmapFont font;
     protected Enemy objetivo;
     protected int estado; //1 ociosa, 2 atacando
     protected float tiempoEntreAtaques; //Tiemmpo entre ataques
     protected float tiempoSiguienteAtaque; //Tiempo restante para el siguiente ataque
     protected int daño;
+
+    public void setFont(BitmapFont font) {
+        this.font = font;
+    }
 
     public float getTiempoEntreAtaques() {
         return tiempoEntreAtaques;

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
@@ -18,20 +19,20 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  */
 public class UpButton extends Actor{
     protected int coste;
-    protected Texture imagen;
+    protected TextureRegion imagen;
     private BitmapFont font;
     protected String texto;
 
 
     public UpButton(final Tower tower,int coste,float x,float y){
-        imagen= MainClass.getManager().get("mejorar.png", Texture.class);
-        font=new BitmapFont(Gdx.files.internal("data/default.fnt"),Gdx.files.internal("data/default.png"), false);
+        imagen=TextureLoader.getInstance().obtenerMejorar();
+        font=TextureLoader.getInstance().obtenerFont();
         font.setColor(Color.BLUE);
         font.getData().setScale(4f);
         this.coste=coste;
         texto=String.valueOf(coste);
-        this.setWidth(imagen.getWidth());
-        this.setHeight(imagen.getHeight());
+        this.setWidth(imagen.getRegionWidth());
+        this.setHeight(imagen.getRegionHeight());
         this.setPosition(x, y);// + imagen.getHeight() * 0.5f
         this.setDebug(true);
         final UpButton ñapa=this;
