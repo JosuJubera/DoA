@@ -56,12 +56,7 @@ public class GestureHandlerPruebas implements GestureDetector.GestureListener {
 
     @Override
     public boolean longPress(float x, float y) {
-        //atencion, setButtonUpdate gorda, tapense los ojos. Esta setButtonUpdate puede herir su sensibilidad
-        Vector3 pantallacorr=new Vector3(x,y,0);
-        pantallacorr=camera.unproject(pantallacorr);
-
-        Level1.niapa.setDestino(new Vector2(pantallacorr.x,pantallacorr.y));
-        return true;
+        return false;
     }
 
     @Override

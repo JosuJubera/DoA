@@ -25,6 +25,7 @@ public class MainClass extends Game{
         manager.load("atlas/Inf.pack", TextureAtlas.class);
         manager.load("atlas/spr.pack", TextureAtlas.class);
         manager.load("data/uiskin.json", Skin.class);
+        manager.load("mapaFinal.png", Texture.class);
         //
 		manager.load("torre.png", Texture.class);
         manager.load("torre2.png", Texture.class);

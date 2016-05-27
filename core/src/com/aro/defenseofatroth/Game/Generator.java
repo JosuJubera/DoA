@@ -48,20 +48,21 @@ public class Generator{
     /**
      * Para debugear, genera enemigos con la configuracion por defecto
      */
-    public void setDefault(){
+    public void setDefaultLevel2(){
         creados=0;
         entropy=2;
         size=1;
         frecuency=1.5f;
         tiempo=1.5f;
         ruta=new Array<Vector2>();
-        ruta.add(new Vector2(0, 0));
-        ruta.add(new Vector2(300, 100));
-        ruta.add(new Vector2(400, 400));
-        ruta.add(new Vector2(500, 200));
-        ruta.add(new Vector2(600, 600));
-        ruta.add(new Vector2(1000, 0));
-        ruta.add(new Vector2(100000, 0));
+        ruta.add(new Vector2(1250,2300));
+        ruta.add(new Vector2(825, 1225));
+        ruta.add(new Vector2(690, 300));
+        ruta.add(new Vector2(1160, 200));
+        ruta.add(new Vector2(1750, 425));
+        ruta.add(new Vector2(1800, 1000));
+        ruta.add(new Vector2(2000, 1600));
+        ruta.add(new Vector2(2500, 1825));
         enemyFactory.setRuta(ruta);
     }
 

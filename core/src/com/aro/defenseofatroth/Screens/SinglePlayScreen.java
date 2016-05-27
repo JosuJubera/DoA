@@ -92,7 +92,7 @@ public class SinglePlayScreen extends BaseScreen {
         n1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Level1(game, musica));
+                game.setScreen(new Level1(game));
             }
         });
 

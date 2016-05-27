@@ -22,6 +22,8 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
@@ -72,6 +74,7 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
     private EnemyFactory enemyFactory;
     private ProyectileFactory proyectileFactory;
     private TowerFactory towerFactory;
+    private Sprite fondo;
 
     //Lineas de debug
     Box2DDebugRenderer debugRenderer;
@@ -123,12 +126,12 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
        //Generador de enemigos
         generator=new Generator();
         generator.setEnemyFactory(enemyFactory);
-        generator.setDefault(); //Pa debugear
+        generator.setDefaultLevel2(); //Pa debugear
         //Se crea el dragAndDrop
         customDragAndDrop=new CustomDragAndDrop();
         Array<Vector2> posciones=new Array<Vector2>();
-        posciones.add(new Vector2(500,-200));
-        posciones.add(new Vector2(500,500));
+        posciones.add(new Vector2(500, -200));
+        posciones.add(new Vector2(500, 500));
         customDragAndDrop.setSources(selector.getImagenes());
         customDragAndDrop.setTowerFactory(towerFactory);
         customDragAndDrop.setStage(stage);
@@ -138,13 +141,13 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
         InputMultiplexer inputMultiplexer = new InputMultiplexer(stage,selector.stage,gestureDetector);
         Gdx.input.setInputProcessor(inputMultiplexer);
         debugRenderer=new Box2DDebugRenderer(true,true,true,true,true,true);
-        towerFactory.obtenerBasicTower(500, -200);
-        towerFactory.obtenerLaserTower(500,500);
+        towerFactory.obtenerBasicTower(0, 0);
+
         rondaActiva=false;
         //Gdx.input.setInputProcessor(gestureDetector);
         logger=new FPSLogger();
 
-        towerFactory.obtenerBasicTower(1500,-200);
+        towerFactory.obtenerBasicTower(1500, -200);
         towerFactory.obtenerMissileTower(1500, 500);
 
         towerFactory.obtenerBasicTower(2500, -200);
@@ -161,7 +164,10 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
 
         Message.getInstance().setStage(hud.stage);
 
-
+        fondo=new Sprite(MainClass.getManager().get("mapaFinal.png",Texture.class));
+        fondo.setScale(5f);
+        fondo.setPosition(fondo.getWidth()*2.5f-130,fondo.getHeight()*2.5f-180);
+        towerFactory.obtenerLaserTower(fondo.getWidth()*0.5f,fondo.getHeight()*0.5f);
         //Ñapa para fin de partida
         BodyDef cuerpoDef=new BodyDef();
         cuerpoDef.type = BodyDef.BodyType.DynamicBody;
@@ -191,6 +197,9 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
         world.step(delta, 6, 2);
         mundoBatch.setProjectionMatrix(camera.combined);
         debugRenderer.render(world, camera.combined);
+        mundoBatch.begin();
+        fondo.draw(mundoBatch);
+        mundoBatch.end();
         stage.draw();
         hud.stage.act();
         hud.stage.draw();
