@@ -183,7 +183,7 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
         fixtureDef.filter.maskBits = Enemy.ENEMY_BIT; //con quien choca
         cuerpo.createFixture(fixtureDef);
         shape.dispose();
-        cuerpo.setTransform(3000,0,0); //zona donde acaba el juego
+        cuerpo.setTransform(2500,1825,0); //zona donde acaba el juego
 
     }
 
