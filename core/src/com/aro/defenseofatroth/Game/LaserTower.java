@@ -11,7 +11,7 @@ import static com.aro.defenseofatroth.Tools.Constants.ALCANCE_LASER;
  */
 public class LaserTower extends Tower {
 
-    protected static float ALCANCE = ALCANCE_LASER;
+    protected static float ALCANCE = Constants.ALCANCE_LASER;
     private Enemy objetivo;
     protected int estado; //1 ociosa, 2 atacando
     protected float tiempoEntreAtaques; //Tiemmpo entre ataques

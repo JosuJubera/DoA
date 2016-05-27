@@ -27,6 +27,7 @@ public class MainClass extends Game{
         manager.load("data/uiskin.json", Skin.class);
         //
 		manager.load("torre.png", Texture.class);
+        manager.load("torre2.png", Texture.class);
 		manager.load("barraRoja.png", Texture.class);
 		manager.load("barraRojaBuena.png", Texture.class);
 		manager.load("barraVerdeBuena.png", Texture.class);

@@ -1,5 +1,6 @@
 package com.aro.defenseofatroth.Game;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
@@ -22,7 +23,13 @@ public class Generator{
         tiempo-=delta;
         if ((tiempo<0) && (creados<size)){
             tiempo=frecuency;
-            enemyFactory.obtenerTankeBasico();
+            int rand= MathUtils.random(0,3);
+            switch (rand) {
+                case 0: enemyFactory.obtenerTankeBasico();
+                case 1: enemyFactory.obtenerTankeMotor();
+                case 2: enemyFactory.obtenerTankePesado();
+                default: enemyFactory.obtenerTankeBasico();
+            }
             creados++;
         }
     }

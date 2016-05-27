@@ -77,6 +77,62 @@ public class EnemyFactory implements ObjectPool<Enemy> {
                 return basicTank;
             }
         };
+
+        motorTankPool=new Pool<MotorTank>() {
+            @Override
+            protected MotorTank newObject() {
+                MotorTank motorTank=new MotorTank();
+                //Creamos el cuerpo de Box2d
+                BodyDef cuerpoDef=new BodyDef();
+                cuerpoDef.type = BodyDef.BodyType.DynamicBody;
+                Body cuerpo=textureLoader.getMundo().createBody(cuerpoDef);
+                cuerpo.setUserData(motorTank); //Añadimos un puntero al cuerpo con la informacion del tanke
+                FixtureDef fixtureDef=new FixtureDef();
+                CircleShape shape =  new CircleShape(); //El shape tambien puede ser un cuadrado, si eso se camia aki
+                shape.setRadius(50f);
+                fixtureDef.shape = shape;
+                fixtureDef.filter.categoryBits = Enemy.ENEMY_BIT; //su categoria
+                fixtureDef.filter.maskBits = (short) (Tower.TORRE_SENSOR_BIT | Proyectile.PROYECTILE_BIT); //con quien choca
+                cuerpo.createFixture(fixtureDef);
+                shape.dispose();
+                //añadimos los datos en el basictank
+                motorTank.setCuerpo(cuerpo);
+                motorTank.setTextura(textureLoader.obtenerSprinter());
+                motorTank.setAnimacionMuerte(textureLoader.obtenerAnimaSprinter());
+                motorTank.setAnimationTime(0);
+                motorTank.setPoolOrigen(niapa); //añadimos el pool de origen para limpiarlo mas adelante
+                motorTank.setBarraVida(new BarraVida(textureLoader.obtenerBarraRoja(),textureLoader.obtenerBarraVerde()));
+                return motorTank;
+            }
+        };
+
+        heavyTankPool=new Pool<HeavyTank>() {
+            @Override
+            protected HeavyTank newObject() {
+                HeavyTank heavyTank=new HeavyTank();
+                //Creamos el cuerpo de Box2d
+                BodyDef cuerpoDef=new BodyDef();
+                cuerpoDef.type = BodyDef.BodyType.DynamicBody;
+                Body cuerpo=textureLoader.getMundo().createBody(cuerpoDef);
+                cuerpo.setUserData(heavyTank); //Añadimos un puntero al cuerpo con la informacion del tanke
+                FixtureDef fixtureDef=new FixtureDef();
+                CircleShape shape =  new CircleShape(); //El shape tambien puede ser un cuadrado, si eso se camia aki
+                shape.setRadius(50f);
+                fixtureDef.shape = shape;
+                fixtureDef.filter.categoryBits = Enemy.ENEMY_BIT; //su categoria
+                fixtureDef.filter.maskBits = (short) (Tower.TORRE_SENSOR_BIT | Proyectile.PROYECTILE_BIT); //con quien choca
+                cuerpo.createFixture(fixtureDef);
+                shape.dispose();
+                //añadimos los datos en el basictank
+                heavyTank.setCuerpo(cuerpo);
+                heavyTank.setTextura(textureLoader.obtenerCamion());
+                heavyTank.setAnimacionMuerte(textureLoader.obtenerAnimaCamion());
+                heavyTank.setAnimationTime(0);
+                heavyTank.setPoolOrigen(niapa); //añadimos el pool de origen para limpiarlo mas adelante
+                heavyTank.setBarraVida(new BarraVida(textureLoader.obtenerBarraRoja(),textureLoader.obtenerBarraVerde()));
+                return heavyTank;
+            }
+        };
     }
 
     public BasicTank obtenerTankeBasico(/*int nivel //Por si queremos que sean mas fuertes*/){

@@ -3,9 +3,65 @@ spr.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-spr1
+spr01
   rotate: false
   xy: 1, 621
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+spr02
+  rotate: false
+  xy: 1, 1
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+spr03
+  rotate: false
+  xy: 251, 311
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+spr04
+  rotate: false
+  xy: 501, 621
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+spr05
+  rotate: false
+  xy: 251, 1
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+spr06
+  rotate: false
+  xy: 501, 311
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+spr07
+  rotate: false
+  xy: 751, 621
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+spr08
+  rotate: false
+  xy: 501, 1
+  size: 248, 308
+  orig: 248, 308
+  offset: 0, 0
+  index: -1
+spr09
+  rotate: false
+  xy: 751, 311
   size: 248, 308
   orig: 248, 308
   offset: 0, 0
@@ -20,62 +76,6 @@ spr10
 spr11
   rotate: false
   xy: 251, 621
-  size: 248, 308
-  orig: 248, 308
-  offset: 0, 0
-  index: -1
-spr2
-  rotate: false
-  xy: 1, 1
-  size: 248, 308
-  orig: 248, 308
-  offset: 0, 0
-  index: -1
-spr3
-  rotate: false
-  xy: 251, 311
-  size: 248, 308
-  orig: 248, 308
-  offset: 0, 0
-  index: -1
-spr4
-  rotate: false
-  xy: 501, 621
-  size: 248, 308
-  orig: 248, 308
-  offset: 0, 0
-  index: -1
-spr5
-  rotate: false
-  xy: 251, 1
-  size: 248, 308
-  orig: 248, 308
-  offset: 0, 0
-  index: -1
-spr6
-  rotate: false
-  xy: 501, 311
-  size: 248, 308
-  orig: 248, 308
-  offset: 0, 0
-  index: -1
-spr7
-  rotate: false
-  xy: 751, 621
-  size: 248, 308
-  orig: 248, 308
-  offset: 0, 0
-  index: -1
-spr8
-  rotate: false
-  xy: 501, 1
-  size: 248, 308
-  orig: 248, 308
-  offset: 0, 0
-  index: -1
-spr9
-  rotate: false
-  xy: 751, 311
   size: 248, 308
   orig: 248, 308
   offset: 0, 0
