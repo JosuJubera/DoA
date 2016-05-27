@@ -46,7 +46,7 @@ public class Selector {
         torre.setUserObject(new Integer(1)); //Ids de las torres, para despues saber cual es cual
         table.add(torre);
 
-        Image torre2 = new Image(MainClass.getManager().get("torre.png", Texture.class));
+        Image torre2 = new Image(MainClass.getManager().get("torre2.png", Texture.class));
         torre2.setUserObject(new Integer(2));
         table.add(torre2);
 

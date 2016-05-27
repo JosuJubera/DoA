@@ -139,7 +139,7 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
         Gdx.input.setInputProcessor(inputMultiplexer);
         debugRenderer=new Box2DDebugRenderer(true,true,true,true,true,true);
         towerFactory.obtenerBasicTower(500, -200);
-        towerFactory.obtenerMissileTower(500,500);
+        towerFactory.obtenerLaserTower(500,500);
         rondaActiva=false;
         //Gdx.input.setInputProcessor(gestureDetector);
         logger=new FPSLogger();
