@@ -155,6 +155,7 @@ public class Enemy extends Actor implements Pool.Poolable {
 
     public void setVidaMaxima(int vidaMaxima) {
         this.vidaMaxima = vidaMaxima;
+        this.vida=vidaMaxima;
         if (vidaMaxima!=0){
             barraVida.setValor(((float)vida)/((float)vidaMaxima));
         }

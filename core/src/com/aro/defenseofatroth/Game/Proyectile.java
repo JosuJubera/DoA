@@ -90,10 +90,11 @@ public class Proyectile extends Actor implements Pool.Poolable {
         super.setPosition(posicion.x,posicion.y); //creo k no es necesario pero bueno
         Vector2 enemyPos=enemigo.getPosicion();
         angulo = MathUtils.atan2(enemyPos.y - posicion.y, enemyPos.x - posicion.x);
-        velocidad.x = MathUtils.cos(angulo) * velocidadM * (1+delta);
-        velocidad.y = MathUtils.sin(angulo) * velocidadM * (1+delta);
+        velocidad.x = MathUtils.cos(angulo) * velocidadM * (delta);
+        velocidad.y = MathUtils.sin(angulo) * velocidadM * (delta);
         //cuerpo.setLinearVelocity(velocidad);
-        cuerpo.setLinearVelocity(velocidad.x,velocidad.y);
+        //cuerpo.setLinearVelocity(velocidad.x,velocidad.y);
+        cuerpo.setTransform(cuerpo.getPosition().add(velocidad),0);
         //Si esta lo suficientemente cerca
         if (posicion.dst(enemyPos)<=20f+velocidadM*delta){
             enemigo.dainar(daino);

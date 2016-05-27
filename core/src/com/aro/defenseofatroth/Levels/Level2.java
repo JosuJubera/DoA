@@ -129,12 +129,12 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
         Array<Vector2> posciones=new Array<Vector2>();
         posciones.add(new Vector2(500,-200));
         posciones.add(new Vector2(500,500));
-       /* customDragAndDrop.setSources(selector.getImagenes());
+        customDragAndDrop.setSources(selector.getImagenes());
         customDragAndDrop.setTowerFactory(towerFactory);
         customDragAndDrop.setStage(stage);
         customDragAndDrop.setHud(hud);
         customDragAndDrop.setPosiciones(posciones);
-        customDragAndDrop.bind();*/
+        customDragAndDrop.bind();
         InputMultiplexer inputMultiplexer = new InputMultiplexer(stage,selector.stage,gestureDetector);
         Gdx.input.setInputProcessor(inputMultiplexer);
         debugRenderer=new Box2DDebugRenderer(true,true,true,true,true,true);
@@ -178,7 +178,6 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
         cuerpo.createFixture(fixtureDef);
         shape.dispose();
         cuerpo.setTransform(3000,0,0); //zona donde acaba el juego
-
 
     }
 

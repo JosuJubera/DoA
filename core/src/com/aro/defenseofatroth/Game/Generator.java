@@ -26,8 +26,11 @@ public class Generator{
             int rand= MathUtils.random(0,3);
             switch (rand) {
                 case 0: enemyFactory.obtenerTankeBasico();
+                    break;
                 case 1: enemyFactory.obtenerTankeMotor();
+                    break;
                 case 2: enemyFactory.obtenerTankePesado();
+                    break;
                 default: enemyFactory.obtenerTankeBasico();
             }
             creados++;

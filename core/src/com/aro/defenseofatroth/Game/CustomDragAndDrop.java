@@ -2,9 +2,11 @@ package com.aro.defenseofatroth.Game;
 
 import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Screens.Hud;
+import com.aro.defenseofatroth.Tools.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -39,11 +41,24 @@ public class CustomDragAndDrop {
         public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
             Gdx.app.log("Drag&Drop", "Se ha dropeado en in sitio valido. Coors: "+x+" "+y);
             if (validTargets.contains(this,true)){ //Es un target valido
-                getActor().remove();//Deja de dibujarse
-                Integer tipo=(Integer) payload.getObject(); //Obtenemos el tipo de torre
-                Actor actor=getActor();
-                towerFactory.obtenerBasicTower(actor.getX()+actor.getWidth()*0.5f,actor.getY()+actor.getHeight()*0.5f); //Pnemos la torre
-                dragAndDrop.removeTarget(this); //Creo k no hace falta, pero bueno
+                if (Hud.getMoney()>= Constants.COSTETORRE) {
+                    Hud.addGold(-Constants.COSTETORRE);
+                    Actor actor = getActor();
+                    actor.remove();//Deja de dibujarse
+                    Integer tipo = (Integer) payload.getObject(); //Obtenemos el tipo de torre
+                    switch (tipo.intValue()){
+                        case 1: towerFactory.obtenerBasicTower(actor.getX() + actor.getWidth() * 0.5f, actor.getY() + actor.getHeight() * 0.5f);
+                            break;
+                        case 2:towerFactory.obtenerMissileTower(actor.getX() + actor.getWidth() * 0.5f, actor.getY() + actor.getHeight() * 0.5f);
+                            break;
+                        case 3: towerFactory.obtenerLaserTower(actor.getX() + actor.getWidth() * 0.5f, actor.getY() + actor.getHeight() * 0.5f);
+                            break;
+                        default: towerFactory.obtenerBasicTower(actor.getX() + actor.getWidth() * 0.5f, actor.getY() + actor.getHeight() * 0.5f);
+                    }
+                    dragAndDrop.removeTarget(this); //Creo k no hace falta, pero bueno
+                }else{
+                    Message.getInstance().say("No tienes suficiente oro");
+                }
             }
 
         }
@@ -60,17 +75,27 @@ public class CustomDragAndDrop {
             Integer id=(Integer) getActor().getUserObject(); //Se obtiene el tipo de torre
             payload.setObject(id); //Se establece el mismo ID que el actor
             //Imagen de la torre TODO poner la imagen segun el ID
-            Image dragging=new Image(MainClass.getManager().get("torre.png", Texture.class));
-            dragging.setScale(0.5f);
+            TextureRegion text;
+            switch (id.intValue()){
+                case 1: text=TextureLoader.getInstance().obtenerBasicTower();
+                        break;
+                case 2:text=TextureLoader.getInstance().obtenerMisileTower_I();
+                    break;
+                case 3: text=TextureLoader.getInstance().obtenerLaserTower_I();
+                    break;
+                default: text=TextureLoader.getInstance().obtenerBasicTower();
+            }
+            Image dragging=new Image(text);
+            dragging.setScale(2f);
             payload.setDragActor(dragging);
             //Imagen torre Valida
-            Image validPosition=new Image(MainClass.getManager().get("torre.png", Texture.class));
-            validPosition.setScale(0.5f);
+            Image validPosition=new Image(text);
+            validPosition.setScale(2f);
             validPosition.setColor(Color.GREEN);
             payload.setValidDragActor(validPosition);
             //Imagen torre Invalida
-            Image inValidPosition=new Image(MainClass.getManager().get("torre.png", Texture.class));
-            inValidPosition.setScale(0.5f);
+            Image inValidPosition=new Image(text);
+            inValidPosition.setScale(2f);
             inValidPosition.setColor(Color.RED);
             payload.setInvalidDragActor(inValidPosition);
             return payload;
@@ -118,6 +143,7 @@ public class CustomDragAndDrop {
             //Se crean las imagenes de las posiciones
             Image target = new Image(TextureLoader.getInstance().obtenerTarget());
             target.setPosition(posiciones.get(i).x,posiciones.get(i).y);
+            target.setScale(0.5f);
             stage.addActor(target);
             //Se crean los targets del drag&drop a partir de las imagenes
             CustomTarget aux=new CustomTarget(target);

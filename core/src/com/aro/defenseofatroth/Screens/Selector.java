@@ -1,5 +1,6 @@
 package com.aro.defenseofatroth.Screens;
 
+import com.aro.defenseofatroth.Game.TextureLoader;
 import com.aro.defenseofatroth.MainClass;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -42,15 +43,15 @@ public class Selector {
         table.bottom();
         table.setFillParent(true);
 
-        Image torre = new Image(MainClass.getManager().get("torre.png", Texture.class));
+        Image torre = new Image(TextureLoader.getInstance().obtenerBasicTower());
         torre.setUserObject(new Integer(1)); //Ids de las torres, para despues saber cual es cual
         table.add(torre);
 
-        Image torre2 = new Image(MainClass.getManager().get("torre2.png", Texture.class));
+        Image torre2 = new Image(TextureLoader.getInstance().obtenerMisileTower_I());
         torre2.setUserObject(new Integer(2));
         table.add(torre2);
 
-        Image torre3 = new Image(MainClass.getManager().get("torre.png", Texture.class));
+        Image torre3 = new Image(TextureLoader.getInstance().obtenerLaserTower_I());
         torre3.setUserObject(new Integer(3));
         table.add(torre3);
 

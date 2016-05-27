@@ -141,7 +141,7 @@ public class EnemyFactory implements ObjectPool<Enemy> {
         aux.setRuta(ruta); //Ciudadooooo NO HAY QUE MODIFICAR EL ARRAY o se modificaran TODAS las rutas de TODOS los enemigos
         aux.setVida(100);
         aux.setVidaMaxima(101);
-        aux.setVelocidadM(100);
+        aux.setVelocidadM(70);
         aux.setViva(true);
         aux.setPosicion(ruta.get(0));
         aux.setPosicionEnRuta(1); //qieremos ir al 2º punto, el 1º es el origen!
@@ -157,7 +157,7 @@ public class EnemyFactory implements ObjectPool<Enemy> {
         aux.setRuta(ruta); //Ciudadooooo NO HAY QUE MODIFICAR EL ARRAY o se modificaran TODAS las rutas de TODOS los enemigos
         aux.setVida(250);
         aux.setVidaMaxima(251);
-        aux.setVelocidadM(50);
+        aux.setVelocidadM(30);
         aux.setViva(true);
         aux.setPosicion(ruta.get(0));
         aux.setPosicionEnRuta(1); //qieremos ir al 2º punto, el 1º es el origen!
@@ -173,7 +173,7 @@ public class EnemyFactory implements ObjectPool<Enemy> {
         aux.setRuta(ruta); //Ciudadooooo NO HAY QUE MODIFICAR EL ARRAY o se modificaran TODAS las rutas de TODOS los enemigos
         aux.setVida(50);
         aux.setVidaMaxima(51);
-        aux.setVelocidadM(150);
+        aux.setVelocidadM(120);
         aux.setViva(true);
         aux.setPosicion(ruta.get(0));
         aux.setPosicionEnRuta(1); //qieremos ir al 2º punto, el 1º es el origen!

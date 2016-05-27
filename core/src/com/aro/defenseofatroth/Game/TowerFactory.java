@@ -68,7 +68,7 @@ public class TowerFactory {
     public MissileTower obtenerMissileTower(float x, float y){
         //A diferencia de proyectiles y unidades, aqui no hay pool. T.odo se especifica aqui
         MissileTower torre=new MissileTower();
-        torre.setTextura(textureLoader.obtenerBasicTower());
+        torre.setTextura(textureLoader.obtenerMisileTower_I());
         //Se crea cuerpo
         BodyDef cuerpoDef=new BodyDef();
         cuerpoDef.type = BodyDef.BodyType.StaticBody;
@@ -99,7 +99,7 @@ public class TowerFactory {
     public LaserTower obtenerLaserTower(float x, float y){
         //A diferencia de proyectiles y unidades, aqui no hay pool. T.odo se especifica aqui
         LaserTower torre=new LaserTower();
-        torre.setTextura(textureLoader.obtenerBasicTower());
+        torre.setTextura(textureLoader.obtenerLaserTower_I());
         //Se crea cuerpo
         BodyDef cuerpoDef=new BodyDef();
         cuerpoDef.type = BodyDef.BodyType.StaticBody;
