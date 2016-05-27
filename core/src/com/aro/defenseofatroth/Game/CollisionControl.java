@@ -1,5 +1,6 @@
 package com.aro.defenseofatroth.Game;
 
+import com.aro.defenseofatroth.Levels.Level;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -13,6 +14,10 @@ import com.badlogic.gdx.physics.box2d.Manifold;
  * Created by Sergio on 17/04/2016.
  */
 public class CollisionControl implements ContactListener {
+    Level level;
+    public CollisionControl(Level level){
+        this.level=level;
+    }
     @Override
     public void beginContact(Contact contact) {
         //Cojemos la fixture de los implicados
@@ -36,6 +41,10 @@ public class CollisionControl implements ContactListener {
                 Enemy enemigo=(Enemy) cuerpoA.getUserData();
                 torre.enemyInRange(enemigo);
             }
+        }
+        if ((cuerpoA.getUserData() instanceof String) || (cuerpoB.getUserData() instanceof String)){
+            //Fin de partida
+            level.fin();
         }
         /* //Por ahora hacemos que se calcule segun la distancia con el objetivo. Asi no se choca antes
         //Comprobamos si lo que choca es un proyectil con una unidad

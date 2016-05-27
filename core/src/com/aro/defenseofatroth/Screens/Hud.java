@@ -84,11 +84,6 @@ public class Hud implements Disposable {
     }
 
 
-    public static void addScore(int value) {
-        score += value;
-        scoreLabel.setText(String.format("%08d", score));
-    }
-
     public void addWave() {
         wave++;
         waveLabel.setText(String.format("%02d", wave));
@@ -102,9 +97,16 @@ public class Hud implements Disposable {
 
         money += gold;
         moneyLabel.setText(String.format("%06d", money));
+        score+=gold;
+        scoreLabel.setText(String.format("%08d", score));
     }
 
     public static int getMoney() {
         return money;
     }
+
+    public static int getScore() {
+        return score;
+    }
 }
+

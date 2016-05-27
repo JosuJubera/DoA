@@ -1,10 +1,9 @@
 package com.aro.defenseofatroth.Levels;
 
 import com.aro.defenseofatroth.ActionResolver;
-import com.aro.defenseofatroth.Entities.Torre;
-import com.aro.defenseofatroth.Game.BasicTower;
 import com.aro.defenseofatroth.Game.CollisionControl;
 import com.aro.defenseofatroth.Game.CustomDragAndDrop;
+import com.aro.defenseofatroth.Game.Enemy;
 import com.aro.defenseofatroth.Game.EnemyFactory;
 import com.aro.defenseofatroth.Game.Generator;
 import com.aro.defenseofatroth.Game.Message;
@@ -14,30 +13,27 @@ import com.aro.defenseofatroth.Game.TowerFactory;
 import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Screens.BaseScreen;
 import com.aro.defenseofatroth.Screens.Hud;
+import com.aro.defenseofatroth.Screens.MenuScreen;
 import com.aro.defenseofatroth.Screens.Selector;
 import com.aro.defenseofatroth.Tools.Constants;
 import com.aro.defenseofatroth.Tools.GestureHandlerPruebas;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
-import com.badlogic.gdx.scenes.scene2d.utils.GameDragAndDrop;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.chartboost.sdk.CBLocation;
 import com.chartboost.sdk.Chartboost;
@@ -47,7 +43,7 @@ import com.chartboost.sdk.Chartboost;
 /** TODO completar. El drag and drop debe de ir en otra clase, junto con el generador
  * Created by Sergio on 18/05/2016.
  */
-public class Level2 extends BaseScreen implements ActionResolver{
+public class Level2 extends BaseScreen implements ActionResolver,Level{
     //Variables del MUNDO
     private OrthographicCamera camera;
     private Stage stage;
@@ -108,7 +104,7 @@ public class Level2 extends BaseScreen implements ActionResolver{
         textureLoader.setMundo(world);
         textureLoader.setEscenario(stage);
         textureLoader.cargar();
-        collisionControl = new CollisionControl();
+        collisionControl = new CollisionControl(this);
         world.setContactListener(collisionControl);
 
         hud=new Hud(mundoBatch);
@@ -165,6 +161,25 @@ public class Level2 extends BaseScreen implements ActionResolver{
 
         Message.getInstance().setStage(hud.stage);
 
+
+        //Ñapa para fin de partida
+        BodyDef cuerpoDef=new BodyDef();
+        cuerpoDef.type = BodyDef.BodyType.DynamicBody;
+        cuerpoDef.bullet=true;
+        Body cuerpo=textureLoader.getMundo().createBody(cuerpoDef);
+        cuerpo.setUserData("Zona"); //Añadimos un puntero al cuerpo con la informacion del tanke
+        FixtureDef fixtureDef=new FixtureDef();
+        CircleShape shape =  new CircleShape(); //El shape tambien puede ser un cuadrado, si eso se camia aki
+        shape.setRadius(400f);
+        fixtureDef.shape = shape;
+        fixtureDef.isSensor=true;
+        fixtureDef.filter.categoryBits = 0xFF; //su categoria
+        fixtureDef.filter.maskBits = Enemy.ENEMY_BIT; //con quien choca
+        cuerpo.createFixture(fixtureDef);
+        shape.dispose();
+        cuerpo.setTransform(3000,0,0); //zona donde acaba el juego
+
+
     }
 
     @Override
@@ -208,12 +223,23 @@ public class Level2 extends BaseScreen implements ActionResolver{
         Chartboost.showInterstitial(CBLocation.LOCATION_DEFAULT);
     }
 
-    public void addMoney(int modey) {
-        hud.addGold(modey);
-    }
 
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height);
+    }
+
+    @Override
+    public void fin() {
+        Message.getInstance().finalSay("¡Has perdido!");
+        //TODO subir puntuacion
+        Timer.Task t = new Timer.Task() {
+            @Override
+            public void run() {
+                game.setScreen(new MenuScreen(game));
+            }
+        };
+        Message.getInstance().say("Puntuacion: " + Hud.getScore());
+        Timer.schedule(t,4);
     }
 }

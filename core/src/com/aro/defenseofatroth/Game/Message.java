@@ -20,6 +20,7 @@ public class Message {
     }
     Stage stage;
     Label mensaje;
+    Skin skin;
 
 
     private Message() {
@@ -27,7 +28,7 @@ public class Message {
     public void setStage(Stage stage) {
         this.stage = stage;
         BitmapFont font = new BitmapFont(Gdx.files.internal("data/default.fnt"));
-        Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+        skin = new Skin(Gdx.files.internal("data/uiskin.json"));
         skin.add("default", font);
         mensaje=new Label("",skin);
         mensaje.setColor(Color.RED);
@@ -41,6 +42,21 @@ public class Message {
             mensaje.addAction(Actions.show());
             mensaje.addAction(Actions.sequence(Actions.delay(2f), Actions.hide()));
            // stage.addActor(mensaje);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean finalSay(String message){
+        if (mensaje!=null) {
+            Label mensaje2=new Label("",skin);
+            mensaje2.setColor(Color.RED);
+            mensaje2.setText(message);
+            mensaje2.setFontScale(8f);
+            mensaje2.setPosition(0.4f * stage.getWidth(), 0.5f * stage.getHeight());
+            stage.addActor(mensaje2);
+            mensaje2.addAction(Actions.show());
+            mensaje2.addAction(Actions.sequence(Actions.delay(5f), Actions.hide()));
             return true;
         }
         return false;

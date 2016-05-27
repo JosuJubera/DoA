@@ -33,7 +33,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-public class Level1  extends BaseScreen {
+public class Level1  extends BaseScreen implements Level {
 
 	private OrthographicCamera camera; //camara principal.
 	private SpriteBatch batch; //representa el MUNDO.
@@ -144,7 +144,7 @@ public class Level1  extends BaseScreen {
         textureLoader.setMundo(world);
         textureLoader.setEscenario(stage);
         textureLoader.cargar();
-		collisionControl=new CollisionControl();
+		collisionControl=new CollisionControl(this);
         world.setContactListener(collisionControl);
 		//Variables  auxilires, estas se borrarian
         enemyFactory=new EnemyFactory();
@@ -207,4 +207,8 @@ public class Level1  extends BaseScreen {
 		//Camaras y sprites no se necesitan limpiar
 	}
 
+	@Override
+	public void fin() {
+
+	}
 }

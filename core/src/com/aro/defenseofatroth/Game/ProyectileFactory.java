@@ -1,6 +1,7 @@
 package com.aro.defenseofatroth.Game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -51,6 +52,9 @@ public class ProyectileFactory implements ObjectPool<Proyectile> {
                 proyectile.setPoolOrigen(niapa);
                 proyectile.setPosicion(new Vector2(0, 0));
                 proyectile.setVelocidad(new Vector2(0, 0));
+                ParticleEffect particula=new ParticleEffect();
+                particula.load(Gdx.files.internal("data/disparo.p"),Gdx.files.internal("data"));
+                proyectile.setParticleEffect(particula);
                 return proyectile;
             }
         };
