@@ -208,11 +208,11 @@ public class Level3 extends BaseScreen implements ActionResolver,Level{
         stage.act(delta);
         world.step(delta, 6, 2);
         mundoBatch.setProjectionMatrix(camera.combined);
-        debugRenderer.render(world, camera.combined);
         mundoBatch.begin();
         fondo.draw(mundoBatch);
         particula.draw(mundoBatch,delta);
         mundoBatch.end();
+        debugRenderer.render(world, camera.combined);
         stage.draw();
         hud.stage.act();
         hud.stage.draw();
