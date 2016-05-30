@@ -54,16 +54,13 @@ public class Generator{
         size=1;
         frecuency=1.5f;
         tiempo=1.5f;
-        ruta=new Array<Vector2>();
-        ruta.add(new Vector2(1250,2300));
-        ruta.add(new Vector2(825, 1225));
-        ruta.add(new Vector2(690, 300));
-        ruta.add(new Vector2(1160, 200));
-        ruta.add(new Vector2(1750, 425));
-        ruta.add(new Vector2(1800, 1000));
-        ruta.add(new Vector2(2000, 1600));
-        ruta.add(new Vector2(2500, 1825));
-        enemyFactory.setRuta(ruta);
+    }
+    public void setDefaultLevel1(){
+        creados=0;
+        entropy=2;
+        size=1;
+        frecuency=1.5f;
+        tiempo=1.5f;
     }
 
     public EnemyFactory getEnemyFactory() {
@@ -80,6 +77,7 @@ public class Generator{
 
     public void setRuta(Array<Vector2> ruta) {
         this.ruta = ruta;
+        enemyFactory.setRuta(ruta);
     }
 
     public int getSize() {

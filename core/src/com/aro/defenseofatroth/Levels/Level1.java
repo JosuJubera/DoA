@@ -13,15 +13,21 @@ import com.aro.defenseofatroth.Game.TowerFactory;
 import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Screens.BaseScreen;
 import com.aro.defenseofatroth.Screens.Hud;
+import com.aro.defenseofatroth.Screens.LoginScreen;
 import com.aro.defenseofatroth.Screens.MenuScreen;
 import com.aro.defenseofatroth.Screens.Selector;
 import com.aro.defenseofatroth.Tools.Constants;
 import com.aro.defenseofatroth.Tools.GestureHandlerPruebas;
+import com.aro.defenseofatroth.WS.ResponseWS;
+import com.aro.defenseofatroth.WS.WebServices;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
@@ -47,6 +53,7 @@ public class Level1  extends BaseScreen implements ActionResolver,Level {
 	private World world;
 	private GestureDetector gestureDetector;
 	private FitViewport viewport;
+	private Sprite fondo;
 	// Es para el zoom y control de input del usuario. Kitar
 	private static final float HALF_TAP_SQUARE_SIZE = 20.0f;
 	private static final float TAP_COUNT_INTERVAL = 0.4f;
@@ -55,7 +62,6 @@ public class Level1  extends BaseScreen implements ActionResolver,Level {
 
 	//Generador de bots, al final ira en otra clase
 	Generator generator;
-	private boolean rondaActiva;
 
 	//ELementos del HUD
 	private Hud hud;
@@ -110,37 +116,55 @@ public class Level1  extends BaseScreen implements ActionResolver,Level {
 		proyectileFactory=new ProyectileFactory();
 		towerFactory=new TowerFactory();
 		enemyFactory.setTextureLoader(textureLoader);
-		enemyFactory.crearPools();
 		proyectileFactory.setTextureLoader(textureLoader);
 		towerFactory.setTextureLoader(textureLoader);
 		towerFactory.setProyectileFactory(proyectileFactory);
 		proyectileFactory.crearPools();
 		gestureHandler.setTowerFactory(towerFactory); // <-------Ñapa
+		//Fondo
+		//Generacion del fondo
+		float scaleX=3.5f,scaleY=3.5f; //Escala del mapa
+		fondo=new Sprite(MainClass.getManager().get("mapaFinal2.png",Texture.class));
+		fondo.setScale(scaleX, scaleY);
+		fondo.setOrigin(0, 0);
+		fondo.setPosition(0, 0);
+		Array<Vector2> posiciones=new Array<Vector2>();
+		posiciones.add(new Vector2(proyecion(320, 130)));
+		posiciones.add(new Vector2(proyecion(90, 340)));
+		posiciones.add(new Vector2(proyecion(200, 270)));
+		posiciones.add(new Vector2(proyecion(430, 250)));
+		//Ruta
+		Array<Vector2> ruta=new Array<Vector2>();
+		ruta.add(new Vector2(proyecion(250, 25)));
+		ruta.add(new Vector2(proyecion(390, 85)));
+		ruta.add(new Vector2(proyecion(380, 160)));
+		ruta.add(new Vector2(proyecion(217, 200)));
+		ruta.add(new Vector2(proyecion(150, 270)));
+		ruta.add(new Vector2(proyecion(215, 340)));
+		ruta.add(new Vector2(proyecion(390, 310)));
+		ruta.add(new Vector2(proyecion(500, 300)));
+		enemyFactory.setRuta(ruta);
+		enemyFactory.crearPools();
 		//Generador de enemigos
 		generator=new Generator();
 		generator.setEnemyFactory(enemyFactory);
-		generator.setDefaultLevel2(); //Pa debugear
+		generator.setDefaultLevel1(); //Pa debugear
+		//generator.setRuta(ruta);
 		//Se crea el dragAndDrop
 		customDragAndDrop=new CustomDragAndDrop();
-		Array<Vector2> posciones=new Array<Vector2>();
-		posciones.add(new Vector2(500,-200));
-		posciones.add(new Vector2(500, 500));
-		posciones.add(new Vector2(0, 500));
-		posciones.add(new Vector2(500,0));
 		customDragAndDrop.setSources(selector.getImagenes());
 		customDragAndDrop.setTowerFactory(towerFactory);
 		customDragAndDrop.setStage(stage);
 		customDragAndDrop.setHud(hud);
-		customDragAndDrop.setPosiciones(posciones);
+		customDragAndDrop.setPosiciones(posiciones);
 		customDragAndDrop.bind();
 		InputMultiplexer inputMultiplexer = new InputMultiplexer(stage,selector.stage,gestureDetector);
 		Gdx.input.setInputProcessor(inputMultiplexer);
 		debugRenderer=new Box2DDebugRenderer(true,true,true,true,true,true);
-		towerFactory.obtenerBasicTower(500, -200);
-		towerFactory.obtenerLaserTower(500,500);
-		rondaActiva=false;
+
 		//Gdx.input.setInputProcessor(gestureDetector);
 		logger=new FPSLogger();
+
 		Message.getInstance().setStage(hud.stage);
 		//Ñapa para fin de partida
 		BodyDef cuerpoDef=new BodyDef();
@@ -150,16 +174,17 @@ public class Level1  extends BaseScreen implements ActionResolver,Level {
 		cuerpo.setUserData("Zona"); //Añadimos un puntero al cuerpo con la informacion del tanke
 		FixtureDef fixtureDef=new FixtureDef();
 		CircleShape shape =  new CircleShape(); //El shape tambien puede ser un cuadrado, si eso se camia aki
-		shape.setRadius(400f);
+		shape.setRadius(200f);
 		fixtureDef.shape = shape;
 		fixtureDef.isSensor=true;
 		fixtureDef.filter.categoryBits = 0xFF; //su categoria
 		fixtureDef.filter.maskBits = Enemy.ENEMY_BIT; //con quien choca
 		cuerpo.createFixture(fixtureDef);
 		shape.dispose();
-		cuerpo.setTransform(3000, 0, 0); //zona donde acaba el juego
-		hud.addGold(200); //Dinero inicial
+		Vector2 pry=ruta.peek();
+		cuerpo.setTransform(pry.x, pry.y, 0); //zona donde acaba el juego
 
+		Hud.addGold(500); //Oro inicial
 	}
 
 	@Override
@@ -172,6 +197,9 @@ public class Level1  extends BaseScreen implements ActionResolver,Level {
 		world.step(delta, 6, 2);
 		mundoBatch.setProjectionMatrix(camera.combined);
 		debugRenderer.render(world, camera.combined);
+		mundoBatch.begin();
+		fondo.draw(mundoBatch);
+		mundoBatch.end();
 		stage.draw();
 		hud.stage.act();
 		hud.stage.draw();
@@ -212,7 +240,9 @@ public class Level1  extends BaseScreen implements ActionResolver,Level {
 	@Override
 	public void fin() {
 		Message.getInstance().finalSay("¡Has perdido!");
-		//TODO subir puntuacion
+		if (!LoginScreen.email.equals("Invitado")){
+			ResponseWS rws1 = new WebServices().updateScore(LoginScreen.email,Hud.getScore());
+		}
 		Timer.Task t = new Timer.Task() {
 			@Override
 			public void run() {
@@ -220,6 +250,19 @@ public class Level1  extends BaseScreen implements ActionResolver,Level {
 			}
 		};
 		Message.getInstance().say("Puntuacion: " + Hud.getScore());
-		Timer.schedule(t,4);
+		Timer.schedule(t, 4);
+	}
+
+	/**
+	 * Pryecta las coordenadas en la imagen por las del mundo. Cabiar la funcion segun la imagen.
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	private Vector2 proyecion(float x,float y){
+		float newX,newY;
+		newX=x*fondo.getScaleX();
+		newY=(fondo.getHeight()-y)*fondo.getScaleY();
+		return new Vector2(newX,newY);
 	}
 }

@@ -37,6 +37,7 @@ public class LoginScreen extends BaseScreen {
     private Skin skin;
 
     public static String userName = "Invitado";
+    public static String email = "Invitado";
 
     public LoginScreen(MainClass game) {
         super(game);
@@ -153,6 +154,7 @@ public class LoginScreen extends BaseScreen {
                     User user=login(mail,pass);
                     if (user!=null) {
                         userName = user.getNombre();
+                        email=user.getMail();
                         game.setScreen(new MenuScreen(game));
                     } else {
                         new Dialog("Error", skin) {

@@ -143,6 +143,7 @@ public class CustomDragAndDrop {
             //Se crean las imagenes de las posiciones
             Image target = new Image(TextureLoader.getInstance().obtenerTarget());
             target.setPosition(posiciones.get(i).x,posiciones.get(i).y);
+            target.setOrigin(0,0);
             target.setScale(0.5f);
             stage.addActor(target);
             //Se crean los targets del drag&drop a partir de las imagenes

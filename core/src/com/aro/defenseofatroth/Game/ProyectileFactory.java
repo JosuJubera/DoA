@@ -52,9 +52,7 @@ public class ProyectileFactory implements ObjectPool<Proyectile> {
                 proyectile.setPoolOrigen(niapa);
                 proyectile.setPosicion(new Vector2(0, 0));
                 proyectile.setVelocidad(new Vector2(0, 0));
-                ParticleEffect particula=new ParticleEffect();
-                particula.load(Gdx.files.internal("data/disparo.p"),Gdx.files.internal("data"));
-                proyectile.setParticleEffect(particula);
+                proyectile.setParticleEffect();
                 return proyectile;
             }
         };

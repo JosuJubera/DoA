@@ -170,12 +170,12 @@ public class EnemyFactory implements ObjectPool<Enemy> {
     public MotorTank obtenerTankeMotor(/*int nivel //Por si queremos que sean mas fuertes*/){
         //Añadimos los datos al tanke. Ojo, solo añadimos aquellos que se resetean
         MotorTank aux = motorTankPool.obtain();
-        aux.setRuta(ruta); //Ciudadooooo NO HAY QUE MODIFICAR EL ARRAY o se modificaran TODAS las rutas de TODOS los enemigos
+        aux.setRuta(this.ruta); //Ciudadooooo NO HAY QUE MODIFICAR EL ARRAY o se modificaran TODAS las rutas de TODOS los enemigos
         aux.setVida(50);
         aux.setVidaMaxima(51);
         aux.setVelocidadM(120);
         aux.setViva(true);
-        aux.setPosicion(ruta.get(0));
+        aux.setPosicion(this.ruta.get(0));
         aux.setPosicionEnRuta(1); //qieremos ir al 2º punto, el 1º es el origen!
         enemies.add(aux); //Se añade al array de enemigos
         aux.setMoney(20); //Dinero que  deja al morir

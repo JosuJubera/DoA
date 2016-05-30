@@ -13,16 +13,20 @@ import com.aro.defenseofatroth.Game.TowerFactory;
 import com.aro.defenseofatroth.MainClass;
 import com.aro.defenseofatroth.Screens.BaseScreen;
 import com.aro.defenseofatroth.Screens.Hud;
+import com.aro.defenseofatroth.Screens.LoginScreen;
 import com.aro.defenseofatroth.Screens.MenuScreen;
 import com.aro.defenseofatroth.Screens.Selector;
 import com.aro.defenseofatroth.Tools.Constants;
 import com.aro.defenseofatroth.Tools.GestureHandlerPruebas;
+import com.aro.defenseofatroth.WS.ResponseWS;
+import com.aro.defenseofatroth.WS.WebServices;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
@@ -78,6 +82,7 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
 
     //Lineas de debug
     Box2DDebugRenderer debugRenderer;
+    ParticleEffect particula;
 
     //Drag and drop
     CustomDragAndDrop customDragAndDrop;
@@ -117,7 +122,6 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
         proyectileFactory=new ProyectileFactory();
         towerFactory=new TowerFactory();
         enemyFactory.setTextureLoader(textureLoader);
-        enemyFactory.crearPools();
         proyectileFactory.setTextureLoader(textureLoader);
         towerFactory.setTextureLoader(textureLoader);
         towerFactory.setProyectileFactory(proyectileFactory);
@@ -127,47 +131,47 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
         generator=new Generator();
         generator.setEnemyFactory(enemyFactory);
         generator.setDefaultLevel2(); //Pa debugear
+        //Generacion del fondo
+        float scaleX=3.5f,scaleY=3.5f; //Escala del mapa
+        fondo=new Sprite(MainClass.getManager().get("mapaFinal.png",Texture.class));
+        fondo.setScale(scaleX, scaleY);
+        fondo.setOrigin(0, 0);
+        fondo.setPosition(0, 0);
+        Array<Vector2> posiciones=new Array<Vector2>();
+        posiciones.add(new Vector2(proyecion(240, 123)));
+        posiciones.add(new Vector2(proyecion(212, 380)));
+        posiciones.add(new Vector2(proyecion(420,200)));
+        posiciones.add(new Vector2(proyecion(60, 410)));
+        posiciones.add(new Vector2(proyecion(375, 430)));
+
+        //Ruta
+        Array<Vector2> ruta=new Array<Vector2>();
+        ruta.add(new Vector2(proyecion(200, 74)));
+        ruta.add(new Vector2(proyecion(165, 215)));
+        ruta.add(new Vector2(proyecion(138, 400)));
+        ruta.add(new Vector2(proyecion(232, 420)));
+        ruta.add(new Vector2(proyecion(350, 375)));
+        ruta.add(new Vector2(proyecion(360, 260)));
+        ruta.add(new Vector2(proyecion(400, 140)));
+        ruta.add(new Vector2(proyecion(500, 95)));
+        enemyFactory.setRuta(ruta);
+        enemyFactory.crearPools();
         //Se crea el dragAndDrop
         customDragAndDrop=new CustomDragAndDrop();
-        Array<Vector2> posciones=new Array<Vector2>();
-        posciones.add(new Vector2(500, -200));
-        posciones.add(new Vector2(500, 500));
         customDragAndDrop.setSources(selector.getImagenes());
         customDragAndDrop.setTowerFactory(towerFactory);
         customDragAndDrop.setStage(stage);
         customDragAndDrop.setHud(hud);
-        customDragAndDrop.setPosiciones(posciones);
+        customDragAndDrop.setPosiciones(posiciones);
         customDragAndDrop.bind();
         InputMultiplexer inputMultiplexer = new InputMultiplexer(stage,selector.stage,gestureDetector);
         Gdx.input.setInputProcessor(inputMultiplexer);
         debugRenderer=new Box2DDebugRenderer(true,true,true,true,true,true);
-        towerFactory.obtenerBasicTower(0, 0);
 
-        rondaActiva=false;
         //Gdx.input.setInputProcessor(gestureDetector);
         logger=new FPSLogger();
 
-        towerFactory.obtenerBasicTower(1500, -200);
-        towerFactory.obtenerMissileTower(1500, 500);
-
-        towerFactory.obtenerBasicTower(2500, -200);
-        towerFactory.obtenerMissileTower(2500, 500);
-
-        towerFactory.obtenerBasicTower(3500, -200);
-        towerFactory.obtenerMissileTower(3500, 500);
-
-        towerFactory.obtenerBasicTower(5500, -200);
-        towerFactory.obtenerMissileTower(5500, 500);
-
-        towerFactory.obtenerBasicTower(6500, -200);
-        towerFactory.obtenerMissileTower(6500, 500);
-
         Message.getInstance().setStage(hud.stage);
-
-        fondo=new Sprite(MainClass.getManager().get("mapaFinal.png",Texture.class));
-        fondo.setScale(5f);
-        fondo.setPosition(fondo.getWidth()*2.5f-130,fondo.getHeight()*2.5f-180);
-        towerFactory.obtenerLaserTower(fondo.getWidth()*0.5f,fondo.getHeight()*0.5f);
         //Ñapa para fin de partida
         BodyDef cuerpoDef=new BodyDef();
         cuerpoDef.type = BodyDef.BodyType.DynamicBody;
@@ -176,14 +180,24 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
         cuerpo.setUserData("Zona"); //Añadimos un puntero al cuerpo con la informacion del tanke
         FixtureDef fixtureDef=new FixtureDef();
         CircleShape shape =  new CircleShape(); //El shape tambien puede ser un cuadrado, si eso se camia aki
-        shape.setRadius(400f);
+        shape.setRadius(200f);
         fixtureDef.shape = shape;
         fixtureDef.isSensor=true;
         fixtureDef.filter.categoryBits = 0xFF; //su categoria
         fixtureDef.filter.maskBits = Enemy.ENEMY_BIT; //con quien choca
         cuerpo.createFixture(fixtureDef);
         shape.dispose();
-        cuerpo.setTransform(2500,1825,0); //zona donde acaba el juego
+        Vector2 pry=new Vector2(proyecion(510,90));
+        cuerpo.setTransform(pry.x, pry.y, 0); //zona donde acaba el juego
+
+        Hud.addGold(500); //Oro inicial
+
+        particula=new ParticleEffect();
+        particula.load(Gdx.files.internal("data/explosion.particle"), Gdx.files.internal("data"));
+        particula.setPosition(0, 0);
+        particula.getEmitters().first().setContinuous(true);
+        particula.start();
+        particula.scaleEffect(10f);
 
     }
 
@@ -199,6 +213,7 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
         debugRenderer.render(world, camera.combined);
         mundoBatch.begin();
         fondo.draw(mundoBatch);
+        particula.draw(mundoBatch,delta);
         mundoBatch.end();
         stage.draw();
         hud.stage.act();
@@ -240,7 +255,9 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
     @Override
     public void fin() {
         Message.getInstance().finalSay("¡Has perdido!");
-        //TODO subir puntuacion
+        if (!LoginScreen.email.equals("Invitado")){
+            ResponseWS rws1 = new WebServices().updateScore(LoginScreen.email,Hud.getScore());
+        }
         Timer.Task t = new Timer.Task() {
             @Override
             public void run() {
@@ -248,6 +265,19 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
             }
         };
         Message.getInstance().say("Puntuacion: " + Hud.getScore());
-        Timer.schedule(t,4);
+        Timer.schedule(t, 4);
+    }
+
+    /**
+     * Pryecta las coordenadas en la imagen por las del mundo. Cabiar la funcion segun la imagen.
+     * @param x
+     * @param y
+     * @return
+     */
+    private Vector2 proyecion(float x,float y){
+        float newX,newY;
+        newX=x*fondo.getScaleX();
+        newY=(fondo.getHeight()-y)*fondo.getScaleY();
+        return new Vector2(newX,newY);
     }
 }
