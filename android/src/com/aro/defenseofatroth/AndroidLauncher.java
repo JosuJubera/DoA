@@ -3,10 +3,11 @@ package com.aro.defenseofatroth;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import com.badlogic.gdx.backends.android.*;
-import com.chartboost.sdk.Chartboost;
+
+import com.badlogic.gdx.backends.android.AndroidApplication;
+import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.chartboost.sdk.CBLocation;
-import com.chartboost.sdk.ChartboostDelegate;
+import com.chartboost.sdk.Chartboost;
 
 public class AndroidLauncher extends AndroidApplication implements ActionResolver {
 

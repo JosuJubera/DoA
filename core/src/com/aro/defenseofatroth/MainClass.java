@@ -7,7 +7,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 
@@ -27,9 +26,7 @@ public class MainClass extends Game{
         manager.load("data/uiskin.json", Skin.class);
         manager.load("mapaFinal.png", Texture.class);
 		manager.load("mapaFinal2.png", Texture.class);
-        //
-		manager.load("torre.png", Texture.class);
-        manager.load("torre2.png", Texture.class);
+
 		manager.load("barraRoja.png", Texture.class);
 		manager.load("barraRojaBuena.png", Texture.class);
 		manager.load("barraVerdeBuena.png", Texture.class);

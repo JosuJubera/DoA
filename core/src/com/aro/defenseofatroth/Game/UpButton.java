@@ -1,15 +1,11 @@
 package com.aro.defenseofatroth.Game;
 
-import com.aro.defenseofatroth.MainClass;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 
@@ -34,7 +30,6 @@ public class UpButton extends Actor{
         this.setWidth(imagen.getRegionWidth());
         this.setHeight(imagen.getRegionHeight());
         this.setPosition(x, y);// + imagen.getHeight() * 0.5f
-        this.setDebug(true);
         final UpButton ñapa=this;
         this.addListener(new ClickListener() {
             @Override

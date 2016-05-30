@@ -1,7 +1,6 @@
 package com.aro.defenseofatroth.Game;
 
 import com.aro.defenseofatroth.Screens.Hud;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -51,7 +50,7 @@ public class BasicTower extends Tower{
     public void draw(Batch bach,float delta){
         super.draw(bach, delta);
         font.setColor(Color.WHITE);
-        font.draw(bach, "Estado: " + estado + "\n Tiempo sigueinte Ataque " + tiempoSiguienteAtaque, posicion.x - textura.getRegionWidth() * 0.5f, posicion.y - textura.getRegionWidth() * 0.5f - 10);//Debug, borrrar
+        //font.draw(bach, "Estado: " + estado + "\n Tiempo sigueinte Ataque " + tiempoSiguienteAtaque, posicion.x - textura.getRegionWidth() * 0.5f, posicion.y - textura.getRegionWidth() * 0.5f - 10);//Debug, borrrar
     }
 
     @Override

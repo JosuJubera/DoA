@@ -1,8 +1,8 @@
 package com.aro.defenseofatroth.desktop;
 
+import com.aro.defenseofatroth.MainClass;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.aro.defenseofatroth.MainClass;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

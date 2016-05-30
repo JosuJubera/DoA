@@ -26,14 +26,12 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
@@ -80,9 +78,6 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
     private TowerFactory towerFactory;
     private Sprite fondo;
 
-    //Lineas de debug
-    Box2DDebugRenderer debugRenderer;
-    ParticleEffect particula;
 
     //Drag and drop
     CustomDragAndDrop customDragAndDrop;
@@ -97,6 +92,7 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
 
     private void create(){
 
+        showChartBoostIntersititial();
         mundoBatch = new SpriteBatch();
         camera = new OrthographicCamera(); //camara orthografica, es en 2D!
         viewport = new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT, camera);
@@ -132,7 +128,7 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
         generator.setEnemyFactory(enemyFactory);
         generator.setDefaultLevel2(); //Pa debugear
         //Generacion del fondo
-        float scaleX=3.5f,scaleY=3.5f; //Escala del mapa
+        float scaleX=5.2f,scaleY=3.5f; //Escala del mapa
         fondo=new Sprite(MainClass.getManager().get("mapaFinal.png",Texture.class));
         fondo.setScale(scaleX, scaleY);
         fondo.setOrigin(0, 0);
@@ -166,7 +162,6 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
         customDragAndDrop.bind();
         InputMultiplexer inputMultiplexer = new InputMultiplexer(stage,selector.stage,gestureDetector);
         Gdx.input.setInputProcessor(inputMultiplexer);
-        debugRenderer=new Box2DDebugRenderer(true,true,true,true,true,true);
 
         //Gdx.input.setInputProcessor(gestureDetector);
         logger=new FPSLogger();
@@ -191,14 +186,6 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
         cuerpo.setTransform(pry.x, pry.y, 0); //zona donde acaba el juego
 
         Hud.addGold(500); //Oro inicial
-
-        particula=new ParticleEffect();
-        particula.load(Gdx.files.internal("data/explosion.particle"), Gdx.files.internal("data"));
-        particula.setPosition(0, 0);
-        particula.getEmitters().first().setContinuous(true);
-        particula.start();
-        particula.scaleEffect(10f);
-
     }
 
     @Override
@@ -210,10 +197,8 @@ public class Level2 extends BaseScreen implements ActionResolver,Level{
         stage.act(delta);
         world.step(delta, 6, 2);
         mundoBatch.setProjectionMatrix(camera.combined);
-        debugRenderer.render(world, camera.combined);
         mundoBatch.begin();
         fondo.draw(mundoBatch);
-        particula.draw(mundoBatch,delta);
         mundoBatch.end();
         stage.draw();
         hud.stage.act();

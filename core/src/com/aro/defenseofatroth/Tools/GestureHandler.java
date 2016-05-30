@@ -1,10 +1,8 @@
 package com.aro.defenseofatroth.Tools;
 
-import com.aro.defenseofatroth.Levels.Level1;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 
 /**
  * Created by elementary on 25/03/16.

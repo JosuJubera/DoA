@@ -1,7 +1,6 @@
 package com.aro.defenseofatroth.Game;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Affine2;
 
 /**
  * Por ahora no hay que tocar nada...

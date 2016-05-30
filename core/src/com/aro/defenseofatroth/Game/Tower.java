@@ -1,18 +1,11 @@
 package com.aro.defenseofatroth.Game;
 
-import com.aro.defenseofatroth.Screens.Hud;
-import com.aro.defenseofatroth.Screens.MenuScreen;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 
@@ -82,7 +75,6 @@ public class Tower extends Actor {
     }
     public void setButtonUpdate(){
         this.setWidth(textura.getRegionWidth());
-        this.setDebug(true);
         this.setHeight(textura.getRegionHeight());
         final Tower ñapa=this;
         this.addListener(new ClickListener() {

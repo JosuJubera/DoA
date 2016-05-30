@@ -1,10 +1,5 @@
 package com.aro.defenseofatroth.Game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-
 /**
  * Created by Sergio on 24/05/2016.
  */

@@ -16,7 +16,6 @@ import com.aro.defenseofatroth.Screens.Hud;
 import com.aro.defenseofatroth.Screens.LoginScreen;
 import com.aro.defenseofatroth.Screens.MenuScreen;
 import com.aro.defenseofatroth.Screens.Selector;
-import com.aro.defenseofatroth.Tools.Constants;
 import com.aro.defenseofatroth.Tools.GestureHandlerPruebas;
 import com.aro.defenseofatroth.WS.ResponseWS;
 import com.aro.defenseofatroth.WS.WebServices;
@@ -26,14 +25,12 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
@@ -43,6 +40,9 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.chartboost.sdk.CBLocation;
 import com.chartboost.sdk.Chartboost;
+
+import static com.aro.defenseofatroth.Tools.Constants.VIRTUAL_HEIGHT;
+import static com.aro.defenseofatroth.Tools.Constants.VIRTUAL_WIDTH;
 
 public class Level1  extends BaseScreen implements ActionResolver,Level {
 
@@ -75,8 +75,6 @@ public class Level1  extends BaseScreen implements ActionResolver,Level {
 	private ProyectileFactory proyectileFactory;
 	private TowerFactory towerFactory;
 
-	//Lineas de debug
-	Box2DDebugRenderer debugRenderer;
 
 	//Drag and drop
 	CustomDragAndDrop customDragAndDrop;
@@ -91,9 +89,10 @@ public class Level1  extends BaseScreen implements ActionResolver,Level {
 
 	private void create(){
 
+		showChartBoostIntersititial();
 		mundoBatch = new SpriteBatch();
 		camera = new OrthographicCamera(); //camara orthografica, es en 2D!
-		viewport = new FitViewport(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT, camera);
+		viewport = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
 		GestureHandlerPruebas gestureHandler=new GestureHandlerPruebas( camera);
 		gestureDetector = new GestureDetector(HALF_TAP_SQUARE_SIZE,
 				TAP_COUNT_INTERVAL,
@@ -123,7 +122,7 @@ public class Level1  extends BaseScreen implements ActionResolver,Level {
 		gestureHandler.setTowerFactory(towerFactory); // <-------Ñapa
 		//Fondo
 		//Generacion del fondo
-		float scaleX=3.5f,scaleY=3.5f; //Escala del mapa
+		float scaleX=5.2f,scaleY=4f; //Escala del mapa
 		fondo=new Sprite(MainClass.getManager().get("mapaFinal2.png",Texture.class));
 		fondo.setScale(scaleX, scaleY);
 		fondo.setOrigin(0, 0);
@@ -160,7 +159,6 @@ public class Level1  extends BaseScreen implements ActionResolver,Level {
 		customDragAndDrop.bind();
 		InputMultiplexer inputMultiplexer = new InputMultiplexer(stage,selector.stage,gestureDetector);
 		Gdx.input.setInputProcessor(inputMultiplexer);
-		debugRenderer=new Box2DDebugRenderer(true,true,true,true,true,true);
 
 		//Gdx.input.setInputProcessor(gestureDetector);
 		logger=new FPSLogger();
@@ -196,7 +194,6 @@ public class Level1  extends BaseScreen implements ActionResolver,Level {
 		stage.act(delta);
 		world.step(delta, 6, 2);
 		mundoBatch.setProjectionMatrix(camera.combined);
-		debugRenderer.render(world, camera.combined);
 		mundoBatch.begin();
 		fondo.draw(mundoBatch);
 		mundoBatch.end();

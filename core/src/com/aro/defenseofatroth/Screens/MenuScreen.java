@@ -1,11 +1,8 @@
 package com.aro.defenseofatroth.Screens;
 
 import com.aro.defenseofatroth.MainClass;
-import com.aro.defenseofatroth.Screens.BaseScreen;
-import com.aro.defenseofatroth.Screens.SinglePlayScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -15,14 +12,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-import com.aro.defenseofatroth.Screens.GameScreen;
 
 public class MenuScreen extends BaseScreen {
 
@@ -85,12 +79,9 @@ public class MenuScreen extends BaseScreen {
 		unjugador.setPosition(VIRTUAL_WIDTH /2 - VIRTUAL_WIDTH /8 , VIRTUAL_HEIGHT* 3 /8);
 		stage.addActor(unjugador);
 
-		TextButton multijugador = new TextButton("Multijugador", skin); // Use the initialized skin
-		multijugador.setPosition(VIRTUAL_WIDTH /2 - VIRTUAL_WIDTH /8 , VIRTUAL_HEIGHT * 2 /8);
-		stage.addActor(multijugador);
 
 		TextButton ranking = new TextButton("Ranking", skin); // Use the initialized skin
-		ranking.setPosition(VIRTUAL_WIDTH /2 - VIRTUAL_WIDTH /8 , VIRTUAL_HEIGHT /8);
+		ranking.setPosition(VIRTUAL_WIDTH /2 - VIRTUAL_WIDTH /8 , VIRTUAL_HEIGHT * 2 /8);
 		stage.addActor(ranking);
 
 		// Single player button listener
@@ -106,40 +97,12 @@ public class MenuScreen extends BaseScreen {
 			};
 		});
 
-		// Multi player button listener
-		multijugador.addListener( new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				stage.addAction(Actions.sequence(Actions.fadeOut(0.2f), Actions.run(new Runnable() {
-					@Override
-					public void run() {
-						((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(game));
-					}
-				})));
-			};
-		});
 
 		// Ranking button listener
 		ranking.addListener( new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				game.setScreen(new RankingScreen(game));
-			};
-		});
-
-
-		TextButton musicButton = new TextButton("MUSICA", skin); // Use the initialized skin
-		musicButton.setPosition(VIRTUAL_WIDTH - VIRTUAL_WIDTH * 2 /10 , VIRTUAL_HEIGHT * 6 / 7); // desde bottomleft
-		stage.addActor(musicButton);
-
-		// musicButton button listener
-		musicButton.addListener( new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				if (musica == false) {
-					musica = true;
-				} else
-					musica = false;
 			};
 		});
 	}

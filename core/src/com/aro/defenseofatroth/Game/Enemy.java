@@ -2,12 +2,8 @@ package com.aro.defenseofatroth.Game;
 
 import com.aro.defenseofatroth.BarraVida;
 import com.aro.defenseofatroth.Screens.Hud;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -257,8 +253,8 @@ public class Enemy extends Actor implements Pool.Poolable {
         this.money = money;
     }
 
-    @Override //pa debugear
-    public String toString(){
-        return "Soy un enemigo";
-    }
+//    @Override //pa debugear
+//    public String toString(){
+//        return "Soy un enemigo";
+//    }
 }

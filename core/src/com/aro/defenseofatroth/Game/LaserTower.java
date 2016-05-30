@@ -3,8 +3,8 @@ package com.aro.defenseofatroth.Game;
 import com.aro.defenseofatroth.Screens.Hud;
 import com.aro.defenseofatroth.Tools.Constants;
 
-import static com.aro.defenseofatroth.Tools.Constants.*;
-import static com.aro.defenseofatroth.Tools.Constants.ALCANCE_LASER;
+import static com.aro.defenseofatroth.Tools.Constants.dañoAtaque;
+import static com.aro.defenseofatroth.Tools.Constants.velAtaque;
 
 /**
  * Created by elementary on 26/05/16.
